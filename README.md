@@ -22,6 +22,7 @@ Adds support for the openapi-processor `mapping.yaml` configuration file.
 
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation)
 * marks the `mapping.yaml` with an openapi-processor icon to separate it from the openapi yaml file(s) 
+<br/><br/>
 <!-- Plugin description end -->
 
 ## Installation
