@@ -16,7 +16,9 @@
                   patterns="**/api/mapping.yaml;**/api/mapping.yml"
                   implementationClass="io.openapiprocessor.intellij.TypeMapping"/>
 
-
+<!--        <codeInsight.lineMarkerProvider-->
+<!--                language="yaml"-->
+<!--                implementationClass="io.openapiprocessor.intellij.LineMarker"/>-->
 
     </extensions>
 
