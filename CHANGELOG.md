@@ -3,8 +3,6 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- to be released as 2021.1
 - auto-detect the `mapping.yaml` file and set the json schema for editing support (autocompletion & validation)
-- use openapi-processor icon for `mapping.yaml` 
-
-### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- add openapi-processor icon for `mapping.yaml` 
