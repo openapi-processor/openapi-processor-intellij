@@ -10,12 +10,18 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.hauner.openapiprocessorintellij.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.hauner.openapiprocessorintellij.services.MyProjectService"/>
+
+        <fileType name="openapiprocessor mapping"
+                  fileNames="mapping.yaml;mapping.yml"
+                  patterns="**/api/mapping.yaml;**/api/mapping.yml"
+                  implementationClass="io.openapiprocessor.intellij.TypeMapping"/>
+
+
+
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.hauner.openapiprocessorintellij.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <extensions defaultExtensionNs="JavaScript.JsonSchema">
+        <ProviderFactory implementation="io.openapiprocessor.intellij.TypeMappingSchema"/>
+    </extensions>
+
 </idea-plugin>
