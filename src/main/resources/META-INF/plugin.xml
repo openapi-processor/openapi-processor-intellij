@@ -1,7 +1,7 @@
 <idea-plugin>
-    <id>com.github.hauner.openapiprocessorintellij</id>
-    <name>openapi-processor-intellij</name>
-    <vendor>hauner</vendor>
+    <id>io.openapiprocessor.intellij-plugin</id>
+    <name>openapi-processor</name>
+    <vendor>io.openapiprocessor</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
