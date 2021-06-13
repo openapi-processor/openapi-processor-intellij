@@ -55,12 +55,17 @@ changelog {
 detekt {
     config = files("./detekt-config.yml")
     buildUponDefaultConfig = true
+    ignoreFailures = true
 
     reports {
         html.enabled = false
         xml.enabled = false
         txt.enabled = false
     }
+}
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    ignoreFailures.set(true)
 }
 
 tasks {
