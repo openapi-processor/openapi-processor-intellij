@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>io.openapiprocessor.intellij-plugin</id>
     <name>openapi-processor</name>
-    <vendor>io.openapiprocessor</vendor>
+    <vendor>openapiprocessor.io</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
