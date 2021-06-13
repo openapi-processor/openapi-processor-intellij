@@ -11,7 +11,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
 
-        <fileType name="openapiprocessor mapping"
+        <fileType name="openapi-processor mapping"
                   fileNames="mapping.yaml;mapping.yml"
                   patterns="**/api/mapping.yaml;**/api/mapping.yml"
                   implementationClass="io.openapiprocessor.intellij.TypeMapping"/>
