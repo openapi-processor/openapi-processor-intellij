@@ -14,7 +14,11 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
+[openapi-processor homepage](https://docs.openapiprocessor.io/oap/home/home.html)
+<br/><br/>
+
 Adds support for the openapi-processor `mapping.yaml` configuration file.
+<br/><br/>
 
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation)
 * marks the `mapping.yaml` with an openapi-processor icon to separate it from the openapi yaml file(s) 
