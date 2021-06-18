@@ -25,7 +25,7 @@ class TypeMapping : LanguageFileType(YAMLLanguage.INSTANCE, true) {
     }
 
     override fun getIcon(): Icon {
-        return IconLoader.getIcon("/META-INF/pluginIcon.svg")
+        return IconLoader.getIcon("/icons/openapi-processor-p.svg")
     }
 
 }
