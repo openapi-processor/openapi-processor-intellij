@@ -12,7 +12,9 @@ import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory
 import com.jetbrains.jsonSchema.extension.SchemaType
 
-val SCHEMA_URL = "raw.githubusercontent.com/openapi-processor/openapi-processor-core/master/src/main/resources/mapping/v2/mapping.yaml.json"
+const val SCHEMA_URL = "raw.githubusercontent.com" +
+                       "/openapi-processor/openapi-processor-core" +
+                       "/master/src/main/resources/mapping/v2/mapping.yaml.json"
 
 class TypeMappingSchema: JsonSchemaProviderFactory {
 
