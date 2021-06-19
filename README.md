@@ -13,8 +13,9 @@
 - [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html).
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
+## Plugin Description
 <!-- Plugin description -->
-** Note: this is a PREVIEW **<br/><br/>Adds support for the [openapi-processor](https://docs.openapiprocessor.io/oap/home/home.html) `mapping.yaml` configuration file.
+** Note: this is a PREVIEW ** - Adds support for the [openapi-processor](https://docs.openapiprocessor.io/oap/home/home.html) `mapping.yaml` configuration file.
 <br/><br/>
 
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation)
