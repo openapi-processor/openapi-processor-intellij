@@ -40,7 +40,11 @@ intellij {
     updateSinceUntilBuild.set(true)
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
-    plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
+    plugins.set(
+        properties("platformPlugins")
+            .split(',')
+            .map(String::trim)
+            .filter(String::isNotEmpty))
 }
 
 // Configure gradle-changelog-plugin plugin.
@@ -87,7 +91,8 @@ tasks {
         sinceBuild.set(properties("pluginSinceBuild"))
         untilBuild.set(properties("pluginUntilBuild"))
 
-        // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
+        // Extract the <!-- Plugin description --> section from README.md and set it in the
+        // plugin's manifest
         pluginDescription.set(
             File(projectDir, "README.md").readText().lines().run {
                 val start = "<!-- Plugin description -->"
@@ -105,15 +110,26 @@ tasks {
     }
 
     runPluginVerifier {
-        ideVersions.set(properties("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
+        ideVersions.set(
+            properties("pluginVerifierIdeVersions")
+                .split(',')
+                .map(String::trim)
+                .filter(String::isNotEmpty))
     }
 
     publishPlugin {
         dependsOn("patchChangelog")
-        token.set(System.getenv("PUBLISH_TOKEN"))
-        // pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
-        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
+        token.set(System.getenv("INTELLIJ_PUBLISH_TOKEN"))
+        // pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels
+        // like 2.1.7-alpha.3
+        // Specify pre-release label to publish the plugin in a custom Release Channel automatically.
+        // Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
-        channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
+        channels.set(listOf(
+            properties("pluginVersion")
+                .split('-')
+                .getOrElse(1) { "default" }
+                .split('.')
+                .first()))
     }
 }
