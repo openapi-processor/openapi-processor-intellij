@@ -52,6 +52,7 @@ intellij {
 changelog {
     version = properties("pluginVersion")
     groups = emptyList()
+    headerParserRegex = """([1-9][0-9][0-9][0-9])\.(\d+)(\.\d+)?(-([A-Z]+)(\.(\d+))?)?"""
 }
 
 // Configure detekt plugin.
