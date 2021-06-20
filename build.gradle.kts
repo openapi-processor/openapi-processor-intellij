@@ -28,6 +28,7 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+    testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -81,6 +82,10 @@ tasks {
     }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
+    }
+
+    withType<Test> {
+        useJUnitPlatform()
     }
 
     withType<Detekt> {
