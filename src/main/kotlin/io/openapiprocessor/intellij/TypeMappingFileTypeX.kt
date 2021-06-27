@@ -10,6 +10,7 @@ import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.yaml.YAMLLanguage
+import org.yaml.snakeyaml.Yaml
 import javax.swing.Icon
 
 class TypeMappingFileTypeX : LanguageFileType(YAMLLanguage.INSTANCE, true),
@@ -40,10 +41,14 @@ class TypeMappingFileTypeX : LanguageFileType(YAMLLanguage.INSTANCE, true),
             return false
         }
 
-        val content = String(file.inputStream.readAllBytes())
-        return content.lines().any {
-            return it.matches(Regex("""^openapi-processor-mapping:\s*v2"""))
+        val yaml = Yaml()
+        val mapping: Map<String, Any> = yaml.load(file.inputStream)
+        if (!mapping.containsKey("openapi-processor-mapping")) {
+            return false
         }
+
+        return mapping["openapi-processor-mapping"].toString()
+            .startsWith("v2")
     }
 
 }
