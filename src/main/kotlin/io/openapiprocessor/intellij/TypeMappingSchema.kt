@@ -12,10 +12,6 @@ import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory
 import com.jetbrains.jsonSchema.extension.SchemaType
 
-const val SCHEMA_URL = "raw.githubusercontent.com" +
-                       "/openapi-processor/openapi-processor-core" +
-                       "/master/src/main/resources/mapping/v2/mapping.yaml.json"
-
 class TypeMappingSchema: JsonSchemaProviderFactory {
 
     override fun getProviders(project: Project): MutableList<JsonSchemaFileProvider> {
@@ -30,7 +26,7 @@ class TypeMappingSchema: JsonSchemaProviderFactory {
         }
 
         override fun getName(): String {
-            return "openapi-processor mapping"
+            return SCHEMA_NAME
         }
 
         override fun getSchemaFile(): VirtualFile? {
@@ -41,6 +37,14 @@ class TypeMappingSchema: JsonSchemaProviderFactory {
             return SchemaType.remoteSchema
         }
 
+    }
+
+    companion object {
+        const val SCHEMA_NAME = "openapi-processor mapping"
+
+        const val SCHEMA_URL = "raw.githubusercontent.com" +
+                               "/openapi-processor/openapi-processor-core" +
+                               "/master/src/main/resources/mapping/v2/mapping.yaml.json"
     }
 
 }
