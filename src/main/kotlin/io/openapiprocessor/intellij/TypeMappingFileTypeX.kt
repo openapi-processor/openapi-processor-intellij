@@ -5,32 +5,11 @@
 
 package io.openapiprocessor.intellij
 
-import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
-import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VirtualFile
-import org.jetbrains.yaml.YAMLLanguage
 import org.yaml.snakeyaml.Yaml
-import javax.swing.Icon
 
-class TypeMappingFileTypeX : LanguageFileType(YAMLLanguage.INSTANCE, true),
-    FileTypeIdentifiableByVirtualFile {
-
-    override fun getName(): String {
-        return "openapi-processor mapping"
-    }
-
-    override fun getDescription(): String {
-        return "OpenAPI-Processor Configuration"
-    }
-
-    override fun getDefaultExtension(): String {
-        return ""
-    }
-
-    override fun getIcon(): Icon {
-        return IconLoader.getIcon("/icons/openapi-processor-p.svg")
-    }
+class TypeMappingFileTypeX : TypeMappingFileType(), FileTypeIdentifiableByVirtualFile {
 
     override fun isMyFileType(file: VirtualFile): Boolean {
         if(!listOf("yaml", "yml").contains(file.extension)) {
@@ -43,12 +22,16 @@ class TypeMappingFileTypeX : LanguageFileType(YAMLLanguage.INSTANCE, true),
 
         val yaml = Yaml()
         val mapping: Map<String, Any> = yaml.load(file.inputStream)
-        if (!mapping.containsKey("openapi-processor-mapping")) {
+        if (!mapping.containsKey(MAPPING_KEY)) {
             return false
         }
 
-        return mapping["openapi-processor-mapping"].toString()
+        return mapping[MAPPING_KEY].toString()
             .startsWith("v2")
+    }
+
+    companion object {
+        const val MAPPING_KEY = "openapi-processor-mapping"
     }
 
 }

@@ -10,10 +10,10 @@ import com.intellij.openapi.util.IconLoader
 import org.jetbrains.yaml.YAMLLanguage
 import javax.swing.Icon
 
-class TypeMappingFileType : LanguageFileType(YAMLLanguage.INSTANCE, true) {
+open class TypeMappingFileType : LanguageFileType(YAMLLanguage.INSTANCE, true) {
 
     override fun getName(): String {
-        return "openapi-processor mapping"
+        return NAME
     }
 
     override fun getDescription(): String {
@@ -26,6 +26,10 @@ class TypeMappingFileType : LanguageFileType(YAMLLanguage.INSTANCE, true) {
 
     override fun getIcon(): Icon {
         return IconLoader.getIcon("/icons/openapi-processor-p.svg")
+    }
+
+    companion object {
+        const val NAME = "openapi-processor mapping"
     }
 
 }
