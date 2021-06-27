@@ -11,10 +11,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
 
+        <fileBasedIndex implementation="io.openapiprocessor.intellij.MappingIndex"/>
+
         <fileType name="openapi-processor mapping"
                   fileNames="mapping.yaml;mapping.yml"
                   patterns="**/api/mapping.yaml;**/api/mapping.yml"
-                  implementationClass="io.openapiprocessor.intellij.TypeMapping"/>
+                  implementationClass="io.openapiprocessor.intellij.TypeMappingFileType"/>
 
 <!--        <codeInsight.lineMarkerProvider-->
 <!--                language="yaml"-->

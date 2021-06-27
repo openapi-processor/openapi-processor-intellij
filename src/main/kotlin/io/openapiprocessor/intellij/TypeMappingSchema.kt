@@ -26,7 +26,7 @@ class TypeMappingSchema: JsonSchemaProviderFactory {
         private val schema = HttpsFileSystem.getHttpsInstance().findFileByPath(SCHEMA_URL)
 
         override fun isAvailable(file: VirtualFile): Boolean {
-            return file.fileType is TypeMapping
+            return file.fileType is TypeMappingFileType
         }
 
         override fun getName(): String {

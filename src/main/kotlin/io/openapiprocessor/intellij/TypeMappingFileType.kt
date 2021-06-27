@@ -10,7 +10,7 @@ import com.intellij.openapi.util.IconLoader
 import org.jetbrains.yaml.YAMLLanguage
 import javax.swing.Icon
 
-class TypeMapping : LanguageFileType(YAMLLanguage.INSTANCE, true) {
+class TypeMappingFileType : LanguageFileType(YAMLLanguage.INSTANCE, true) {
 
     override fun getName(): String {
         return "openapi-processor mapping"
