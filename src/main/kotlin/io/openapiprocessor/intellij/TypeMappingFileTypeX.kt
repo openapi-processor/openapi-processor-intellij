@@ -12,7 +12,7 @@ import org.yaml.snakeyaml.Yaml
 class TypeMappingFileTypeX : TypeMappingFileType(), FileTypeIdentifiableByVirtualFile {
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        if(!listOf("yaml", "yml").contains(file.extension)) {
+        if(!listOf("yaml", "yml").contains(file.extension?.toLowerCase())) {
             return false
         }
 
