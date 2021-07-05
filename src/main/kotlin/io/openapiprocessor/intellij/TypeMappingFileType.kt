@@ -21,7 +21,7 @@ open class TypeMappingFileType : LanguageFileType(YAMLLanguage.INSTANCE, true) {
     }
 
     override fun getDefaultExtension(): String {
-        return ""
+        return "yaml;yml"
     }
 
     override fun getIcon(): Icon {
