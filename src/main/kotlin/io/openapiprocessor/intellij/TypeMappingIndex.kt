@@ -65,7 +65,7 @@ class TypeMappingIndex: FileBasedIndexExtension<String, String>() {
     }
 
     companion object {
-        val INDEX_NAME = ID.create<String, String>("openapi-processor.mapping")
+        val INDEX_NAME = ID.create<String, String>("io.openapiprocessor.mapping")
     }
 
 }
