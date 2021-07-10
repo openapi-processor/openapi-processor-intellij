@@ -6,6 +6,7 @@
 package io.openapiprocessor.intellij
 
 import com.intellij.util.indexing.*
+import com.intellij.util.indexing.*
 import com.intellij.util.io.DataExternalizer
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
@@ -48,6 +49,9 @@ class TypeMappingIndex: FileBasedIndexExtension<String, String>() {
     override fun getIndexer(): DataIndexer<String, String, FileContent> {
         return DataIndexer<String, String, FileContent> { inputData ->
             val m = mutableMapOf<String, String>()
+            println("DataIndexer")
+
+            m.put("foo", "bar")
 
             inputData.psiFile.accept(object : YamlRecursivePsiElementVisitor() {
                 override fun visitKeyValue(keyValue: YAMLKeyValue) {
