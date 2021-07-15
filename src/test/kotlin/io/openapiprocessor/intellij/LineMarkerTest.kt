@@ -50,10 +50,44 @@ class LineMarkerTest: BaseTestCase() {
         // then
         val gutter = gutters.first()
         assertEquals(AllIcons.Modules.GeneratedFolder, gutter.icon)
-        assertEquals(TypeMappingLineMarker.PACKAGE_TOOLTIP_TEXT, gutter.tooltipText)
+        assertEquals(TypeMappingLineMarker.PACKAGE_EXISTS_TOOLTIP_TEXT, gutter.tooltipText)
 
         val pkg = tmpDir.findFileByRelativePath("build/openapi/io/openapiprocessor")!!
         assertEquals(pkg.path, gutter.targets.first())
+    }
+
+    fun `test adds 'empty' navigation gutter at package-name if it does not exist`() {
+        val tmpDir = directoryContent {
+            dir("build") {
+                dir("compilerOutput") {}
+                dir("openapi") {
+                }
+            }
+        }.generateInVirtualTempDir()
+
+        val mapping = fixture.configureByText(
+            "mapping.yaml", """
+                openapi-processor-mapping: v2
+                options:
+                  package-name: io.openapiprocessor
+            """.trimIndent())
+
+        val compilerOutput = tmpDir.findFileByRelativePath("build/compilerOutput")!!
+        setCompilerOutputPath(compilerOutput)
+
+        // root of "generated" code
+        val contentRoot = tmpDir.findFileByRelativePath("build/openapi")!!
+        addContentRoot(contentRoot)
+
+        // when
+        lateinit var gutters: List<GutterMark>
+        runInEdtAndWait { gutters = fixture.findAllGutters("mapping.yaml") }
+
+        // then
+        val gutter = gutters.first()
+        assertEquals(AllIcons.Modules.GeneratedFolder, gutter.icon)
+        assertEquals(TypeMappingLineMarker.PACKAGE_MISSING_TOOLTIP_TEXT, gutter.tooltipText)
+        assertEquals(0, gutter.targets.size)
     }
 
     private fun addContentRoot(api: VirtualFile) {

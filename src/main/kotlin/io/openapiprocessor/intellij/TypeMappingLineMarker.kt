@@ -73,14 +73,21 @@ class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
             }
         }
 
-        // if not match, not yt generated tooltip without target
+        if (targetPkg != null) {
+            val builder = NavigationGutterIconBuilder
+                .create(getPackageIcon())
+                .setTargets(targetPkg)
+                .setTooltipText(PACKAGE_EXISTS_TOOLTIP_TEXT)
 
-        val builder = NavigationGutterIconBuilder
-            .create(getPackageIcon())
-            .setTargets(targetPkg)
-            .setTooltipText(PACKAGE_TOOLTIP_TEXT)
+            result.add(builder.createLineMarkerInfo(element))
+        } else {
+            val builder = NavigationGutterIconBuilder
+                .create(getPackageIcon())
+                .setTarget(element)
+                .setTooltipText(PACKAGE_MISSING_TOOLTIP_TEXT)
 
-        result.add(builder.createLineMarkerInfo(element))
+            result.add(builder.createLineMarkerInfo(element))
+        }
 
         super.collectNavigationMarkers(element, result)
     }
@@ -96,7 +103,8 @@ class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
 
     companion object {
         const val PACKAGE_KEY = "package-name"
-        const val PACKAGE_TOOLTIP_TEXT = "Navigate to generated package"
+        const val PACKAGE_EXISTS_TOOLTIP_TEXT = "Navigate to generated package"
+        const val PACKAGE_MISSING_TOOLTIP_TEXT = "Generated package does not yet exists"
     }
 
 }
