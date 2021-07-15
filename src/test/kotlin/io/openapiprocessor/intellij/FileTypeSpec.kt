@@ -39,17 +39,17 @@ class FileTypeSpec : StringSpec({
     }
 
     "detects file type with 'yaml' extension" {
-        val mapping = loadFile("src/api/mapping.yaml")
+        val mapping = loadFile("mapping.yaml")
         mapping.fileType.name shouldBe TypeMappingFileType.NAME
     }
 
     "detects file type with 'yml' extension" {
-        val mapping = loadFile("src/api/mapping.yml")
+        val mapping = loadFile("mapping.yml")
         mapping.fileType.name shouldBe TypeMappingFileType.NAME
     }
 
     "ignores empty file" {
-        val mapping = loadFile("src/api/empty.yaml")
+        val mapping = loadFile("empty.yaml")
         mapping.fileType.name shouldNotBe TypeMappingFileType.NAME
     }
 
