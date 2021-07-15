@@ -9,17 +9,18 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.compiler.CompilerPaths
+import com.intellij.openapi.components.service
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtil
-import com.intellij.openapi.roots.ModuleRootManager
-import com.intellij.psi.JavaPsiFacade
-import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import org.jetbrains.yaml.psi.YAMLKeyValue
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import javax.swing.Icon
 
 class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     override fun collectNavigationMarkers(
         element: PsiElement,
@@ -36,47 +37,18 @@ class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
         if (keyValue !is YAMLKeyValue)
             return
 
-        val psi = JavaPsiFacade.getInstance(element.project)
-        val pkg = psi.findPackage(keyValue.valueText)
+        val pkgName = keyValue.valueText
+        val module = findModule(element.containingFile)
+            ?: return
 
-        val mappingModule = ModuleUtil.findModuleForFile(element.containingFile)
-        println("mapping module: ${mappingModule?.name}")
+        val target = element.project
+            .service<TargetPackageService>()
+            .findPkgInTargetDir(pkgName, module)
 
-        val out = CompilerPaths.getModuleOutputPath(mappingModule, false)
-        println("mapping module output path: ${out}")
-
-        val sourceRoots = ModuleRootManager.getInstance(mappingModule!!).sourceRoots
-        println("mapping module source roots: ${sourceRoots}")
-
-        val prefixes = mutableSetOf<String>()
-        sourceRoots.forEach { r ->
-            val prefix = out?.commonPrefixWith(r.path)
-            if (prefix != null && prefix.isNotEmpty()) {
-                prefixes.add(prefix)
-            }
-        }
-
-        var longestPrefix: String = ""
-        prefixes.forEach {
-            println("common prefix: $it")
-            if (it.length > longestPrefix.length) {
-                longestPrefix = it
-            }
-        }
-        println("longest common prefix: $longestPrefix")
-
-        var targetPkg: PsiDirectory? = null
-        pkg?.directories?.forEach {
-            if (it.virtualFile.path.startsWith(longestPrefix)) {
-                targetPkg = it
-                println("found target: $it")
-            }
-        }
-
-        if (targetPkg != null) {
+        if (target != null) {
             val builder = NavigationGutterIconBuilder
                 .create(getPackageIcon())
-                .setTargets(targetPkg)
+                .setTargets(target)
                 .setTooltipText(PACKAGE_EXISTS_TOOLTIP_TEXT)
 
             result.add(builder.createLineMarkerInfo(element))
@@ -92,13 +64,21 @@ class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
         super.collectNavigationMarkers(element, result)
     }
 
-    private fun getPackageIcon(): Icon {
-        return AllIcons.Modules.GeneratedFolder
+    private fun findModule(file: PsiFile): Module? {
+        val module = ModuleUtil.findModuleForFile(file)
+        if (module == null) {
+            log.warn("failed to find module of {}", file.virtualFile.path)
+        }
+        return module
     }
 
     private fun isMappingFile(file: PsiFile): Boolean {
         // static method on TypeMappingFileType
         return file.viewProvider.fileType is TypeMappingFileType
+    }
+
+    private fun getPackageIcon(): Icon {
+        return AllIcons.Modules.GeneratedFolder
     }
 
     companion object {
