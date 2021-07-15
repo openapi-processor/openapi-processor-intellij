@@ -5,33 +5,29 @@
 
 package io.openapiprocessor.intellij
 
-import com.intellij.openapi.roots.ModuleRootModificationUtil
 import com.intellij.openapi.vfs.VfsUtil.*
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
-import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
 import com.intellij.util.io.directoryContent
 import com.intellij.util.io.generateInVirtualTempDir
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.openapiprocessor.intellij.listener.CodeInsightListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
 class FileTypeSpec : StringSpec({
+    val test = CodeInsightListener()
+    listener(test)
+
     lateinit var fixture: CodeInsightTestFixture
 
     beforeTest {
-        val factory = IdeaTestFixtureFactory.getFixtureFactory()
-        val builder = factory.createLightFixtureBuilder()
-        fixture = factory.createCodeInsightFixture(builder.fixture)
+        fixture = test.fixture
         fixture.testDataPath = "src/test/testdata/filetype"
-        fixture.setUp()
-    }
-
-    afterTest {
-        fixture.tearDown()
     }
 
     fun loadFile(path: String): VirtualFile {
