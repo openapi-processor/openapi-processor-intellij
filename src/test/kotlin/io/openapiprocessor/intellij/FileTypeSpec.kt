@@ -67,10 +67,10 @@ class FileTypeSpec : StringSpec({
             }
         }.generateInVirtualTempDir()
 
-        ModuleRootModificationUtil.addModuleLibrary(
-            fixture.module, "yaml in jar",
-            emptyList(),
-            listOf(getUrlForLibraryRoot(File("${tmpDir.path}/yaml.jar")))
+        PsiTestUtil.addLibrary(
+            fixture.module,
+            "yaml in jar",
+            getUrlForLibraryRoot(File("${tmpDir.path}/yaml.jar"))
         )
 
         val url = convertToURL("jar://${tmpDir.path}/yaml.jar!/resources/a.yaml")!!
