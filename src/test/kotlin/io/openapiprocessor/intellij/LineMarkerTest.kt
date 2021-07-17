@@ -7,12 +7,13 @@ package io.openapiprocessor.intellij
 
 import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.testFramework.PsiTestUtil
+import com.intellij.psi.PsiDirectory
+import com.intellij.testFramework.replaceService
 import com.intellij.testFramework.runInEdtAndWait
 import com.intellij.util.io.directoryContent
 import com.intellij.util.io.generateInVirtualTempDir
+import io.openapiprocessor.intellij.support.TargetPackageFinderStub
 import io.openapiprocessor.intellij.support.targets
 
 class LineMarkerTest: BaseTestCase() {
@@ -20,7 +21,6 @@ class LineMarkerTest: BaseTestCase() {
     fun `test adds navigation gutter at package-name if it exists`() {
         val tmpDir = directoryContent {
             dir("build") {
-                dir("compilerOutput") {}
                 dir("openapi") {
                     dir("io") {
                         dir("openapiprocessor") {}
@@ -36,12 +36,8 @@ class LineMarkerTest: BaseTestCase() {
                   package-name: io.openapiprocessor
             """.trimIndent())
 
-        val compilerOutput = tmpDir.findFileByRelativePath("build/compilerOutput")!!
-        setCompilerOutputPath(compilerOutput)
-
-        // root of "generated" code
-        val contentRoot = tmpDir.findFileByRelativePath("build/openapi")!!
-        addContentRoot(contentRoot)
+        val expectedPkg = tmpDir.findFileByRelativePath("build/openapi/io/openapiprocessor")!!
+        stubTargetPackageService(expectedPkg)
 
         // when
         lateinit var gutters: List<GutterMark>
@@ -52,14 +48,12 @@ class LineMarkerTest: BaseTestCase() {
         assertEquals(AllIcons.Modules.GeneratedFolder, gutter.icon)
         assertEquals(TypeMappingLineMarker.PACKAGE_EXISTS_TOOLTIP_TEXT, gutter.tooltipText)
 
-        val pkg = tmpDir.findFileByRelativePath("build/openapi/io/openapiprocessor")!!
-        assertEquals(pkg.path, gutter.targets.first())
+        assertEquals(expectedPkg.path, gutter.targets.first())
     }
 
     fun `test adds 'empty' navigation gutter at package-name if it does not exist`() {
         val tmpDir = directoryContent {
             dir("build") {
-                dir("compilerOutput") {}
                 dir("openapi") {
                 }
             }
@@ -72,12 +66,7 @@ class LineMarkerTest: BaseTestCase() {
                   package-name: io.openapiprocessor
             """.trimIndent())
 
-        val compilerOutput = tmpDir.findFileByRelativePath("build/compilerOutput")!!
-        setCompilerOutputPath(compilerOutput)
-
-        // root of "generated" code
-        val contentRoot = tmpDir.findFileByRelativePath("build/openapi")!!
-        addContentRoot(contentRoot)
+        stubTargetPackageService(null)
 
         // when
         lateinit var gutters: List<GutterMark>
@@ -90,21 +79,17 @@ class LineMarkerTest: BaseTestCase() {
         assertEquals(0, gutter.targets.size)
     }
 
-    private fun addContentRoot(api: VirtualFile) {
-        val cnt = PsiTestUtil.addContentRoot(module, api)
-        val src = PsiTestUtil.addSourceRoot(module, api)
-
-        Disposer.register(testRootDisposable) {
-            PsiTestUtil.removeContentEntry(module, cnt.file!!)
+    private fun stubTargetPackageService(pkg: VirtualFile?)  {
+        val psiDir: PsiDirectory? = if (pkg != null) {
+            psiManager.findDirectory(pkg)
+        } else {
+            null
         }
-    }
 
-    private fun setCompilerOutputPath(build: VirtualFile) {
-        PsiTestUtil.setCompilerOutputPath(fixture.module, build.path, false)
-
-        Disposer.register(testRootDisposable) {
-            PsiTestUtil.setCompilerOutputPath(module, "", false)
-        }
+        project.replaceService(
+            TargetPackageService::class.java,
+            TargetPackageService(TargetPackageFinderStub(psiDir)),
+            testRootDisposable)
     }
 
 }
