@@ -19,6 +19,10 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.swing.Icon
 
+/**
+ * line marker for the package-name key in the mapping.yaml. It navigates to the root of the
+ * generated target package.
+ */
 class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
@@ -43,7 +47,7 @@ class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
 
         val target = element.project
             .service<TargetPackageService>()
-            .findPkgInTargetDir(pkgName, module)
+            .findPackageDir(pkgName, module)
 
         if (target != null) {
             val builder = NavigationGutterIconBuilder
