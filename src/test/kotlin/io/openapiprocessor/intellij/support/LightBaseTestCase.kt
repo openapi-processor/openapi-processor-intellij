@@ -3,12 +3,15 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package io.openapiprocessor.intellij
+package io.openapiprocessor.intellij.support
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 
-open class BaseTestCase: BasePlatformTestCase() {
+/**
+ * improve api of [BasePlatformTestCase]
+ */
+open class LightBaseTestCase: BasePlatformTestCase() {
 
     val fixture: CodeInsightTestFixture
         get() {

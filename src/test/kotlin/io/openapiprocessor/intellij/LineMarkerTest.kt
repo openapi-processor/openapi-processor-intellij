@@ -13,10 +13,11 @@ import com.intellij.testFramework.replaceService
 import com.intellij.testFramework.runInEdtAndWait
 import com.intellij.util.io.directoryContent
 import com.intellij.util.io.generateInVirtualTempDir
+import io.openapiprocessor.intellij.support.LightBaseTestCase
 import io.openapiprocessor.intellij.support.TargetPackageFinderStub
 import io.openapiprocessor.intellij.support.targets
 
-class LineMarkerTest: BaseTestCase() {
+class LineMarkerTest: LightBaseTestCase() {
 
     fun `test adds navigation gutter at package-name if it exists`() {
         val tmpDir = directoryContent {
