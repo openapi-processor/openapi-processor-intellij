@@ -12,7 +12,7 @@ import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.testFramework.HeavyPlatformTestCase
-import java.nio.file.Paths
+import java.nio.file.Path
 
 /**
  * improve/extend api of [HeavyPlatformTestCase]
@@ -29,7 +29,7 @@ abstract class HeavyBaseTestCase : HeavyPlatformTestCase() {
     }
 
     fun findFileByPath(path: String): VirtualFile? {
-        return VirtualFileManager.getInstance().findFileByNioPath(Paths.get(path))
+        return VirtualFileManager.getInstance().findFileByNioPath(Path.of(path))
     }
 
     fun getBaseRelativePsiFile(path: String): PsiFile {
