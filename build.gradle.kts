@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -9,7 +8,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.5.10"
     id("org.jetbrains.intellij") version "1.0"
     id("org.jetbrains.changelog") version "1.1.2"
-    id("io.gitlab.arturbosch.detekt") version "1.17.1"
 }
 
 group = properties("pluginGroup")
@@ -20,7 +18,6 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
     testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
 }
@@ -50,20 +47,6 @@ changelog {
     headerParserRegex = """([1-9][0-9][0-9][0-9])\.(\d+)(\.\d+)?(-([A-Z]+)(\.(\d+))?)?"""
 }
 
-// Configure detekt plugin.
-// Read more: https://detekt.github.io/detekt/kotlindsl.html
-detekt {
-    config = files("./detekt-config.yml")
-    buildUponDefaultConfig = true
-    ignoreFailures = true
-
-    reports {
-        html.enabled = false
-        xml.enabled = false
-        txt.enabled = false
-    }
-}
-
 tasks {
     // Set the compatibility versions to 1.8
     withType<JavaCompile> {
@@ -76,10 +59,6 @@ tasks {
 
     withType<Test> {
         useJUnitPlatform()
-    }
-
-    withType<Detekt> {
-        jvmTarget = "1.8"
     }
 
     patchPluginXml {
