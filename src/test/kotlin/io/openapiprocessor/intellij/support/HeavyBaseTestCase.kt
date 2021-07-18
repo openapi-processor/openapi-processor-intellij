@@ -17,7 +17,8 @@ import java.nio.file.Path
 /**
  * improve/extend api of [HeavyPlatformTestCase]
  */
-open class HeavyBaseTestCase: HeavyPlatformTestCase() {
+abstract class HeavyBaseTestCase: HeavyPlatformTestCase() {
+
     val base: VirtualFile
         get() {
             return findFileByPath(project.basePath!!)!!
