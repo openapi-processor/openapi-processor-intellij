@@ -17,7 +17,7 @@ import io.openapiprocessor.intellij.support.LightBaseTestCase
 import io.openapiprocessor.intellij.support.TargetPackageFinderStub
 import io.openapiprocessor.intellij.support.targets
 
-class LineMarkerTest: LightBaseTestCase() {
+class LineMarkerTest : LightBaseTestCase() {
 
     fun `test adds navigation gutter at package-name if it exists`() {
         val tmpDir = directoryContent {
@@ -80,7 +80,7 @@ class LineMarkerTest: LightBaseTestCase() {
         assertEquals(0, gutter.targets.size)
     }
 
-    private fun stubTargetPackageService(pkg: VirtualFile?)  {
+    private fun stubTargetPackageService(pkg: VirtualFile?) {
         val psiDir: PsiDirectory? = if (pkg != null) {
             psiManager.findDirectory(pkg)
         } else {
@@ -94,4 +94,3 @@ class LineMarkerTest: LightBaseTestCase() {
     }
 
 }
-

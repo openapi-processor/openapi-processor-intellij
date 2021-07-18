@@ -9,7 +9,7 @@ import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiDirectory
 import io.openapiprocessor.intellij.TargetPackageFinder
 
-class TargetPackageFinderStub(private val pkg: PsiDirectory?): TargetPackageFinder {
+class TargetPackageFinderStub(private val pkg: PsiDirectory?) : TargetPackageFinder {
 
     override fun findPackageDir(pkgName: String, mappingModule: Module): PsiDirectory? {
         return pkg

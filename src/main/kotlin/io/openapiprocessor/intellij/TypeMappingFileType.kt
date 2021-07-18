@@ -35,10 +35,10 @@ open class TypeMappingFileType :
 
     override fun isMyFileType(file: VirtualFile): Boolean {
         if (file.isDirectory) {
-          return false
+            return false
         }
 
-        if(!extensions.contains(file.extension?.toLowerCase())) {
+        if (!extensions.contains(file.extension?.toLowerCase())) {
             return false
         }
 

@@ -12,7 +12,7 @@ import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
 
-class CodeInsightListener: TestListener {
+class CodeInsightListener : TestListener {
     lateinit var fixture: CodeInsightTestFixture
 
     override suspend fun beforeTest(testCase: TestCase) {

@@ -17,7 +17,7 @@ import java.nio.file.Path
 /**
  * improve/extend api of [HeavyPlatformTestCase]
  */
-abstract class HeavyBaseTestCase: HeavyPlatformTestCase() {
+abstract class HeavyBaseTestCase : HeavyPlatformTestCase() {
 
     val base: VirtualFile
         get() {

@@ -12,13 +12,13 @@ import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory
 import com.jetbrains.jsonSchema.extension.SchemaType
 
-class TypeMappingSchema: JsonSchemaProviderFactory {
+class TypeMappingSchema : JsonSchemaProviderFactory {
 
     override fun getProviders(project: Project): MutableList<JsonSchemaFileProvider> {
         return mutableListOf(TypeMappingSchemaProvider)
     }
 
-    object TypeMappingSchemaProvider: JsonSchemaFileProvider {
+    object TypeMappingSchemaProvider : JsonSchemaFileProvider {
         private val schema = HttpsFileSystem.getHttpsInstance().findFileByPath(SCHEMA_URL)
 
         override fun isAvailable(file: VirtualFile): Boolean {
@@ -43,8 +43,8 @@ class TypeMappingSchema: JsonSchemaProviderFactory {
         const val SCHEMA_NAME = "openapi-processor mapping"
 
         const val SCHEMA_URL = "raw.githubusercontent.com" +
-                               "/openapi-processor/openapi-processor-core" +
-                               "/master/src/main/resources/mapping/v2/mapping.yaml.json"
+            "/openapi-processor/openapi-processor-core" +
+            "/master/src/main/resources/mapping/v2/mapping.yaml.json"
     }
 
 }

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory
  * production source code module. For gradle typically in the *build* folder and for maven in the
  * *target* folder.
  */
-class TargetPackageFinderImpl: TargetPackageFinder {
+class TargetPackageFinderImpl : TargetPackageFinder {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     override fun findPackageDir(pkgName: String, mappingModule: Module): PsiDirectory? {

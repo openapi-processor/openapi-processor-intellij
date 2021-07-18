@@ -8,4 +8,5 @@ package io.openapiprocessor.intellij
 import com.intellij.openapi.components.Service
 
 @Service
-class TargetPackageService(finder: TargetPackageFinder = TargetPackageFinderImpl()): TargetPackageFinder by finder
+class TargetPackageService(finder: TargetPackageFinder = TargetPackageFinderImpl()) :
+    TargetPackageFinder by finder

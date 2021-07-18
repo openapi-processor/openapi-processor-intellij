@@ -11,7 +11,7 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 /**
  * improve/extend api of [BasePlatformTestCase]
  */
-abstract class LightBaseTestCase: BasePlatformTestCase() {
+abstract class LightBaseTestCase : BasePlatformTestCase() {
 
     val fixture: CodeInsightTestFixture
         get() {

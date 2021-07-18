@@ -23,7 +23,7 @@ import javax.swing.Icon
  * line marker for the package-name key in the mapping.yaml. It navigates to the root of the
  * generated target package.
  */
-class TypeMappingLineMarker: RelatedItemLineMarkerProvider() {
+class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     override fun collectNavigationMarkers(
