@@ -11,14 +11,15 @@
 
     <extensions defaultExtensionNs="com.intellij">
 
-        <fileType name="openapi-processor mapping"
-                  implementationClass="io.openapiprocessor.intellij.TypeMappingFileType"/>
+        <fileType
+            name="openapi-processor mapping"
+            implementationClass="io.openapiprocessor.intellij.TypeMappingFileType"/>
 
 <!--        <fileBasedIndex implementation="io.openapiprocessor.intellij.TypeMappingIndex"/>-->
 
         <codeInsight.lineMarkerProvider
-                language="yaml"
-                implementationClass="io.openapiprocessor.intellij.TypeMappingLineMarker"/>
+            language="yaml"
+            implementationClass="io.openapiprocessor.intellij.TypeMappingLineMarker"/>
 
     </extensions>
 
