@@ -6,16 +6,23 @@
 package io.openapiprocessor.intellij
 
 import com.intellij.openapi.fileTypes.LanguageFileType
+import com.intellij.openapi.fileTypes.PlainTextLikeFileType
 import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
 import org.jetbrains.yaml.YAMLLanguage
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
+import java.io.IOException
 import javax.swing.Icon
 
 open class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
-    FileTypeIdentifiableByVirtualFile {
+    FileTypeIdentifiableByVirtualFile, PlainTextLikeFileType {
+
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     override fun getName(): String {
         return NAME
@@ -34,26 +41,40 @@ open class TypeMappingFileType :
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        if (file.isDirectory) {
+        println("isMyFilType: ${file.name}")
+
+        // when creating a new yaml file by pressing return in the new file dialog the file is
+        // a FakeVirtualFile. Is there a better way to handle it?
+        if (file is FakeVirtualFile)
+            return false
+
+        if (file.isDirectory)
+            return false
+
+        if (!extensions.contains(file.extension?.toLowerCase()))
+            return false
+
+        if (file.length == 0L)
+            return false
+
+        return checkMappingKey(file)
+    }
+
+    private fun checkMappingKey(file: VirtualFile): Boolean {
+        try {
+            val yaml = Yaml()
+            val mapping: Map<String, Any> = yaml.load(file.inputStream)
+            if (!mapping.containsKey(MAPPING_KEY)) {
+                return false
+            }
+
+            return mapping[MAPPING_KEY].toString()
+                .startsWith("v2")
+
+        } catch(e: IOException) {
+            log.error("bad file", e)
             return false
         }
-
-        if (!extensions.contains(file.extension?.toLowerCase())) {
-            return false
-        }
-
-        if (file.length == 0L) {
-            return false
-        }
-
-        val yaml = Yaml()
-        val mapping: Map<String, Any> = yaml.load(file.inputStream)
-        if (!mapping.containsKey(MAPPING_KEY)) {
-            return false
-        }
-
-        return mapping[TypeMappingFileType.MAPPING_KEY].toString()
-            .startsWith("v2")
     }
 
     private val extensions = defaultExtension.split(";")
@@ -61,6 +82,8 @@ open class TypeMappingFileType :
     companion object {
         const val NAME = "openapi-processor mapping"
         const val MAPPING_KEY = "openapi-processor-mapping"
+
+        val INSTANCE = TypeMappingFileType()
     }
 
 }
