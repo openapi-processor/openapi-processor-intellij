@@ -9,8 +9,9 @@
 ** Note: this is a PREVIEW ** - Adds support for the [openapi-processor](https://docs.openapiprocessor.io/oap/home/home.html) `mapping.yaml` configuration file.
 <br/><br/>
 
-* automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation)
+* automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation). Note that the `openapi-processor-mapping: v2` line in the `mapping.yaml` is used to detect it. 
 * marks the `mapping.yaml` with an openapi-processor icon to separate it from the openapi yaml file(s) 
+* navigation gutter icon on `package-name` configuration in the `mapping.yaml`. If the target package exists, it will navigate to the package with the generated sources. 
 <br/><br/>
 <!-- Plugin description end -->
 
