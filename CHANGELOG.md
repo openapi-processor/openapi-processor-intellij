@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- fix exception in file type check.
+
 ## [2021.1-SNAPSHOT.2]
 - auto-detect mapping.yaml by `openapi-processor-mapping: v2` key/value instead of matching the file name.
 - add navigation gutter icon on `package-name` configuration in the `mapping.yaml`. If the target package exists, it will navigate to the package with the generated sources. 
