@@ -14,7 +14,6 @@ import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
 import org.jetbrains.yaml.YAMLLanguage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.yaml.snakeyaml.Yaml
 import java.io.IOException
 import javax.swing.Icon
 
@@ -61,19 +60,11 @@ open class TypeMappingFileType :
     }
 
     private fun checkMappingKey(file: VirtualFile): Boolean {
-        try {
-            val yaml = Yaml()
-            val mapping: Map<String, Any> = yaml.load(file.inputStream)
-            if (!mapping.containsKey(MAPPING_KEY)) {
-                return false
-            }
-
-            return mapping[MAPPING_KEY].toString()
-                .startsWith("v2")
-
+        return try {
+            MAPPING_REGEX.containsMatchIn(String(file.inputStream.readNBytes(64)))
         } catch(e: IOException) {
-            log.error("bad file", e)
-            return false
+            log.error("breaking file {}", file.name, e)
+            false
         }
     }
 
@@ -82,6 +73,8 @@ open class TypeMappingFileType :
     companion object {
         const val NAME = "openapi-processor mapping"
         const val MAPPING_KEY = "openapi-processor-mapping"
+
+        val MAPPING_REGEX = Regex("""^${MAPPING_KEY}:\s+v2""")
 
         val INSTANCE = TypeMappingFileType()
     }
