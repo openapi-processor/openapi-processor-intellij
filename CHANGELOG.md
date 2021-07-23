@@ -3,6 +3,7 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+## [2021.1-SNAPSHOT.3]
 - fix exception in file type check.
 
 ## [2021.1-SNAPSHOT.2]
