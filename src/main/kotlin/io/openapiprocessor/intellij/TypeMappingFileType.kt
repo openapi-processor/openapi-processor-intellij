@@ -40,8 +40,6 @@ open class TypeMappingFileType :
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        println("isMyFilType: ${file.name}")
-
         // when creating a new yaml file by pressing return in the new file dialog the file is
         // a FakeVirtualFile. Is there a better way to handle it?
         if (file is FakeVirtualFile)
