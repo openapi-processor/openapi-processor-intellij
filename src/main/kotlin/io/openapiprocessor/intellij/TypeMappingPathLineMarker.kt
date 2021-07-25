@@ -63,7 +63,8 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
         return listOf(
                 Annotation("io.micronaut.http.annotation", "Get", "uri"),
                 Annotation("io.micronaut.http.annotation", "Post", "uri"),
-                Annotation("org.springframework.web.bind.annotation", "GetMapping", "path")
+                Annotation("org.springframework.web.bind.annotation", "GetMapping", "path"),
+                Annotation("org.springframework.web.bind.annotation", "PostMapping", "path")
             )
             .map {
                 findPathTargets(element, it)

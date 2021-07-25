@@ -39,4 +39,31 @@ class PathLineMarkerTest  : LightBaseTestCase() {
         assertEquals(expected, methods)
     }
 
+    fun `test adds navigation gutter icon to spring interface methods`() {
+        fixture.testDataPath = "src/test/testdata/path-to-methods"
+        fixture.copyDirectoryToProject("spring", "")
+        fixture.configureByFile("mapping.yaml")
+
+        // when
+        lateinit var gutters: List<GutterMark>
+        runInEdtAndWait {
+            gutters = fixture.findAllGutters("mapping.yaml")
+        }
+
+        // then
+        val gutter = gutters.first {
+            it.icon == TypeMappingPathLineMarker.ICON
+        }
+
+        val expected = listOf(
+            getMethod("getFoo"),
+            getMethod("postFoo")
+        )
+        val methods = gutter.methods
+
+        assertEquals(TypeMappingPathLineMarker.TOOLTIP_TEXT, gutter.tooltipText)
+        assertEquals(2, methods.size)
+        assertEquals(expected, methods)
+    }
+
 }
