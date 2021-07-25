@@ -29,13 +29,18 @@ class PathLineMarkerTest  : LightBaseTestCase() {
         }
 
         val expected = listOf(
+            getMethod("deleteFoo"),
             getMethod("getFoo"),
-            getMethod("postFoo")
+            getMethod("headFoo"),
+            getMethod("patchFoo"),
+            getMethod("postFoo"),
+            getMethod("putFoo"),
+            getMethod("traceFoo")
         )
         val methods = gutter.methods
 
         assertEquals(TypeMappingPathLineMarker.TOOLTIP_TEXT, gutter.tooltipText)
-        assertEquals(2, methods.size)
+        assertEquals(expected.size, methods.size)
         assertEquals(expected, methods)
     }
 
@@ -56,13 +61,18 @@ class PathLineMarkerTest  : LightBaseTestCase() {
         }
 
         val expected = listOf(
+            getMethod("deleteFoo"),
             getMethod("getFoo"),
-            getMethod("postFoo")
+            getMethod("headFoo"),
+            getMethod("patchFoo"),
+            getMethod("postFoo"),
+            getMethod("putFoo"),
+            getMethod("traceFoo")
         )
         val methods = gutter.methods
 
         assertEquals(TypeMappingPathLineMarker.TOOLTIP_TEXT, gutter.tooltipText)
-        assertEquals(2, methods.size)
+        assertEquals(expected.size, methods.size)
         assertEquals(expected, methods)
     }
 

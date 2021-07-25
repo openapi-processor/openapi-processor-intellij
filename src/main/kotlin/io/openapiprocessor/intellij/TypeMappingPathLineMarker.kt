@@ -60,12 +60,7 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
     }
 
     private fun findPathTargets(element: YAMLKeyValue): List<PsiElement> {
-        return listOf(
-                Annotation("io.micronaut.http.annotation", "Get", "uri"),
-                Annotation("io.micronaut.http.annotation", "Post", "uri"),
-                Annotation("org.springframework.web.bind.annotation", "GetMapping", "path"),
-                Annotation("org.springframework.web.bind.annotation", "PostMapping", "path")
-            )
+        return ANNOTATIONS
             .map {
                 findPathTargets(element, it)
             }
@@ -75,18 +70,10 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
     private fun findPathTargets(uriKey: YAMLKeyValue, annotation: Annotation): List<PsiElement> {
         val targets = mutableListOf<PsiElement>()
         val matches = getAnnotations(annotation, uriKey.project)
-        val matchUri = uriKey.keyText
+        val matchPath = uriKey.keyText
 
         matches.forEach {
-            if (!it.hasQualifiedName(annotation.qualifiedName))
-                return@forEach
-
-            val value = it.findAttributeValue(annotation.attribute)
-            if (value !is PsiLiteralExpression)
-                return@forEach
-
-            val uri = PsiLiteralUtil.getStringLiteralContent(value)
-            if (uri != matchUri)
+            if (!annotation.matches(it, matchPath))
                 return@forEach
 
             val method = PsiTreeUtil.getParentOfType(it.navigationElement, PsiMethod::class.java)
@@ -107,8 +94,79 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
         return file.viewProvider.fileType is TypeMappingFileType
     }
 
-    class Annotation(val pkg: String, val name: String, val attribute: String) {
-        val qualifiedName = "$pkg.$name"
+    interface Annotation {
+        val pkg: String
+        val name: String
+        val qualifiedName: String
+            get() = "$pkg.$name"
+
+        fun matches(psi: PsiAnnotation, path: String): Boolean
+    }
+
+    class MicronautAnnotation(override val name: String): Annotation {
+        override val pkg: String = "io.micronaut.http.annotation"
+
+        override fun matches(psi: PsiAnnotation, path: String): Boolean {
+            if (!psi.hasQualifiedName(qualifiedName))
+                return false
+
+            val value = psi.findAttributeValue("uri")
+            if (value !is PsiLiteralExpression)
+                return false
+
+            val uri = PsiLiteralUtil.getStringLiteralContent(value)
+            if (uri != path)
+                return false
+
+            return true
+        }
+    }
+
+    class SpringAnnotation(override val name: String): Annotation {
+        override val pkg: String = "org.springframework.web.bind.annotation"
+
+        override fun matches(psi: PsiAnnotation, path: String): Boolean {
+            if (!psi.hasQualifiedName(qualifiedName))
+                return false
+
+            val value = psi.findAttributeValue("path")
+            if (value !is PsiLiteralExpression)
+                return false
+
+            val uri = PsiLiteralUtil.getStringLiteralContent(value)
+            if (uri != path)
+                return false
+
+            return true
+        }
+    }
+
+    class SpringRequestAnnotation(val method: String): Annotation {
+        override val pkg: String = "org.springframework.web.bind.annotation"
+        override val name: String = "RequestMapping"
+
+        override fun matches(psi: PsiAnnotation, path: String): Boolean {
+            if (!psi.hasQualifiedName(qualifiedName))
+                return false
+
+            val methodRef = psi.findAttributeValue("method")
+            if (methodRef !is PsiReferenceExpression)
+                return false
+
+            if ( methodRef.qualifiedName != "RequestMethod.$method")
+                return false
+
+            val value = psi.findAttributeValue("path")
+            if (value !is PsiLiteralExpression)
+                return false
+
+            val uri = PsiLiteralUtil.getStringLiteralContent(value)
+            if (uri != path)
+                return false
+
+            return true
+        }
+
     }
 
     companion object {
@@ -116,6 +174,23 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
 
         const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
         const val POPUP_TITLE = "Endpoint Interface Methods"
+
+        val ANNOTATIONS = listOf(
+            MicronautAnnotation("Delete"),
+            MicronautAnnotation("Get"),
+            MicronautAnnotation("Head"),
+            MicronautAnnotation("Patch"),
+            MicronautAnnotation("Post"),
+            MicronautAnnotation("Put"),
+            MicronautAnnotation("Trace"),
+            SpringAnnotation("DeleteMapping"),
+            SpringAnnotation("GetMapping"),
+            SpringRequestAnnotation("HEAD"),
+            SpringAnnotation("PatchMapping"),
+            SpringAnnotation("PostMapping"),
+            SpringAnnotation("PutMapping"),
+            SpringRequestAnnotation("TRACE")
+        )
     }
 
 }
