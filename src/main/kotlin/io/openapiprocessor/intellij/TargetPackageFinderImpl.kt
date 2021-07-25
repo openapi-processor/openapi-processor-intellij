@@ -105,9 +105,10 @@ class TargetPackageFinderImpl : TargetPackageFinder {
     private fun findCandidateModules(module: Module): List<Module> {
         log.debug("looking for nested modules in module '{}' with output path", module.name)
 
+        // target module is usually below this folder
         val parentRoot = findContentRoot(module) ?: return emptyList()
 
-        return ModuleManager.getInstance(/*project*/module.project).modules
+        return ModuleManager.getInstance(module.project).modules
             .filter { it.name != module.name }
             .filter { isNestedModule(it, parentRoot) }
             .filter { hasOutputPath(it) }
@@ -166,7 +167,7 @@ class TargetPackageFinderImpl : TargetPackageFinder {
     }
 
     private fun getPackage(module: Module, pkgName: String): PsiPackage? {
-        val pkg = JavaPsiFacade.getInstance(/*project*/module.project).findPackage(pkgName)
+        val pkg = JavaPsiFacade.getInstance(module.project).findPackage(pkgName)
 
         log.debug("found package location candidates ({}):", pkg?.directories?.size)
         pkg?.directories?.forEach {
