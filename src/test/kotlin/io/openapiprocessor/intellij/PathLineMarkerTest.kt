@@ -12,9 +12,9 @@ import io.openapiprocessor.intellij.support.methods
 
 class PathLineMarkerTest  : LightBaseTestCase() {
 
-    fun `test adds navigation gutter icon to interface methods`() {
+    fun `test adds navigation gutter icon to micronaut interface methods`() {
         fixture.testDataPath = "src/test/testdata/path-to-methods"
-        fixture.copyDirectoryToProject("", "")
+        fixture.copyDirectoryToProject("micronaut", "")
         fixture.configureByFile("mapping.yaml")
 
         // when
