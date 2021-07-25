@@ -5,6 +5,9 @@
 
 package io.openapiprocessor.intellij.support
 
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.impl.java.stubs.index.JavaMethodNameIndex
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 
@@ -17,5 +20,11 @@ abstract class LightBaseTestCase : BasePlatformTestCase() {
         get() {
             return myFixture
         }
+
+    fun getMethod(name: String): PsiMethod {
+        return JavaMethodNameIndex.getInstance()
+            .get(name, project, GlobalSearchScope.allScope(project))
+            .first()
+    }
 
 }

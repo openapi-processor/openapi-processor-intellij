@@ -9,10 +9,15 @@ import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.navigation.NavigationGutterIconRenderer
 import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiMethod
 
 val GutterMark.targets: List<String>
     get() = getTargets(getHandler(this))
+
+val GutterMark.methods: List<PsiElement>
+    get() = getMethods(getHandler(this))
 
 private fun getTargets(handler: NavigationGutterIconRenderer): List<String> {
     val targets = mutableListOf<String>()
@@ -26,6 +31,10 @@ private fun getTargets(handler: NavigationGutterIconRenderer): List<String> {
     }
 
     return targets
+}
+
+private fun getMethods(handler: NavigationGutterIconRenderer): List<PsiMethod> {
+    return handler.targetElements.filterIsInstance(PsiMethod::class.java)
 }
 
 private fun getHandler(gutter: GutterMark): NavigationGutterIconRenderer {
