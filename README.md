@@ -11,7 +11,8 @@
 
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation). Note that the `openapi-processor-mapping: v2` line in the `mapping.yaml` is used to detect it. 
 * marks the `mapping.yaml` with an openapi-processor icon to separate it from the openapi yaml file(s) 
-* navigation gutter icon on `package-name` configuration in the `mapping.yaml`. If the target package exists, it will navigate to the package with the generated sources. 
+* navigate from the `package-name` configuration in the `mapping.yaml` to the package with the generated sources (if the target package exists).
+* navigate from an endpoint `path` mapping to a generated interface method.  
 <br/><br/>
 <!-- Plugin description end -->
 
