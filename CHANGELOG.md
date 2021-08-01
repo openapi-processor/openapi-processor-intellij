@@ -3,6 +3,7 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+## [2021.1-SNAPSHOT.4]
 - navigate from path mapping to interface method (spring & micronaut).
 
 ## [2021.1-SNAPSHOT.3]
