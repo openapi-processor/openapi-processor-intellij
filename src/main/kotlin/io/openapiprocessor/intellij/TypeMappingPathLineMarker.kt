@@ -8,8 +8,8 @@ package io.openapiprocessor.intellij
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.*
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -170,7 +170,7 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
     }
 
     companion object {
-        val ICON =  AllIcons.Gutter.ImplementedMethod
+        val ICON = IconLoader.getIcon("/icons/openapi-processor-p-interface.svg")
 
         const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
         const val POPUP_TITLE = "Endpoint Interface Methods"
