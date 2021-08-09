@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- fixed exception if the target package does not exist.
+
 ## [2021.1-SNAPSHOT.4]
 - navigate from path mapping to interface method (spring & micronaut).
 
