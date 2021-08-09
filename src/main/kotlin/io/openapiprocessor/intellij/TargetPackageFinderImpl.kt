@@ -55,7 +55,7 @@ class TargetPackageFinderImpl : TargetPackageFinder {
     }
 
     private fun findPkgWithPrefix(pkg: PsiPackage?, prefix: String): PsiDirectory? {
-        val target: PsiDirectory? = pkg?.directories?.first {
+        val target: PsiDirectory? = pkg?.directories?.firstOrNull {
             it.virtualFile.path.startsWith(prefix)
         }
 
