@@ -3,6 +3,7 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+## [2021.1-SNAPSHOT.5]
 - fixed exception if the target package does not exist.
 
 ## [2021.1-SNAPSHOT.4]
