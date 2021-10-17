@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- do not log 'file not found' as error.
+
 ## [2021.1-SNAPSHOT.5]
 - fixed exception if the target package does not exist.
 

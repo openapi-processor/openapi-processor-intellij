@@ -61,7 +61,7 @@ open class TypeMappingFileType :
         return try {
             MAPPING_REGEX.containsMatchIn(String(file.inputStream.readNBytes(64)))
         } catch(e: IOException) {
-            log.error("breaking file {}", file.name, e)
+            log.info("failed to check file {} ({})", file.name, e.message)
             false
         }
     }
