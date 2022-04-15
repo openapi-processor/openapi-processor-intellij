@@ -56,6 +56,7 @@ tasks {
     }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "11"
+        kotlinOptions.languageVersion = "1.3"
     }
 
     withType<Test> {
