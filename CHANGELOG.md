@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- 2022.1 compatibility
+
 ## [2021.1-SNAPSHOT.6]
 - do not log 'file not found' as error.
 
