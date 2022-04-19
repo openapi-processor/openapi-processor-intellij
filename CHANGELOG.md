@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- same as 2022.1-SNAPSHOT.1
+
 ## [2022.1-SNAPSHOT.1]
 - 2022.1 compatibility
 
