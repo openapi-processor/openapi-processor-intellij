@@ -50,13 +50,15 @@ changelog {
 }
 
 tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-    }
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
-        kotlinOptions.languageVersion = "1.4"
+    properties("javaVersion").let {
+        withType<JavaCompile> {
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
+        withType<KotlinCompile> {
+            kotlinOptions.jvmTarget = it
+            kotlinOptions.languageVersion = "1.4"
+        }
     }
 
     withType<Test> {
