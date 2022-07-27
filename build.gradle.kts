@@ -5,11 +5,10 @@ fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.5.10"
-    id("org.jetbrains.intellij") version "1.2.1"
+    id("org.jetbrains.kotlin.jvm") version "1.5.32"
+    id("org.jetbrains.intellij") version "1.5.3"
     id("org.jetbrains.changelog") version "1.1.2"
-    id("com.github.ben-manes.versions") version "0.39.0"
-
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 group = properties("pluginGroup")
@@ -19,6 +18,7 @@ version = properties("pluginVersion")
 repositories {
     mavenCentral()
 }
+
 dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
