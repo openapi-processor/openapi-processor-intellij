@@ -5,8 +5,8 @@ fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.5.32"
-    id("org.jetbrains.intellij") version "1.5.3"
+    id("org.jetbrains.kotlin.jvm") version "1.6.21"
+    id("org.jetbrains.intellij") version "1.7.0"
     id("org.jetbrains.changelog") version "1.1.2"
     id("com.github.ben-manes.versions") version "0.42.0"
 }
@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -56,7 +56,7 @@ tasks {
     }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "11"
-        kotlinOptions.languageVersion = "1.3"
+        kotlinOptions.languageVersion = "1.4"
     }
 
     withType<Test> {
