@@ -6,7 +6,7 @@
 
 ## Plugin Description
 <!-- Plugin description -->
-Adds support for the [openapi-processor](https://docs.openapiprocessor.io/oap/home/home.html) `mapping.yaml` configuration file.
+Adds support for the [openapi-processor](https://openapiprocessor.io/oap/home/home.html) `mapping.yaml` configuration file.
 <br/><br/>
 
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation). Note that the `openapi-processor-mapping: v2[.x]` line in the `mapping.yaml` is used to detect it. 
