@@ -30,7 +30,7 @@ class LineMarkerTest : LightBaseTestCase() {
             }
         }.generateInVirtualTempDir()
 
-        val mapping = fixture.configureByText(
+        fixture.configureByText(
             "mapping.yaml", """
                 openapi-processor-mapping: v2
                 options:
@@ -53,14 +53,14 @@ class LineMarkerTest : LightBaseTestCase() {
     }
 
     fun `test adds 'empty' navigation gutter at package-name if it does not exist`() {
-        val tmpDir = directoryContent {
+        directoryContent {
             dir("build") {
                 dir("openapi") {
                 }
             }
         }.generateInVirtualTempDir()
 
-        val mapping = fixture.configureByText(
+        fixture.configureByText(
             "mapping.yaml", """
                 openapi-processor-mapping: v2
                 options:
