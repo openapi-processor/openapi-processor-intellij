@@ -13,7 +13,9 @@ import com.intellij.util.io.directoryContent
 import com.intellij.util.io.generateInVirtualTempDir
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.shouldNotStartWith
+import io.kotest.matchers.string.shouldStartWith
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.openapiprocessor.intellij.listener.CodeInsightListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,29 +42,39 @@ class FileTypeSpec : StringSpec({
 
     "detects file type with 'yaml' extension" {
         val mapping = loadFile("mapping.yaml")
-        mapping.fileType.name shouldBe TypeMappingFileType.NAME
+        mapping.fileType.name shouldBe "${TypeMappingFileType.NAME} v2"
     }
 
     "detects file type with 'yml' extension" {
         val mapping = loadFile("mapping.yml")
-        mapping.fileType.name shouldBe TypeMappingFileType.NAME
+        mapping.fileType.name shouldBe "${TypeMappingFileType.NAME} v2"
+    }
+
+    "detects v2" {
+        val mapping = loadFile("mapping-v2.yaml")
+        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV2>()
+    }
+
+    "detects v2.1" {
+        val mapping = loadFile("mapping-v2.1.yaml")
+        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV21>()
     }
 
     "ignores empty file" {
         val mapping = loadFile("empty.yaml")
-        mapping.fileType.name shouldNotBe TypeMappingFileType.NAME
+        mapping.fileType.name shouldNotStartWith TypeMappingFileType.NAME
     }
 
     "ignores directory" {
         val directory = withContext(Dispatchers.IO) { createDir("foo") }
-        directory.fileType.name shouldNotBe TypeMappingFileType.NAME
+        directory.fileType.name shouldNotStartWith TypeMappingFileType.NAME
     }
 
     "detects yaml in jar" {
         val tmpDir = directoryContent {
             zip("yaml.jar") {
                 dir("resources") {
-                    file("a.yaml", "openapi-processor-mapping: v2")
+                    file("a.yaml", "openapi-processor-mapping: v2\n")
                 }
             }
         }.generateInVirtualTempDir()
@@ -76,7 +88,7 @@ class FileTypeSpec : StringSpec({
         val url = convertToURL("jar://${tmpDir.path}/yaml.jar!/resources/a.yaml")!!
         val yml = findFileByURL(url)
 
-        yml!!.fileType.name shouldBe TypeMappingFileType.NAME
+        yml!!.fileType.name shouldStartWith TypeMappingFileType.NAME
     }
 
 })

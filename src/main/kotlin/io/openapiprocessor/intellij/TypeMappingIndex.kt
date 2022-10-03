@@ -22,7 +22,10 @@ class TypeMappingIndex: FileBasedIndexExtension<String, String>() {
     }
 
     override fun getInputFilter(): FileBasedIndex.InputFilter {
-        return DefaultFileTypeSpecificInputFilter(TypeMappingFileType())
+        return DefaultFileTypeSpecificInputFilter(
+            TypeMappingFileTypeV2(),
+            TypeMappingFileTypeV21()
+        )
     }
 
     override fun dependsOnFileContent(): Boolean {

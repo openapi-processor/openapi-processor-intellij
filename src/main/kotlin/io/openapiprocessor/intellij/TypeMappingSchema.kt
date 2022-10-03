@@ -15,18 +15,21 @@ import com.jetbrains.jsonSchema.extension.SchemaType
 class TypeMappingSchema : JsonSchemaProviderFactory {
 
     override fun getProviders(project: Project): MutableList<JsonSchemaFileProvider> {
-        return mutableListOf(TypeMappingSchemaProvider)
+        return mutableListOf(
+            TypeMappingSchemaProvider("v2"),
+            TypeMappingSchemaProvider("v2.1")
+        )
     }
 
-    object TypeMappingSchemaProvider : JsonSchemaFileProvider {
-        private val schema = HttpsFileSystem.getHttpsInstance().findFileByPath(SCHEMA_URL)
+    class TypeMappingSchemaProvider(private val version: String) : JsonSchemaFileProvider {
+        private val schema = getSchema()
 
         override fun isAvailable(file: VirtualFile): Boolean {
-            return file.fileType.name == TypeMappingFileType.NAME
+            return file.fileType.name == getName()
         }
 
         override fun getName(): String {
-            return SCHEMA_NAME
+            return "${TypeMappingFileType.NAME} $version"
         }
 
         override fun getSchemaFile(): VirtualFile? {
@@ -37,14 +40,16 @@ class TypeMappingSchema : JsonSchemaProviderFactory {
             return SchemaType.remoteSchema
         }
 
+        private fun getSchema(): VirtualFile? {
+            return HttpsFileSystem.getHttpsInstance().findFileByPath(
+                "raw.githubusercontent.com" +
+                    "/openapi-processor/openapi-processor-core" +
+                    "/master/src/main/resources/mapping/$version/mapping.yaml.json"
+            )
+        }
     }
 
     companion object {
-        const val SCHEMA_NAME = "openapi-processor mapping"
-
-        const val SCHEMA_URL = "raw.githubusercontent.com" +
-            "/openapi-processor/openapi-processor-core" +
-            "/master/src/main/resources/mapping/v2/mapping.yaml.json"
+       // const val SCHEMA_NAME = "openapi-processor mapping"
     }
-
 }

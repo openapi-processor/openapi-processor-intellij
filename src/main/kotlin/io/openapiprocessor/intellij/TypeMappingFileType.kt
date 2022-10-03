@@ -17,18 +17,18 @@ import org.slf4j.LoggerFactory
 import java.io.IOException
 import javax.swing.Icon
 
-open class TypeMappingFileType :
+abstract class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
     FileTypeIdentifiableByVirtualFile, PlainTextLikeFileType {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     override fun getName(): String {
-        return NAME
+        return "$NAME ${getVersion()}"
     }
 
     override fun getDescription(): String {
-        return "OpenAPI-Processor Configuration"
+        return "OpenAPI-Processor Configuration ${getVersion()}"
     }
 
     override fun getDefaultExtension(): String {
@@ -40,7 +40,7 @@ open class TypeMappingFileType :
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        // when creating a new yaml file by pressing return in the new file dialog the file is
+        // when creating a new yaml file by pressing "return" in the new file dialog the file is
         // a FakeVirtualFile. Is there a better way to handle it?
         if (file is FakeVirtualFile)
             return false
@@ -57,11 +57,15 @@ open class TypeMappingFileType :
         return checkMappingKey(file)
     }
 
+    abstract fun getVersion(): String
+
     private fun checkMappingKey(file: VirtualFile): Boolean {
         return try {
-            MAPPING_REGEX.containsMatchIn(String(file.inputStream.readNBytes(64)))
-        } catch(e: IOException) {
-            log.info("failed to check file {} ({})", file.name, e.message)
+            val start = String(file.inputStream.readNBytes(64))
+            val regex = Regex("""^${KEY}:\s+${getVersion()}\s+""")
+            return regex.containsMatchIn(start)
+        } catch (e: IOException) {
+            log.info("failed to check file {} {} ({})", file.name, getVersion(), e.message)
             false
         }
     }
@@ -70,11 +74,6 @@ open class TypeMappingFileType :
 
     companion object {
         const val NAME = "openapi-processor mapping"
-        const val MAPPING_KEY = "openapi-processor-mapping"
-
-        val MAPPING_REGEX = Regex("""^${MAPPING_KEY}:\s+v2""")
-
-        val INSTANCE = TypeMappingFileType()
+        const val KEY = "openapi-processor-mapping"
     }
-
 }
