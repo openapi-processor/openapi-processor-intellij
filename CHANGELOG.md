@@ -3,6 +3,8 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+- support mapping format v2.1 (since openapi-processor-spring/micronaut 2022.5)
+
 ## [2022.2.1]
 - 2022.2 compatibility
 
