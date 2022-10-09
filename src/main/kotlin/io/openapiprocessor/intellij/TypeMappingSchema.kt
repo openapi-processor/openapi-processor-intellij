@@ -41,10 +41,11 @@ class TypeMappingSchema : JsonSchemaProviderFactory {
         }
 
         private fun getSchema(): VirtualFile? {
+            // same as https://openapiprocessor.io/schemas/mapping/mapping-$version.json
             return HttpsFileSystem.getHttpsInstance().findFileByPath(
                 "raw.githubusercontent.com" +
-                    "/openapi-processor/openapi-processor-core" +
-                    "/master/src/main/resources/mapping/$version/mapping.yaml.json"
+                    "/openapi-processor/openapi-processor" +
+                    "/master/public/schemas/mapping/mapping-$version.json"
             )
         }
     }
