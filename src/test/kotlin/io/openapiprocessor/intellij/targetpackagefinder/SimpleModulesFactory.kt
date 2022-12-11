@@ -8,7 +8,6 @@ package io.openapiprocessor.intellij.targetpackagefinder
 import com.intellij.openapi.application.runWriteAction
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.testFramework.PsiTestUtil
 import com.intellij.util.io.directoryContent
 import io.openapiprocessor.intellij.support.HeavyBaseTestCase
@@ -21,10 +20,11 @@ annotation class SimpleModules
 class SimpleModulesFactory(private val testCase: HeavyBaseTestCase) {
     private val project: Project = testCase.project
     private val module: Module = testCase.module!!
-    private val base: VirtualFile = testCase.base
 
     @Suppress("UNUSED_VARIABLE")
     fun setup() {
+        val baseFile = File(project.basePath!!)
+
         directoryContent {
             dir("build") {
                 dir("out") {
@@ -57,7 +57,9 @@ class SimpleModulesFactory(private val testCase: HeavyBaseTestCase) {
                     }
                 }
             }
-        }.generate(File(project.basePath!!))
+        }.generate(baseFile)
+
+        val base = testCase.initBase()
 
         runWriteAction {
             // project module

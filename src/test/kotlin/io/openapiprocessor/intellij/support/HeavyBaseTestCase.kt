@@ -19,17 +19,18 @@ import java.nio.file.Path
  */
 abstract class HeavyBaseTestCase : HeavyPlatformTestCase() {
 
-    val base: VirtualFile
-        get() {
-            return findFileByPath(project.basePath!!)!!
-        }
+    val virtualFileManager: VirtualFileManager
+        get() = VirtualFileManager.getInstance()
 
-    fun createEmptyModule(moduleName: String, modulePath: String): Module {
-        return createModuleAt(moduleName, project, ModuleType.EMPTY, modulePath)
+    lateinit var base: VirtualFile
+
+    fun initBase(): VirtualFile {
+        base = virtualFileManager.refreshAndFindFileByNioPath(Path.of(project.basePath!!))!!
+        return base
     }
 
-    fun findFileByPath(path: String): VirtualFile? {
-        return VirtualFileManager.getInstance().findFileByNioPath(Path.of(path))
+    fun createEmptyModule(moduleName: String, modulePath: String): Module {
+        return createModuleAt(moduleName, project, ModuleType.EMPTY, Path.of(modulePath))
     }
 
     fun getBaseRelativePsiFile(path: String): PsiFile {
@@ -43,5 +44,4 @@ abstract class HeavyBaseTestCase : HeavyPlatformTestCase() {
     private fun getBaseRelativeFile(path: String): VirtualFile {
         return base.findFileByRelativePath(path)!!
     }
-
 }
