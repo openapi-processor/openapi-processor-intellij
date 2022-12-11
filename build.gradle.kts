@@ -72,8 +72,9 @@ tasks {
     patchPluginXml {
         version.set(properties("pluginVersion"))
         sinceBuild.set(properties("pluginSinceBuild"))
-        // not set to include future builds
-        //untilBuild.set(properties("pluginUntilBuild"))
+        // set to empty to include future builds
+        // untilBuild.set(properties("pluginUntilBuild"))
+        untilBuild.set("")
 
         // Extract the <!-- Plugin description --> section from README.md and set it in the
         // plugin's manifest
