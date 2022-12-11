@@ -170,7 +170,7 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
     }
 
     companion object {
-        val ICON = IconLoader.getIcon("/icons/openapi-processor-p-interface.svg")
+        val ICON = IconLoader.getIcon("/icons/openapi-processor-p-interface.svg", javaClass)
 
         const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
         const val POPUP_TITLE = "Endpoint Interface Methods"
