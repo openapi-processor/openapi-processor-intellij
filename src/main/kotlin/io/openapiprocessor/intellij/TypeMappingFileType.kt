@@ -21,7 +21,7 @@ abstract class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
     FileTypeIdentifiableByVirtualFile, PlainTextLikeFileType {
 
-    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
+    private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
     override fun getName(): String {
         return "$NAME ${getVersion()}"

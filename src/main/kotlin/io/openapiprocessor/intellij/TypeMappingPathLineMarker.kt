@@ -20,7 +20,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
-    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
+    private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
     override fun collectNavigationMarkers(
         element: PsiElement,
