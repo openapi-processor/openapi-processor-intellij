@@ -3,6 +3,7 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
+## [2022.4]
 
 - Idea 2022.3 compatibility
 - allow future Idea builds
