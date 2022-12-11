@@ -12,10 +12,6 @@ import io.openapiprocessor.intellij.support.HeavyBaseTestCase
 
 class TargetPackageFinderTest: HeavyBaseTestCase() {
 
-    override fun isCreateProjectFileExplicitly(): Boolean {
-        return false
-    }
-
     override fun setUpModule() {
         super.setUpModule()
 
