@@ -46,7 +46,7 @@ class TargetPackageFinderImpl : TargetPackageFinder {
             if (prefixes.isEmpty())
                 return null
 
-            val prefix = prefixes.maxBy { p -> p.length }!!
+            val prefix = prefixes.maxByOrNull { p -> p.length }!!
             val target = findPkgWithPrefix(pkg, prefix)
             return target
         }
