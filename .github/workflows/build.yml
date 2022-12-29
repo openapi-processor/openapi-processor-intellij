@@ -187,6 +187,9 @@ jobs:
           IDE_VERSIONS="$(echo "$PROPERTIES" | grep "^pluginVerifierIdeVersions:" | base64)"
           
           echo $IDE_VERSIONS
+          base64 -h
+          cGx1Z2luVmVyaWZpZXJJZGVWZXJzaW9uczogMjAyMC4zLjQsIDIwMjEuMSwgMjAyMS4yLCAyMDIx
+          
           echo "ideVersions=$IDE_VERSIONS" >> $GITHUB_OUTPUT
           echo "::set-output name=pluginVerifierHomeDir::~/.pluginVerifier"
 
