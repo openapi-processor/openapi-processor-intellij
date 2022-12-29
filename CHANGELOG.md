@@ -3,8 +3,9 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
-## [2022.4]
+- support mapping format v3 (since openapi-processor-spring/micronaut 2023.1)
 
+## [2022.4]
 - Idea 2022.3 compatibility
 - allow future Idea builds
 - increased minimum version to Idea 2020.3 
