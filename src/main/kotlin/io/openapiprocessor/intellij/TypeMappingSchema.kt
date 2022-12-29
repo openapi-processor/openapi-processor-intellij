@@ -17,7 +17,8 @@ class TypeMappingSchema : JsonSchemaProviderFactory {
     override fun getProviders(project: Project): MutableList<JsonSchemaFileProvider> {
         return mutableListOf(
             TypeMappingSchemaProvider("v2"),
-            TypeMappingSchemaProvider("v2.1")
+            TypeMappingSchemaProvider("v2.1"),
+            TypeMappingSchemaProvider("v3")
         )
     }
 
