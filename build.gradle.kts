@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.9.3")
 }
 
