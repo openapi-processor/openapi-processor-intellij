@@ -65,6 +65,11 @@ class FileTypeSpec : StringSpec({
         mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV3>()
     }
 
+    "detects v4" {
+        val mapping = loadFile("mapping-v4.yaml")
+        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV4>()
+    }
+
     "ignores empty file" {
         val mapping = loadFile("empty.yaml")
         mapping.fileType.name shouldNotStartWith TypeMappingFileType.NAME

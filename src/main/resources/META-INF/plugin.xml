@@ -12,6 +12,10 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <fileType
+            name="openapi-processor mapping v4"
+            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV4"/>
+
+        <fileType
             name="openapi-processor mapping v3"
             implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV3"/>
 
