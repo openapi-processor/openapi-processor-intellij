@@ -8,7 +8,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.7.21"
     id("org.jetbrains.intellij") version "1.14.2"
-    id("org.jetbrains.changelog") version "2.1.0"
+    id("org.jetbrains.changelog") version "1.3.0"  // newer versions are broken
     id("com.github.ben-manes.versions") version "0.47.0"
 }
 
@@ -91,7 +91,8 @@ tasks {
         )
 
         // Get the latest available change notes from the changelog file
-        changeNotes.set(provider { changelog.renderItem(changelog.getLatest(), Changelog.OutputType.HTML) })
+        changeNotes.set(provider { changelog.getLatest().toHTML() })
+//        changeNotes.set(provider { changelog.renderItem(changelog.getLatest(), Changelog.OutputType.HTML) })
     }
 
     runPluginVerifier {
