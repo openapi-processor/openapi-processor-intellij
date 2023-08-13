@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.9.3")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.0")
 }
 
 // Configure gradle-intellij-plugin plugin.
