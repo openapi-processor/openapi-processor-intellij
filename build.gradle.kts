@@ -95,14 +95,6 @@ tasks {
         changeNotes.set(provider { changelog.renderItem(changelog.getLatest(), Changelog.OutputType.HTML) })
     }
 
-    runPluginVerifier {
-        ideVersions.set(
-            properties("pluginVerifierIdeVersions")
-                .split(',')
-                .map(String::trim)
-                .filter(String::isNotEmpty))
-    }
-
     publishPlugin {
         dependsOn("patchChangelog")
         token.set(System.getenv("INTELLIJ_PUBLISH_TOKEN"))
