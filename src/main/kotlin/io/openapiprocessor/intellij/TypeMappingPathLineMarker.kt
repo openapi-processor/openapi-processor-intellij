@@ -49,18 +49,18 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
             val targets = findPathTargets(path)
 
             val builder = NavigationGutterIconBuilder
-                .create(ICON)
-                .setTooltipTitle("tooltip title")
-                .setTooltipText(TOOLTIP_TEXT)
-                .setPopupTitle(POPUP_TITLE)
-                .setEmptyPopupText("empty popup text")
+                .create(Support.ICON)
+                .setTooltipTitle("Tooltip Title")
+                .setTooltipText(Support.TOOLTIP_TEXT)
+                .setPopupTitle(Support.POPUP_TITLE)
+                .setEmptyPopupText("Empty popup text")
                 .setTargets(targets)
             result.add(builder.createLineMarkerInfo(path.key!!))
         }
     }
 
     private fun findPathTargets(element: YAMLKeyValue): List<PsiElement> {
-        return ANNOTATIONS
+        return Support.ANNOTATIONS
             .map {
                 findPathTargets(element, it)
             }
@@ -169,14 +169,14 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
 
     }
 
-    companion object {
-        val ICON = IconLoader.getIcon(
-            "/icons/openapi-processor-p-interface.svg",
-            TypeMappingPathLineMarker::class.java)
-
+    object Support {
         const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
         const val POPUP_TITLE = "Endpoint Interface Methods"
 
+        val ICON = IconLoader.getIcon(
+            "/icons/openapi-processor-p-interface.svg",
+            TypeMappingPathLineMarker::class.java
+        )
         val ANNOTATIONS = listOf(
             MicronautAnnotation("Delete"),
             MicronautAnnotation("Get"),
@@ -195,5 +195,6 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
         )
     }
 
+    companion object {}
 }
 

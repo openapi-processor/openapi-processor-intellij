@@ -25,7 +25,7 @@ class PathLineMarkerTest  : LightBaseTestCase() {
 
         // then
         val gutter = gutters.first {
-            it.icon == TypeMappingPathLineMarker.ICON
+            it.icon == TypeMappingPathLineMarker.Support.ICON
         }
 
         val expected = listOf(
@@ -57,7 +57,7 @@ class PathLineMarkerTest  : LightBaseTestCase() {
 
         // then
         val gutter = gutters.first {
-            it.icon == TypeMappingPathLineMarker.ICON
+            it.icon == TypeMappingPathLineMarker.Support.ICON
         }
 
         val expected = listOf(
