@@ -71,7 +71,7 @@ class PathLineMarkerTest  : LightBaseTestCase() {
         )
         val methods = gutter.methods
 
-        assertEquals(TypeMappingPathLineMarker.TOOLTIP_TEXT, gutter.tooltipText)
+        assertEquals(TypeMappingPathLineMarker.Support.TOOLTIP_TEXT, gutter.tooltipText)
         assertEquals(expected.size, methods.size)
         assertEquals(expected, methods)
     }
