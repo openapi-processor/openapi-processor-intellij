@@ -8,7 +8,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
     id("org.jetbrains.intellij") version "1.15.0"
-    id("org.jetbrains.changelog") version "2.1.2"
+    id("org.jetbrains.changelog") version "2.2.0"
     id("com.github.ben-manes.versions") version "0.48.0"
 }
 
