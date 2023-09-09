@@ -6,7 +6,6 @@
 package io.openapiprocessor.intellij
 
 import com.intellij.util.indexing.*
-import com.intellij.util.indexing.*
 import com.intellij.util.io.DataExternalizer
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
