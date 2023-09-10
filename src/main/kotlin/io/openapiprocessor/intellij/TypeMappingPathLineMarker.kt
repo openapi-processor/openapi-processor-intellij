@@ -19,7 +19,7 @@ import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
+class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
     override fun collectNavigationMarkers(
@@ -51,8 +51,8 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
             val builder = NavigationGutterIconBuilder
                 .create(Support.ICON)
                 .setTooltipTitle("Tooltip Title")
-                .setTooltipText(Support.TOOLTIP_TEXT)
-                .setPopupTitle(Support.POPUP_TITLE)
+                .setTooltipText(TOOLTIP_TEXT)
+                .setPopupTitle(POPUP_TITLE)
                 .setEmptyPopupText("Empty popup text")
                 .setTargets(targets)
             result.add(builder.createLineMarkerInfo(path.key!!))
@@ -170,13 +170,11 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
     }
 
     object Support {
-        const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
-        const val POPUP_TITLE = "Endpoint Interface Methods"
-
         val ICON = IconLoader.getIcon(
             "/icons/openapi-processor-p-interface.svg",
             TypeMappingPathLineMarker::class.java
         )
+
         val ANNOTATIONS = listOf(
             MicronautAnnotation("Delete"),
             MicronautAnnotation("Get"),
@@ -195,6 +193,9 @@ class TypeMappingPathLineMarker  : RelatedItemLineMarkerProvider() {
         )
     }
 
-    companion object {}
+    companion object {
+        const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
+        const val POPUP_TITLE = "Endpoint Interface Methods"
+    }
 }
 
