@@ -10,7 +10,6 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-
         <fileType
             name="openapi-processor mapping v4"
             implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV4"/>
@@ -27,15 +26,12 @@
             name="openapi-processor mapping v2"
             implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV2"/>
 
-<!--        <fileBasedIndex implementation="io.openapiprocessor.intellij.TypeMappingIndex"/>-->
-
         <codeInsight.lineMarkerProvider
             language="yaml"
             implementationClass="io.openapiprocessor.intellij.TypeMappingLineMarker"/>
         <codeInsight.lineMarkerProvider
             language="yaml"
             implementationClass="io.openapiprocessor.intellij.TypeMappingPathLineMarker"/>
-
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript.JsonSchema">
