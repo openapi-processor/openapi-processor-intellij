@@ -8,6 +8,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>com.intellij.java</depends>
+    <depends optional="true" config-file="io.openapiprocessor.intellij-swagger.xml">com.intellij.swagger</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
