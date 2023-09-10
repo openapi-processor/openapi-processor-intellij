@@ -1,5 +1,9 @@
 <idea-plugin>
    <extensions defaultExtensionNs="com.intellij">
 
+       <codeInsight.lineMarkerProvider
+           language="yaml"
+           implementationClass="io.openapiprocessor.intellij.OpenApiLineMarker"/>
+
    </extensions>
 </idea-plugin>
