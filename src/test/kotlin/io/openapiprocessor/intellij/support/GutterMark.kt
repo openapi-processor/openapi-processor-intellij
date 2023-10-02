@@ -13,11 +13,13 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiMethod
 
-val GutterMark.targets: List<String>
-    get() = getTargets(getHandler(this))
-
 val GutterMark.methods: List<PsiElement>
     get() = getMethods(getHandler(this))
+
+
+fun getTargets(gutterMark: GutterMark): List<String> {
+    return getTargets(getHandler(gutterMark))
+}
 
 private fun getTargets(handler: NavigationGutterIconRenderer): List<String> {
     val targets = mutableListOf<String>()

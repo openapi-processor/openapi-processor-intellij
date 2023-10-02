@@ -16,28 +16,28 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotStartWith
 import io.kotest.matchers.string.shouldStartWith
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.openapiprocessor.intellij.listener.CodeInsightListener
+import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
 class FileTypeSpec : StringSpec({
-    val test = CodeInsightListener()
-    listener(test)
+    val test = register(LightCodeInsightListener())
 
-    lateinit var fixture: CodeInsightTestFixture
+    fun fixture(): CodeInsightTestFixture {
+        return test.fixture!!
+    }
 
     beforeTest {
-        fixture = test.fixture
-        fixture.testDataPath = "src/test/testdata/filetype"
+        fixture().testDataPath = "src/test/testdata/filetype"
     }
 
     fun loadFile(path: String): VirtualFile {
-        return fixture.configureByFile(path).virtualFile
+        return fixture().configureByFile(path).virtualFile
     }
 
     fun createDir(path: String): VirtualFile {
-        return fixture.tempDirFixture.findOrCreateDir(path)
+        return fixture().tempDirFixture.findOrCreateDir(path)
     }
 
     "detects file type with 'yaml' extension" {
@@ -90,7 +90,7 @@ class FileTypeSpec : StringSpec({
         }.generateInVirtualTempDir()
 
         PsiTestUtil.addLibrary(
-            fixture.module,
+            fixture().module,
             "yaml in jar",
             getUrlForLibraryRoot(File("${tmpDir.path}/yaml.jar"))
         )
@@ -100,5 +100,4 @@ class FileTypeSpec : StringSpec({
 
         yml!!.fileType.name shouldStartWith TypeMappingFileType.NAME
     }
-
 })

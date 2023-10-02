@@ -12,19 +12,18 @@ import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
 
-class CodeInsightListener : TestListener {
-    lateinit var fixture: CodeInsightTestFixture
+class LightCodeInsightListener : TestListener {
+    var fixture: CodeInsightTestFixture? = null
 
     override suspend fun beforeTest(testCase: TestCase) {
         val factory = IdeaTestFixtureFactory.getFixtureFactory()
         val builder = factory.createLightFixtureBuilder()
         val temp = LightTempDirTestFixtureImpl(true)
         fixture = factory.createCodeInsightFixture(builder.fixture, temp)
-        fixture.setUp()
+        fixture?.setUp()
     }
 
     override suspend fun afterTest(testCase: TestCase, result: TestResult) {
-        fixture.tearDown()
+        fixture?.tearDown()
     }
-
 }
