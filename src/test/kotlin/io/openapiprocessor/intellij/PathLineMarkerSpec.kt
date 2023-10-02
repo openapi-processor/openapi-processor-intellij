@@ -5,13 +5,12 @@
 
 package io.openapiprocessor.intellij
 
-import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.openapi.application.runReadAction
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.impl.java.stubs.index.JavaMethodNameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
-import com.intellij.testFramework.runInEdtAndWait
+import com.intellij.testFramework.runInEdtAndGet
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -37,13 +36,11 @@ class PathLineMarkerSpec: StringSpec({
     }
 
     "test adds navigation gutter icon to micronaut interface methods" {
-        var gutters: List<GutterMark> = emptyList()
-
-        runInEdtAndWait {
+        val gutters = runInEdtAndGet {
             fixture().copyDirectoryToProject("micronaut", "")
             fixture().configureByFile("mapping.yaml")
 
-            gutters = fixture().findAllGutters("mapping.yaml")
+            return@runInEdtAndGet fixture().findAllGutters("mapping.yaml")
         }
 
         runReadAction {
@@ -67,13 +64,11 @@ class PathLineMarkerSpec: StringSpec({
     }
 
     "test adds navigation gutter icon to spring interface methods" {
-        var gutters: List<GutterMark> = emptyList()
-
-        runInEdtAndWait {
+        val gutters = runInEdtAndGet {
             fixture().copyDirectoryToProject("spring", "")
             fixture().configureByFile("mapping.yaml")
 
-            gutters = fixture().findAllGutters("mapping.yaml")
+            return@runInEdtAndGet fixture().findAllGutters("mapping.yaml")
         }
 
         runReadAction {
