@@ -12,6 +12,10 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
+            name="openapi-processor mapping v5"
+            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV5"/>
+
+        <fileType
             name="openapi-processor mapping v4"
             implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV4"/>
 
@@ -33,6 +37,8 @@
         <codeInsight.lineMarkerProvider
             language="yaml"
             implementationClass="io.openapiprocessor.intellij.TypeMappingPathLineMarker"/>
+
+<!--        <iconMapper mappingFile="OpenapiProcessorIconMappings.json"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript.JsonSchema">
