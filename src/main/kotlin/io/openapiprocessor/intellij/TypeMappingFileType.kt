@@ -48,7 +48,7 @@ abstract class TypeMappingFileType :
         if (file.isDirectory)
             return false
 
-        if (!extensions.contains(file.extension?.toLowerCase()))
+        if (!extensions.contains(file.extension?.lowercase()))
             return false
 
         if (file.length == 0L)
