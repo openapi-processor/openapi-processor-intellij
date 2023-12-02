@@ -1,6 +1,6 @@
 # openapi-processor-intellij
 
-![Build](https://github.com/openapi-processor/openapi-processor-intellij/workflows/Build/badge.svg)
+[![Build](https://github.com/openapi-processor/openapi-processor-intellij/actions/workflows/build.yml/badge.svg)](https://github.com/openapi-processor/openapi-processor-intellij/actions/workflows/build.yml)
 [![Version](https://img.shields.io/jetbrains/plugin/v/17008.svg)](https://plugins.jetbrains.com/plugin/17008)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/17008.svg)](https://plugins.jetbrains.com/plugin/17008)
 
