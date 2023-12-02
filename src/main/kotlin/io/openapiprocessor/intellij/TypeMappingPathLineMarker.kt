@@ -13,7 +13,6 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.*
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
 import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.util.PsiLiteralUtil
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
@@ -60,10 +59,8 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
     }
 
     private fun findPathTargets(element: YAMLKeyValue): List<PsiElement> {
-        return Support.ANNOTATIONS
-            .map {
-                findPathTargets(element, it)
-            }
+        return Annotations.KNOWN
+            .map { findPathTargets(element, it) }
             .flatten()
     }
 
@@ -94,102 +91,10 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         return file.viewProvider.fileType is TypeMappingFileType
     }
 
-    interface Annotation {
-        val pkg: String
-        val name: String
-        val qualifiedName: String
-            get() = "$pkg.$name"
-
-        fun matches(psi: PsiAnnotation, path: String): Boolean
-    }
-
-    class MicronautAnnotation(override val name: String): Annotation {
-        override val pkg: String = "io.micronaut.http.annotation"
-
-        override fun matches(psi: PsiAnnotation, path: String): Boolean {
-            if (!psi.hasQualifiedName(qualifiedName))
-                return false
-
-            val value = psi.findAttributeValue("uri")
-            if (value !is PsiLiteralExpression)
-                return false
-
-            val uri = PsiLiteralUtil.getStringLiteralContent(value)
-            if (uri != path)
-                return false
-
-            return true
-        }
-    }
-
-    class SpringAnnotation(override val name: String): Annotation {
-        override val pkg: String = "org.springframework.web.bind.annotation"
-
-        override fun matches(psi: PsiAnnotation, path: String): Boolean {
-            if (!psi.hasQualifiedName(qualifiedName))
-                return false
-
-            val value = psi.findAttributeValue("path")
-            if (value !is PsiLiteralExpression)
-                return false
-
-            val uri = PsiLiteralUtil.getStringLiteralContent(value)
-            if (uri != path)
-                return false
-
-            return true
-        }
-    }
-
-    class SpringRequestAnnotation(val method: String): Annotation {
-        override val pkg: String = "org.springframework.web.bind.annotation"
-        override val name: String = "RequestMapping"
-
-        override fun matches(psi: PsiAnnotation, path: String): Boolean {
-            if (!psi.hasQualifiedName(qualifiedName))
-                return false
-
-            val methodRef = psi.findAttributeValue("method")
-            if (methodRef !is PsiReferenceExpression)
-                return false
-
-            if ( methodRef.qualifiedName != "RequestMethod.$method")
-                return false
-
-            val value = psi.findAttributeValue("path")
-            if (value !is PsiLiteralExpression)
-                return false
-
-            val uri = PsiLiteralUtil.getStringLiteralContent(value)
-            if (uri != path)
-                return false
-
-            return true
-        }
-
-    }
-
     object Support {
         val ICON = IconLoader.getIcon(
             "/icons/openapi-processor-p-interface.svg",
             TypeMappingPathLineMarker::class.java
-        )
-
-        val ANNOTATIONS = listOf(
-            MicronautAnnotation("Delete"),
-            MicronautAnnotation("Get"),
-            MicronautAnnotation("Head"),
-            MicronautAnnotation("Patch"),
-            MicronautAnnotation("Post"),
-            MicronautAnnotation("Put"),
-            MicronautAnnotation("Trace"),
-            SpringAnnotation("DeleteMapping"),
-            SpringAnnotation("GetMapping"),
-            SpringRequestAnnotation("HEAD"),
-            SpringAnnotation("PatchMapping"),
-            SpringAnnotation("PostMapping"),
-            SpringAnnotation("PutMapping"),
-            SpringRequestAnnotation("TRACE")
         )
     }
 
