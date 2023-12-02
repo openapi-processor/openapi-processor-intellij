@@ -3,7 +3,7 @@
 # openapi-processor-intellij Changelog
 
 ## [Unreleased]
-- nothing yet
+- support mapping format v5 (since openapi-processor-spring/micronaut 2023.6)
 
 ## [2023.2]
 - support mapping format v4 (since openapi-processor-spring/micronaut 2023.3)
