@@ -84,9 +84,7 @@ tasks {
     patchPluginXml {
         version = properties("pluginVersion")
         sinceBuild = properties("pluginSinceBuild")
-        // set to empty to include future builds
-        // untilBuild.set(properties("pluginUntilBuild"))
-        untilBuild = ""
+        untilBuild = properties("pluginUntilBuild")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
@@ -109,7 +107,7 @@ tasks {
                     (getOrNull(pluginVersion) ?: getUnreleased())
                         .withHeader(false)
                         .withEmptySections(false),
-                    Changelog.OutputType.HTML,
+                    Changelog.OutputType.HTML
                 )
             }
         }
@@ -134,10 +132,8 @@ tasks {
         dependsOn("patchChangelog")
         // token = environment("PUBLISH_TOKEN")
         token = environment("INTELLIJ_PUBLISH_TOKEN")
-        // pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels
-        // like 2.1.7-alpha.3
-        // Specify pre-release label to publish the plugin in a custom Release Channel automatically.
-        // Read more:
+        // pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels like 2.1.7-alpha.3
+        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels = properties("pluginVersion")
             .map { listOf(it.split('-').getOrElse(1) { "default" }.split('.').first()) }
