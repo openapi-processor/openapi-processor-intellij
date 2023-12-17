@@ -48,7 +48,7 @@ intellij {
 changelog {
     groups.empty()
     repositoryUrl = properties("pluginRepositoryUrl")
-    headerParserRegex = """([1-9][0-9][0-9][0-9])\.(\d+)(\.\d+)?(-([A-Z]+)(\.(\d+))?)?"""
+    headerParserRegex = """^((2[0-9]{3})\.(\d+)(\.(\d+))?(-(SNAPSHOT\.(\d+)))?)$"""
 }
 
 // Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
