@@ -7,7 +7,7 @@
 - support mapping format v5 (since openapi-processor-spring/micronaut 2023.6)
 
 ## [2023.3-SNAPSHOT.1]
-- 
+
 - support mapping format v5 (since openapi-processor-spring/micronaut 2023.6)
 
 ## [2023.2]
