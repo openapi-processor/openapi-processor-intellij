@@ -27,6 +27,10 @@ abstract class TypeMappingFileType :
         return "$NAME ${getVersion()}"
     }
 
+    override fun getDisplayName(): String {
+        return name
+    }
+
     override fun getDescription(): String {
         return "OpenAPI-Processor Configuration ${getVersion()}"
     }
