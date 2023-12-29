@@ -38,7 +38,7 @@
             language="yaml"
             implementationClass="io.openapiprocessor.intellij.TypeMappingPathLineMarker"/>
 
-<!--        <iconMapper mappingFile="OpenapiProcessorIconMappings.json"/>-->
+        <iconMapper mappingFile="IconMappings.json"/>
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript.JsonSchema">

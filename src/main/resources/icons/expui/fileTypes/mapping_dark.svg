@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   fill="none"
+   version="1.1"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="swatch4">
+      <stop
+         style="stop-color:#009050;stop-opacity:1;"
+         offset="0"
+         id="stop4" />
+    </linearGradient>
+  </defs>
+  <ellipse
+     style="opacity:1;fill:none;fill-opacity:0.12549;fill-rule:evenodd;stroke:#009050;stroke-width:1.08695;stroke-dasharray:9.78259, 1.08695, 9.78259, 1.08695, 9.78259, 1.08695, 6.52172, 4.34782;stroke-dashoffset:46.5216;stroke-opacity:1"
+     id="circle4"
+     cx="8.0000439"
+     cy="8"
+     rx="6.9565253"
+     ry="6.9564795" />
+  <g
+     id="layer2">
+    <g
+       id="g5"
+       transform="translate(-0.35869021,0.44836273)">
+      <circle
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ced0d6;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+         id="path4"
+         cx="8.7879095"
+         cy="6.5236778"
+         r="2" />
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ced0d6;stroke-width:0.746624;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0.6;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect4"
+         width="0.25337616"
+         height="7.253376"
+         x="6.598752"
+         y="4.4466109" />
+    </g>
+  </g>
+  <g
+     id="layer3">
+    <ellipse
+       style="mix-blend-mode:normal;fill:none;fill-opacity:0.125;fill-rule:nonzero;stroke:#ced0d6;stroke-width:1.091;stroke-dasharray:none;stroke-opacity:1"
+       id="path4-2"
+       cx="-14.124002"
+       cy="-1.8637996"
+       transform="scale(-1)"
+       rx="1.3183007"
+       ry="1.3182995" />
+    <path
+       style="fill:none;stroke:#ced0d6;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 9.6273863,5.9192322 C 13.194277,2.8014228 13.194277,2.8014228 13.194277,2.8014228"
+       id="path6" />
+  </g>
+</svg>
