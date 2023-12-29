@@ -8,12 +8,16 @@ package io.openapiprocessor.intellij
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.IconLoader
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiMethod
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.util.IconUtil
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -92,10 +96,7 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
     }
 
     object Support {
-        val ICON = IconLoader.getIcon(
-            "/icons/openapi-processor-p-interface.svg",
-            TypeMappingPathLineMarker::class.java
-        )
+        val ICON = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
     }
 
     companion object {
