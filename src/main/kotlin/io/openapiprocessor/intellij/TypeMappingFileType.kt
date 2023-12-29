@@ -36,7 +36,7 @@ abstract class TypeMappingFileType :
     }
 
     override fun getIcon(): Icon {
-        return IconLoader.getIcon("/icons/openapi-processor-p.svg", javaClass)
+        return IconLoader.getIcon("/icons/mapping.svg", javaClass)
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
