@@ -17,7 +17,7 @@ import io.kotest.matchers.shouldBe
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import io.openapiprocessor.intellij.support.methods
 
-class PathLineMarkerSpec: StringSpec({
+class TypeMappingPathLineMarkerSpec: StringSpec({
     val test = register(LightCodeInsightListener())
 
     fun fixture(): CodeInsightTestFixture {
@@ -25,7 +25,9 @@ class PathLineMarkerSpec: StringSpec({
     }
 
     fun getMethod(name: String): PsiMethod {
-        return JavaMethodNameIndex.getInstance()
+        return JavaMethodNameIndex
+            .getInstance()
+            // getMethods()
             .get(name, fixture().project, GlobalSearchScope.allScope(fixture().project))
             .first()
     }

@@ -9,14 +9,9 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiAnnotation
+import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
-import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.IconUtil
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
@@ -39,6 +34,8 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         if(element.keyText != "paths")
             return
 
+        val pathTargetService = service<PathTargetService>()
+
         // TODO for each path, handle http methods?
         element.value?.children?.forEach { path ->
             if (path !is YAMLKeyValue)
@@ -49,45 +46,17 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
                 log.warn("expected to find path but found {}", path.keyText)
             }
 
-            val targets = findPathTargets(path)
+            val targets = pathTargetService.findPathTargets(path.project, path.keyText)
 
             val builder = NavigationGutterIconBuilder
                 .create(Support.ICON)
-                .setTooltipTitle("Tooltip Title")
+                .setTooltipTitle("OpenAPI Processor")
                 .setTooltipText(TOOLTIP_TEXT)
                 .setPopupTitle(POPUP_TITLE)
-                .setEmptyPopupText("Empty popup text")
+                .setEmptyPopupText("Could not find interface")
                 .setTargets(targets)
             result.add(builder.createLineMarkerInfo(path.key!!))
         }
-    }
-
-    private fun findPathTargets(element: YAMLKeyValue): List<PsiElement> {
-        return Annotations.KNOWN
-            .map { findPathTargets(element, it) }
-            .flatten()
-    }
-
-    private fun findPathTargets(uriKey: YAMLKeyValue, annotation: Annotation): List<PsiElement> {
-        val targets = mutableListOf<PsiElement>()
-        val matches = getAnnotations(annotation, uriKey.project)
-        val matchPath = uriKey.keyText
-
-        matches.forEach {
-            if (!annotation.matches(it, matchPath))
-                return@forEach
-
-            val method = PsiTreeUtil.getParentOfType(it.navigationElement, PsiMethod::class.java)
-            if (method != null)
-                targets.add(method.navigationElement)
-        }
-
-        return targets
-    }
-
-    private fun getAnnotations(annotation: Annotation, project: Project): Collection<PsiAnnotation> {
-        return JavaAnnotationIndex.getInstance()
-                     .get(annotation.name, project, GlobalSearchScope.allScope(project))
     }
 
     private fun isMappingFile(file: PsiFile): Boolean {
