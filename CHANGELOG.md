@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- dynamic detection of `mapping.yaml` json schema, i.e. it is no longer necessary to publish a new version for each mapping schema update.
+
 ## [2023.3-SNAPSHOT.2]
 
 - support mapping format v5 (since openapi-processor-spring/micronaut 2023.6)
