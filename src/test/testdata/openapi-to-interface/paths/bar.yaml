@@ -1,0 +1,9 @@
+post:
+  tags:
+    - bar
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: 'openapi.yaml#/components/schemas/Bar'

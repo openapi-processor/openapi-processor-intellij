@@ -3,7 +3,7 @@
 
        <codeInsight.lineMarkerProvider
            language="yaml"
-           implementationClass="io.openapiprocessor.intellij.OpenApiLineMarker"/>
+           implementationClass="io.openapiprocessor.intellij.OpenApiPathLineMarker"/>
 
    </extensions>
 </idea-plugin>
