@@ -12,7 +12,8 @@ Adds support for the [openapi-processor](https://openapiprocessor.io/oap/home/ho
 * automatically selects the json schema of the `mapping.yaml` to provide editing support (autocompletion & validation). Note that the `openapi-processor-mapping: v[x]` line in the `mapping.yaml` is used to detect it. 
 * marks the `mapping.yaml` with an openapi-processor icon to separate it from the openapi yaml file(s) 
 * navigate from the `package-name` configuration in the `mapping.yaml` to the package with the generated sources (if the target package exists).
-* navigate from an endpoint `path` mapping to a generated interface method.  
+* navigate from an endpoint `path` mapping to the generated interface method.  
+* navigate from OpenAPI path to the generated endpoint interface method.
 <br/><br/>
 <!-- Plugin description end -->
 
