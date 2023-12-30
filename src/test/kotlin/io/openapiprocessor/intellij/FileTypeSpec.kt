@@ -15,7 +15,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotStartWith
 import io.kotest.matchers.string.shouldStartWith
-import io.kotest.matchers.types.shouldBeInstanceOf
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -42,37 +41,12 @@ class FileTypeSpec : StringSpec({
 
     "detects file type with 'yaml' extension" {
         val mapping = loadFile("mapping.yaml")
-        mapping.fileType.name shouldBe "${TypeMappingFileType.NAME} v2"
+        mapping.fileType.name shouldBe TypeMappingFileType.NAME
     }
 
     "detects file type with 'yml' extension" {
         val mapping = loadFile("mapping.yml")
-        mapping.fileType.name shouldBe "${TypeMappingFileType.NAME} v2"
-    }
-
-    "detects v2" {
-        val mapping = loadFile("mapping-v2.yaml")
-        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV2>()
-    }
-
-    "detects v2.1" {
-        val mapping = loadFile("mapping-v2.1.yaml")
-        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV21>()
-    }
-
-    "detects v3" {
-        val mapping = loadFile("mapping-v3.yaml")
-        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV3>()
-    }
-
-    "detects v4" {
-        val mapping = loadFile("mapping-v4.yaml")
-        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV4>()
-    }
-
-    "detects v5" {
-        val mapping = loadFile("mapping-v5.yaml")
-        mapping.fileType.shouldBeInstanceOf<TypeMappingFileTypeV5>()
+        mapping.fileType.name shouldBe TypeMappingFileType.NAME
     }
 
     "ignores empty file" {

@@ -11,6 +11,7 @@ import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
+import com.intellij.psi.PsiFile
 import org.jetbrains.yaml.YAMLLanguage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -24,7 +25,7 @@ abstract class TypeMappingFileType :
     private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
     override fun getName(): String {
-        return "$NAME ${getVersion()}"
+        return NAME
     }
 
     override fun getDisplayName(): String {
@@ -32,7 +33,7 @@ abstract class TypeMappingFileType :
     }
 
     override fun getDescription(): String {
-        return "OpenAPI-Processor Configuration ${getVersion()}"
+        return "OpenAPI-Processor configuration"
     }
 
     override fun getDefaultExtension(): String {
@@ -66,10 +67,10 @@ abstract class TypeMappingFileType :
     private fun checkMappingKey(file: VirtualFile): Boolean {
         return try {
             val start = String(file.inputStream.readNBytes(64))
-            val regex = Regex("""^${KEY}:\s+${getVersion()}\s+""")
+            val regex = Regex("""^${KEY}:\s+v\d+\s+""")
             return regex.containsMatchIn(start)
         } catch (e: IOException) {
-            log.info("failed to check file {} {} ({})", file.name, getVersion(), e.message)
+            log.info("failed to check file {} ({})", file.name, e.message)
             false
         }
     }
@@ -79,5 +80,9 @@ abstract class TypeMappingFileType :
     companion object {
         const val NAME = "openapi-processor mapping"
         const val KEY = "openapi-processor-mapping"
+
+        fun isMappingFile(file: PsiFile): Boolean {
+            return file.viewProvider.fileType is TypeMappingFileType
+        }
     }
 }

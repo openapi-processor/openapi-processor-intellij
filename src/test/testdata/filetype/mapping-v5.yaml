@@ -1,4 +1,0 @@
-openapi-processor-mapping: v5
-
-options:
-  package-name: io.openapiprocessor

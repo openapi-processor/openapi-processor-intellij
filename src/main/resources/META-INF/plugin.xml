@@ -13,24 +13,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
-            name="openapi-processor mapping v5"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV5"/>
-
-        <fileType
-            name="openapi-processor mapping v4"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV4"/>
-
-        <fileType
-            name="openapi-processor mapping v3"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV3"/>
-
-        <fileType
-            name="openapi-processor mapping v2.1"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV21"/>
-
-        <fileType
-            name="openapi-processor mapping v2"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingFileTypeV2"/>
+            name="openapi-processor mapping"
+            implementationClass="io.openapiprocessor.intellij.TypeMappingFileType"/>
 
         <codeInsight.lineMarkerProvider
             language="yaml"
@@ -48,7 +32,7 @@
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript.JsonSchema">
-        <ProviderFactory implementation="io.openapiprocessor.intellij.TypeMappingSchema"/>
+        <ContentAwareSchemaFileProvider implementation="io.openapiprocessor.intellij.TypeMappingSchemaProvider"/>
     </extensions>
 
 </idea-plugin>
