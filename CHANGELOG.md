@@ -5,7 +5,8 @@
 ## [Unreleased]
 
 - support mapping format v5 (since openapi-processor-spring/micronaut 2023.6)
-- improved icons, new ui icons
+- navigate from openapi path to the generated interface methods
+- clean up icons, new ui icons
 
 ## [2023.3-SNAPSHOT.1]
 
