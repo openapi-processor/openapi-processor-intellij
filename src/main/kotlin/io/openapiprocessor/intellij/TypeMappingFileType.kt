@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory
 import java.io.IOException
 import javax.swing.Icon
 
-abstract class TypeMappingFileType :
+class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
     FileTypeIdentifiableByVirtualFile, PlainTextLikeFileType {
 
@@ -61,8 +61,6 @@ abstract class TypeMappingFileType :
 
         return checkMappingKey(file)
     }
-
-    abstract fun getVersion(): String
 
     private fun checkMappingKey(file: VirtualFile): Boolean {
         return try {
