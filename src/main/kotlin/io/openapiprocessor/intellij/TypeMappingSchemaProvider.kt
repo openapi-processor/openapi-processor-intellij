@@ -44,6 +44,6 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
     }
 
     private fun isMappingFile(file: PsiFile): Boolean {
-        return TypeMappingFileType.isMappingFile(file)
+        return file.viewProvider.fileType is TypeMappingFileType
     }
 }

@@ -80,9 +80,5 @@ abstract class TypeMappingFileType :
     companion object {
         const val NAME = "openapi-processor mapping"
         const val KEY = "openapi-processor-mapping"
-
-        fun isMappingFile(file: PsiFile): Boolean {
-            return file.viewProvider.fileType is TypeMappingFileType
-        }
     }
 }
