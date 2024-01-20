@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+- dynamic detection of `mapping.yaml` json schema, i.e. it is no longer necessary to publish a new version for each mapping schema update.
+- navigate from openapi path to the generated interface methods
+- clean up icons, new ui icons
+
 ## [2023.3-SNAPSHOT.3]
 
 - dynamic detection of `mapping.yaml` json schema, i.e. it is no longer necessary to publish a new version for each mapping schema update.
