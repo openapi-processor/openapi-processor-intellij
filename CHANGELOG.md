@@ -4,9 +4,9 @@
 
 ## [Unreleased]
 
-- dynamic detection of `mapping.yaml` json schema, i.e. it is no longer necessary to publish a new version for each mapping schema update.
-- navigate from openapi path to the generated interface methods
-- clean up icons, new ui icons
+- dynamic detection of `mapping.yaml` json schema.<br> i.e. it is no longer necessary to wait for a new version that supports the new mapping schema version. This removes the openapi-processor schemas from IntelliJ's json mappings.
+- navigate from an OpenAPI path to the generated interface methods. <br> The plugin will add an interface icon to the paths in an OpenAPI yaml document that provides navigation to the generated interface methods. 
+- clean up icons, new ui icons. <br> navigation from a path mapping in the `mapping.yaml` now uses the interface icon. Added a new ui icon for the `mapping.yaml`. 
 
 ## [2023.3-SNAPSHOT.3]
 
