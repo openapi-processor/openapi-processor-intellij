@@ -17,7 +17,7 @@ class LightCodeInsightListener : TestListener {
 
     override suspend fun beforeTest(testCase: TestCase) {
         val factory = IdeaTestFixtureFactory.getFixtureFactory()
-        val builder = factory.createLightFixtureBuilder()
+        val builder = factory.createLightFixtureBuilder(testCase.name.testName)
         val temp = LightTempDirTestFixtureImpl(true)
         fixture = factory.createCodeInsightFixture(builder.fixture, temp)
         fixture?.setUp()
