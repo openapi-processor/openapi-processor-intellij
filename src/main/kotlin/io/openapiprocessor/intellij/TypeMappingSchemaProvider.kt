@@ -22,14 +22,8 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
 
         val start = String(file.virtualFile.inputStream.readNBytes(64))
         val regex = Regex("""^${TypeMappingFileType.KEY}:\s+(v\d+)\s*$""", RegexOption.MULTILINE)
-
-        val match = regex.find(start)
-        if (match == null)
-            return null
-
-        val version = match.groups[1]
-        if (version == null)
-            return null
+        val match = regex.find(start) ?: return null
+        val version = match.groups[1] ?: return null
 
         return getSchema(version.value)
     }
