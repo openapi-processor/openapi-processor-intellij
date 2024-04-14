@@ -22,8 +22,8 @@ repositories {
 }
 
 dependencies {
-//    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
-//    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.2")
+    testImplementation(libs.kotest)
+    testRuntimeOnly(libs.junit)
 }
 
 // Use Java 11 for 2020.3+, and Java 17 for 2022.2+.

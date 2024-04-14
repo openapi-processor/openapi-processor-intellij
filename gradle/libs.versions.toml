@@ -1,6 +1,8 @@
 [versions]
 # libraries
 annotations = "24.1.0"
+kotest = "5.8.1"
+junit = "5.10.2"
 
 # plugins
 kotlin = "1.9.23"
@@ -12,6 +14,8 @@ versions = "0.51.0"
 
 [libraries]
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+kotest = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+junit = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit" }
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
