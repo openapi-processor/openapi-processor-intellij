@@ -11,7 +11,6 @@ import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
-import com.intellij.psi.PsiFile
 import org.jetbrains.yaml.YAMLLanguage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
