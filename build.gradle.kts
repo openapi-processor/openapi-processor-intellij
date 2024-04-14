@@ -80,9 +80,9 @@ tasks {
         useJUnitPlatform()
     }
 
-//    buildSearchableOptions {
-//      enabled = false
-//    }
+    buildSearchableOptions {
+      enabled = false
+    }
 
     patchPluginXml {
         version = properties("pluginVersion")
