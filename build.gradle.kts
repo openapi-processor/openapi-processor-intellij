@@ -22,13 +22,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.2")
+//    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
+//    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.2")
 }
 
 // Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
 kotlin {
     jvmToolchain(11)
+//    jvmToolchain(17)
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -54,12 +55,12 @@ changelog {
 }
 
 // Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
-qodana {
-    cachePath = provider { file(".qodana").canonicalPath }
-    reportPath = provider { file("build/reports/inspections").canonicalPath }
-    saveReport = true
-    showReport = environment("QODANA_SHOW_REPORT").map { it.toBoolean() }.getOrElse(false)
-}
+//qodana {
+//    cachePath = provider { file(".qodana").canonicalPath }
+//    reportPath = provider { file("build/reports/inspections").canonicalPath }
+//    saveReport = true
+//    showReport = environment("QODANA_SHOW_REPORT").map { it.toBoolean() }.getOrElse(false)
+//}
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
 koverReport {
@@ -79,9 +80,9 @@ tasks {
         useJUnitPlatform()
     }
 
-    buildSearchableOptions {
-      enabled = false
-    }
+//    buildSearchableOptions {
+//      enabled = false
+//    }
 
     patchPluginXml {
         version = properties("pluginVersion")

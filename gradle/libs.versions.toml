@@ -6,7 +6,7 @@ annotations = "24.1.0"
 kotlin = "1.9.23"
 changelog = "2.2.0"
 gradleIntelliJPlugin = "1.17.3"
-qodana = "0.1.13"
+qodana = "2023.3.1"
 kover = "0.7.6"
 versions = "0.51.0"
 
@@ -20,4 +20,3 @@ kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 qodana = { id = "org.jetbrains.qodana", version.ref = "qodana" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
-
