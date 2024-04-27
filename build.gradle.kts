@@ -116,6 +116,16 @@ tasks {
         }
     }
 
+    runPluginVerifier {
+        // listProductReleases
+        ideVersions = listOf(
+            "IU-241.15989.69",
+            "IU-2023.3.6",
+            "IU-2023.2.6",
+            "IU-2023.1.6"
+        )
+    }
+
     // Configure UI tests plugin
     // Read more: https://github.com/JetBrains/intellij-ui-test-robot
     runIdeForUiTests {
