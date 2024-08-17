@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2024.2-SNAPSHOT.1]
+
 - IDEA 2024.3 compatibility
 
 ## [2024.1]
@@ -96,7 +98,7 @@
 - auto-detect the `mapping.yaml` file and set the json schema for editing support (autocompletion & validation)
 - add openapi-processor icon for `mapping.yaml`
 
-[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2024.1...HEAD
+[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2024.2-SNAPSHOT.1...HEAD
 [2022.2.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2022.1...v2022.2.1
 [2021.1-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/commits/v2021.1-SNAPSHOT.1
 [2021.1-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2021.1-SNAPSHOT.1...v2021.1-SNAPSHOT.2
@@ -117,3 +119,4 @@
 [2023.3-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2023.3-SNAPSHOT.1...v2023.3-SNAPSHOT.2
 [2023.3-SNAPSHOT.3]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2023.3-SNAPSHOT.2...v2023.3-SNAPSHOT.3
 [2024.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2023.3-SNAPSHOT.3...v2024.1
+[2024.2-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2024.1...v2024.2-SNAPSHOT.1
