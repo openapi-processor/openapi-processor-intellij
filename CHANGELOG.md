@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- IDEA 2024.3 compatibility
+
 ## [2024.1]
 
 - dynamic detection of `mapping.yaml` json schema.<br> i.e. it is no longer necessary to wait for a new version that supports the new mapping schema version. This removes the openapi-processor schemas from IntelliJ's json mappings.
