@@ -5,11 +5,11 @@ kotest = "5.9.1"
 junit = "5.10.3"
 
 # plugins
-kotlin = "1.9.24"
-changelog = "2.2.0"
-gradleIntelliJPlugin = "1.17.4"
-qodana = "2024.1.5"
-kover = "0.7.6"
+intelliJPlatform = "2.0.1"
+kotlin = "1.9.25"
+changelog = "2.2.1"
+qodana = "2024.1.9"
+kover = "0.8.3"
 versions = "0.51.0"
 
 [libraries]
@@ -18,8 +18,8 @@ kotest = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "ko
 junit = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit" }
 
 [plugins]
+intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
-gradleIntelliJPlugin = { id = "org.jetbrains.intellij", version.ref = "gradleIntelliJPlugin" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 qodana = { id = "org.jetbrains.qodana", version.ref = "qodana" }
