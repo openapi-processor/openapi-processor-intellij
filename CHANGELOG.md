@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- IDEA 2024.3 compatibility
+
 ## [2024.2-SNAPSHOT.1]
 
 - IDEA 2024.3 compatibility
