@@ -5,10 +5,10 @@ kotest = "5.9.1"
 junit = "5.10.3"
 
 # plugins
-intelliJPlatform = "2.0.1"
+intelliJPlatform = "2.1.0"
 kotlin = "1.9.25"
 changelog = "2.2.1"
-qodana = "2024.1.9"
+qodana = "2024.2.3"
 kover = "0.8.3"
 versions = "0.51.0"
 
