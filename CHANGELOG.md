@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- maintenance: update to intellij platform plugin 2.0.2 
+
 ## [2024.2]
 
 - IDEA 2024.3 compatibility
