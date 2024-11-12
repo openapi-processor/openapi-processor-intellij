@@ -9,6 +9,22 @@ on:
 
 jobs:
 
+  free-disk-space:
+    name: Free Disk Space
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
   # Prepare and publish the plugin to JetBrains Marketplace repository
   release:
     name: Publish Plugin
