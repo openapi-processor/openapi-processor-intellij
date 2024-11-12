@@ -13,7 +13,7 @@ import com.intellij.util.io.directoryContent
 import io.openapiprocessor.intellij.support.HeavyBaseTestCase
 import java.io.File
 
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class SimpleModules
 

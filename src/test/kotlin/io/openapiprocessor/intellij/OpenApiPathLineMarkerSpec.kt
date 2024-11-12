@@ -13,7 +13,6 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.runInEdtAndGet
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.shouldBe
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import io.openapiprocessor.intellij.support.methods
 
