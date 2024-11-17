@@ -45,8 +45,7 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
         val module = findModule(element.containingFile)
             ?: return
 
-        val target = element.project
-            .service<TargetPackageService>()
+        val target = service<TargetPackageService>()
             .findPackageDir(pkgName, module)
 
         if (target != null) {
