@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2024.3-SNAPSHOT.2]
+
+- simpler targetDir lookup
+
 ## [2024.3-SNAPSHOT.1]
 
 - maintenance: update to intellij platform plugin 2.0.2
