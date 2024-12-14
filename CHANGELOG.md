@@ -10,7 +10,7 @@
 
 ## [2024.3-SNAPSHOT.1]
 
-- maintenance: update to intellij platform plugin 2.0.2
+- build maintenance
 
 ## [2024.2]
 
