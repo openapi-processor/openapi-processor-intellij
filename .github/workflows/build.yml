@@ -46,6 +46,7 @@ jobs:
   # Prepare environment and build the plugin
   build:
     name: Build
+    needs: [ free-disk-space ]
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.properties.outputs.version }}
