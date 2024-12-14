@@ -4,8 +4,6 @@
 
 ## [Unreleased]
 
-## [2024.3-SNAPSHOT.2]
-
 - simpler targetDir lookup
 
 ## [2024.3-SNAPSHOT.1]
