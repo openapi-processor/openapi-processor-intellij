@@ -28,13 +28,14 @@ class TargetPackageFinderTest: HeavyBaseTestCase() {
         val module = ModuleUtil.findModuleForFile(mapping)!!
 
         // when
-        val target = project
+        val targets = project
             .service<TargetPackageService>()
-            .findPackageDir("io.openapiprocessor", module)
+            .findPackageDirs("io.openapiprocessor", module)
 
         // then
+        val target = targets.first()
         val expected = getBaseRelativePsiDir("build/openapi/io/openapiprocessor")
-        assertEquals(expected.virtualFile.path, target?.virtualFile?.path)
+        assertEquals(expected.virtualFile.path, target.virtualFile.path)
     }
 
 }

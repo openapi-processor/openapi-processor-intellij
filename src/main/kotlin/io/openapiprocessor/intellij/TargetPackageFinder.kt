@@ -9,5 +9,5 @@ import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiDirectory
 
 interface TargetPackageFinder {
-    fun findPackageDir(pkgName: String, mappingModule: Module): PsiDirectory?
+    fun findPackageDirs(pkgName: String, mappingModule: Module): List<PsiDirectory>
 }
