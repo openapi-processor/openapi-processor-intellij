@@ -29,6 +29,10 @@ Adds support for the [openapi-processor](https://openapiprocessor.io/oap/home/ho
   Download the [latest release](https://github.com/openapi-processor/openapi-processor-intellij/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
+## Logging
+
+* to enable debug logging add "io.openapiprocessor.intellij:trace" into Help/Diagnostic Tools/Debug Log Settings...
+
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
