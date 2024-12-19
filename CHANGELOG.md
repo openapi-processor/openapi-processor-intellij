@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- reimplemented (unreliable) `package-name` navigation as package navigation popup. 
+
 ## [2024.3-SNAPSHOT.2]
 
 - simpler targetDir lookup
