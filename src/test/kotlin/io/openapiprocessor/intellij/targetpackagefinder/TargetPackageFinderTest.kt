@@ -7,6 +7,8 @@ package io.openapiprocessor.intellij.targetpackagefinder
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.module.ModuleUtil
+import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldHaveSize
 import io.openapiprocessor.intellij.TargetPackageService
 import io.openapiprocessor.intellij.support.HeavyBaseTestCase
 
@@ -23,7 +25,7 @@ class TargetPackageFinderTest: HeavyBaseTestCase() {
     }
 
     @SimpleModules
-    fun `test finds target package directory`() {
+    fun `test finds target package directories`() {
         val mapping = getBaseRelativePsiFile("src/api/mapping.yaml")
         val module = ModuleUtil.findModuleForFile(mapping)!!
 
@@ -33,9 +35,12 @@ class TargetPackageFinderTest: HeavyBaseTestCase() {
             .findPackageDirs("io.openapiprocessor", module)
 
         // then
-        val target = targets.first()
-        val expected = getBaseRelativePsiDir("build/openapi/io/openapiprocessor")
-        assertEquals(expected.virtualFile.path, target.virtualFile.path)
-    }
+        targets.shouldHaveSize(3)
 
+        val expectedMain = getBaseRelativePsiDir("src/main/io/openapiprocessor")
+        val expectedTest = getBaseRelativePsiDir("src/test/io/openapiprocessor")
+        val expectedApi = getBaseRelativePsiDir("build/openapi/io/openapiprocessor")
+
+        targets.shouldContainAll(expectedMain, expectedTest, expectedApi)
+    }
 }

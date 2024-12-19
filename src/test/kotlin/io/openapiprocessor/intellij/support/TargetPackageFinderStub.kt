@@ -11,8 +11,7 @@ import io.openapiprocessor.intellij.TargetPackageFinder
 
 class TargetPackageFinderStub(private val pkg: PsiDirectory?) : TargetPackageFinder {
 
-    override fun findPackageDir(pkgName: String, mappingModule: Module): PsiDirectory? {
-        return pkg
+    override fun findPackageDirs(pkgName: String, mappingModule: Module): List<PsiDirectory> {
+        return if (pkg == null) emptyList() else listOf(pkg)
     }
-
 }
