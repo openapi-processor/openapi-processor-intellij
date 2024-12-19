@@ -53,6 +53,7 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
                 .setPopupTitle(POPUP_TITLE)
                 .setEmptyPopupText("Could not find interface")
                 .setTargets(targets)
+
             result.add(builder.createLineMarkerInfo(path.key!!))
         }
     }
