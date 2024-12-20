@@ -2,7 +2,7 @@
 # libraries
 annotations = "26.0.1"
 kotest = "5.9.1"
-junit = "5.11.3"
+junit = "5.11.4"
 
 # plugins
 intelliJPlatform = "2.2.1"
