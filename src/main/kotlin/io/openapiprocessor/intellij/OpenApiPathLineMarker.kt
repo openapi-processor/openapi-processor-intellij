@@ -47,7 +47,7 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
             val targets = pathTargetService.findPathTargets(path.project, path.keyText)
 
             val builder = NavigationGutterIconBuilder
-                .create(Support.ICON)
+                .create(Support.NAVIGATE_TO_INTERFACE)
                 .setTooltipTitle("OpenAPI Processor")
                 .setTooltipText(TOOLTIP_TEXT)
                 .setPopupTitle(POPUP_TITLE)
@@ -65,7 +65,7 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
     }
 
     object Support {
-        val ICON = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
+        val NAVIGATE_TO_INTERFACE = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
     }
 
     companion object {
