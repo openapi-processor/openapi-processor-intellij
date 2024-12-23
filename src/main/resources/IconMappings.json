@@ -2,7 +2,8 @@
   "icons": {
     "expui": {
       "fileTypes": {
-        "mapping.svg": "icons/mapping.svg"
+        "mapping.svg": "icons/mapping.svg",
+        "openApi.svg": "icons/openApi.svg"
       }
     }
   }
