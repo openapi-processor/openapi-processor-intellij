@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- navigate from (generated) interface to OpenAPI
 - reimplemented (unreliable) `package-name` navigation as package navigation popup. 
 
 ## [2024.3-SNAPSHOT.2]
