@@ -42,7 +42,6 @@ class PathTargetService {
     private fun getAnnotations(project: Project, annotation: Annotation): Collection<PsiAnnotation> {
         return JavaAnnotationIndex
             .getInstance()
-            // getAnnotations()
-            .get(annotation.name, project, GlobalSearchScope.allScope(project))
+            .getAnnotations(annotation.name, project, GlobalSearchScope.allScope(project))
     }
 }
