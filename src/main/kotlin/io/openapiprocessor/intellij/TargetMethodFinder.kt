@@ -44,6 +44,6 @@ class TargetMethodFinder {
     private fun getAnnotations(annotation: Annotation, project: Project): Collection<PsiAnnotation> {
         return JavaAnnotationIndex
             .getInstance()
-            .get(annotation.name, project, GlobalSearchScope.allScope(project))
+            .getAnnotations(annotation.name, project, GlobalSearchScope.allScope(project))
     }
 }
