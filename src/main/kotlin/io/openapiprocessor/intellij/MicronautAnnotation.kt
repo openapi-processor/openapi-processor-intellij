@@ -15,6 +15,25 @@ class MicronautAnnotation(
 ): Annotation {
     override val pkg: String = "io.micronaut.http.annotation"
 
+    override fun path(psi: PsiAnnotation): String? {
+        val value = psi.findAttributeValue("uri")
+        if (value !is PsiLiteralExpression)
+            return null
+
+        return PsiLiteralUtil.getStringLiteralContent(value)
+    }
+
+    override fun matches(psi: PsiAnnotation): Boolean {
+        if (!psi.hasQualifiedName(qualifiedName))
+            return false
+
+        val value = psi.findAttributeValue("uri")
+        if (value !is PsiLiteralExpression)
+            return false
+
+        return true
+    }
+
     override fun matches(psi: PsiAnnotation, path: String): Boolean {
         if (!psi.hasQualifiedName(qualifiedName))
             return false

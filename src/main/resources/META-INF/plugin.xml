@@ -29,6 +29,10 @@
             language="yaml"
             implementationClass="io.openapiprocessor.intellij.OpenApiPathLineMarker"/>
 
+        <codeInsight.lineMarkerProvider
+            language="JAVA"
+            implementationClass="io.openapiprocessor.intellij.MappingAnnotationLineMarker"/>
+
         <iconMapper mappingFile="IconMappings.json"/>
     </extensions>
 

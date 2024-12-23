@@ -14,6 +14,18 @@ class SpringRequestAnnotation(override val method: String): Annotation {
     override val pkg: String = "org.springframework.web.bind.annotation"
     override val name: String = "RequestMapping"
 
+    override fun path(psi: PsiAnnotation): String? {
+        val value = psi.findAttributeValue("path")
+        if (value !is PsiLiteralExpression)
+            return null
+
+        return PsiLiteralUtil.getStringLiteralContent(value)
+    }
+
+    override fun matches(psi: PsiAnnotation): Boolean {
+        return false
+    }
+
     override fun matches(psi: PsiAnnotation, path: String): Boolean {
         if (!psi.hasQualifiedName(qualifiedName))
             return false

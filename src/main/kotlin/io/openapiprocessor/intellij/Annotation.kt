@@ -15,5 +15,7 @@ interface Annotation {
 
     val method: String
 
+    fun path(psi: PsiAnnotation): String?
+    fun matches(psi: PsiAnnotation): Boolean
     fun matches(psi: PsiAnnotation, path: String): Boolean
 }
