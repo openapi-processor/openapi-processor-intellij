@@ -15,9 +15,9 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-// Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+// 21 for 2024.2+
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 repositories {
