@@ -44,7 +44,7 @@ private fun findKeys(file: PsiFile): List<YamlKey> {
     if (file !is YAMLFile)
         return emptyList()
 
-    log.debug("indexing file: {}, ", file.virtualFile.path)
+    log.debug("indexing file: {}", file.virtualFile.path)
 
     val keys = mutableListOf<YamlKey>()
 
