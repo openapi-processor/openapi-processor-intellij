@@ -38,18 +38,20 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         }
 
         val apiPath = match.path(annotation)
-        val searchTerm = "paths.${apiPath}"
         val module = findModule(element) ?: return
 
         val scope = GlobalSearchScope.moduleScope(module)
-        val targets = findPsiElementsOfPath(searchTerm, scope, element.project)
+        val targets = findPsiElementsOfPath(apiPath!!, scope, element.project)
+
+        if (targets.isEmpty()) {
+            log.warn("found no targets!")
+            return
+        }
 
         val builder = NavigationGutterIconBuilder
-            .create(Support.NAVIGATE_TO_OPENAPI)
-            .setTooltipTitle(POPUP_TITLE)
-            .setTooltipText(TOOLTIP_TEXT)
-            .setPopupTitle(POPUP_TITLE)
-            .setEmptyPopupText("No match")
+            .create(icon)
+            .setTooltipText(I18n.TOOLTIP_TEXT)
+            .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(*targets.toTypedArray())
 
         result.add(builder.createLineMarkerInfo(element))
@@ -100,12 +102,10 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
       return findPathInYaml(path, searchScope, project)
     }
 
-    object Support {
-        val NAVIGATE_TO_OPENAPI = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
-    }
+    private val icon = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
 
-    companion object {
-        const val TOOLTIP_TEXT = "Navigate to OpenAPI description"
-        const val POPUP_TITLE = "Navigate to OpenAPI"
+    object I18n {
+        val TOOLTIP_TEXT = i18n("line.marker.java.mapping.annotation.tooltip")
+        val POPUP_TITLE = i18n("line.marker.java.mapping.annotation.title")
     }
 }

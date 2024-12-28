@@ -101,24 +101,18 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
 
 
         if (targets.isEmpty()) {
-            val builder = NavigationGutterIconBuilder
-                .create(getPackageIcon())
-                .setTarget(element)
-                .setTooltipText(PACKAGE_MISSING_TOOLTIP_TEXT)
-
-            result.add(builder.createLineMarkerInfo(element))
-
-        } else {
-            val builder = NavigationGutterIconBuilder
-                .create(getPackageIcon())
-                .setTooltipTitle(PACKAGE_POPUP_TITLE)
-                .setTooltipText(PACKAGE_EXISTS_TOOLTIP_TEXT)
-                .setPopupTitle(PACKAGE_POPUP_TITLE)
-                .setTargets(targets)
-                .setTargetRenderer(y)
-
-            result.add(builder.createLineMarkerInfo(element))
+            log.warn("found no targets!")
+            return
         }
+
+        val builder = NavigationGutterIconBuilder
+            .create(getPackageIcon())
+            .setTooltipText(I18n.TOOLTIP_TEXT)
+            .setPopupTitle(I18n.POPUP_TITLE)
+            .setTargets(targets)
+            .setTargetRenderer(y)
+
+        result.add(builder.createLineMarkerInfo(element))
     }
 
     private fun addLocations(pkgDirs: List<PsiDirectory>): List<Directory> {
@@ -166,10 +160,13 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
         return AllIcons.Modules.GeneratedFolder
     }
 
+    object I18n {
+        val TOOLTIP_TEXT = i18n("line.marker.type.mapping.package.tooltip")
+        val POPUP_TITLE = i18n("line.marker.type.mapping.package.title")
+    }
+
     companion object {
         const val PACKAGE_KEY = "package-name"
-        const val PACKAGE_POPUP_TITLE = "Package Locations"
-        const val PACKAGE_EXISTS_TOOLTIP_TEXT = "Navigate to package"
-        const val PACKAGE_MISSING_TOOLTIP_TEXT = "Package does not yet exists"
+//        const val PACKAGE_MISSING_TOOLTIP_TEXT = "Package does not yet exists"
     }
 }
