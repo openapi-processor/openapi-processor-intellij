@@ -26,6 +26,7 @@ fun findPathInYaml(path: String, searchScope: GlobalSearchScope, project: Projec
   return findYamlFilesWithPath(path, yamlSearchScope, project)
       .distinct()
       .flatMap(::lookupKey)
+      .filter { key -> key.key == "paths.${path}" }
 }
 
 private fun findYamlFilesWithPath(path: String, searchScope: GlobalSearchScope, project: Project): List<YAMLFile> {
