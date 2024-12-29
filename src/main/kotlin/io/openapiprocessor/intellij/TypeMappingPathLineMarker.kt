@@ -54,7 +54,7 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
             }
 
             val builder = NavigationGutterIconBuilder
-                .create(icon)
+                .create(Icon.`interface`)
                 .setTooltipText(I18n.TOOLTIP_TEXT)
                 .setPopupTitle(I18n.POPUP_TITLE)
                 .setTargets(targets)
@@ -67,7 +67,9 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         return file.viewProvider.fileType is TypeMappingFileType
     }
 
-    private val icon = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
+    object Icon {
+        val `interface` = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
+    }
 
     object I18n {
         val TOOLTIP_TEXT = i18n("line.marker.type.mapping.path.tooltip")

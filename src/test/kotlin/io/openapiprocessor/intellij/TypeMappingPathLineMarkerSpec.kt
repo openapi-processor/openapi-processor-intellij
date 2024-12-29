@@ -31,7 +31,6 @@ class TypeMappingPathLineMarkerSpec: StringSpec({
             .first()
     }
 
-
     beforeTest {
         fixture().testDataPath = "src/test/testdata/path-to-methods"
     }
@@ -55,11 +54,10 @@ class TypeMappingPathLineMarkerSpec: StringSpec({
                 getMethod("traceFoo")
             )
 
-            val gutter = gutters.first {
-                it.icon == TypeMappingPathLineMarker.Support.ICON
-            }
+            val gutter = gutters.first()
 
-            gutter.tooltipText shouldBe TypeMappingPathLineMarker.TOOLTIP_TEXT
+            gutter.icon shouldBe TypeMappingPathLineMarker.Icon.`interface`
+            gutter.tooltipText shouldBe TypeMappingPathLineMarker.I18n.TOOLTIP_TEXT
             gutter.methods shouldContainExactly expected
         }
     }
@@ -83,11 +81,10 @@ class TypeMappingPathLineMarkerSpec: StringSpec({
                 getMethod("traceFoo")
             )
 
-            val gutter = gutters.first {
-                it.icon == TypeMappingPathLineMarker.Support.ICON
-            }
+            val gutter = gutters.first()
 
-            gutter.tooltipText shouldBe TypeMappingPathLineMarker.TOOLTIP_TEXT
+            gutter.icon shouldBe TypeMappingPathLineMarker.Icon.`interface`
+            gutter.tooltipText shouldBe TypeMappingPathLineMarker.I18n.TOOLTIP_TEXT
             gutter.methods shouldContainExactly expected
         }
     }
