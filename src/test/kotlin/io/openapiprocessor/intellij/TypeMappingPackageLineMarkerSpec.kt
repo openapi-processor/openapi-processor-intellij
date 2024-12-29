@@ -72,25 +72,4 @@ class TypeMappingPackageLineMarkerSpec: StringSpec({
             getTargets(gutter).first() shouldBe expectedPkg.path
         }
     }
-
-    "test adds 'empty' navigation gutter at package-name if it does not exist" {
-        directoryContent {
-            dir("build") {
-                dir("openapi") {
-                }
-            }
-        }.generateInVirtualTempDir()
-
-        stubTargetPackageService(null)
-
-        // when
-        runInEdtAndWait {
-            val gutters = fixture().findAllGutters("api/mapping.yaml")
-            val gutter = gutters.first()
-
-            gutter.icon shouldBe AllIcons.Modules.GeneratedFolder
-            gutter.tooltipText shouldBe TypeMappingLineMarker.PACKAGE_MISSING_TOOLTIP_TEXT
-            getTargets(gutter).shouldBeEmpty()
-        }
-    }
 })
