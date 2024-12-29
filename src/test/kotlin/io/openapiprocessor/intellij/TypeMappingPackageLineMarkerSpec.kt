@@ -15,13 +15,12 @@ import com.intellij.testFramework.runInEdtAndWait
 import com.intellij.util.io.directoryContent
 import com.intellij.util.io.generateInVirtualTempDir
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import io.openapiprocessor.intellij.support.TargetPackageFinderStub
 import io.openapiprocessor.intellij.support.getTargets
 
-class LineMarkerSpec: StringSpec({
+class TypeMappingPackageLineMarkerSpec: StringSpec({
     val test = register(LightCodeInsightListener())
 
     fun fixture(): CodeInsightTestFixture {
@@ -68,7 +67,8 @@ class LineMarkerSpec: StringSpec({
             val gutter = gutters.first()
 
             gutter.icon shouldBe AllIcons.Modules.GeneratedFolder
-            gutter.tooltipText shouldBe TypeMappingLineMarker.PACKAGE_EXISTS_TOOLTIP_TEXT
+            gutter.tooltipText shouldBe TypeMappingPackageLineMarker.I18n.TOOLTIP_TEXT
+
             getTargets(gutter).first() shouldBe expectedPkg.path
         }
     }

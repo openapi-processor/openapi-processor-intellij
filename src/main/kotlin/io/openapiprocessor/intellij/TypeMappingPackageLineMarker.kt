@@ -25,12 +25,12 @@ import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.function.Supplier
-import javax.swing.Icon
+import javax.swing.Icon as JIcon
 
 /**
  * line marker for the package-name key in the mapping.yaml. It navigates to any folder with the same package name.
  */
-class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
+class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     class Renderer() : PsiTargetPresentationRenderer<PsiElement>() {
@@ -43,7 +43,7 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
             return SymbolPresentationUtil.getSymbolPresentableText(element)
         }
 
-        override fun getIcon(element: PsiElement): Icon? {
+        override fun getIcon(element: PsiElement): JIcon? {
             return element.getIcon(Iconable.ICON_FLAG_VISIBILITY)
         }
 
@@ -106,7 +106,7 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
         }
 
         val builder = NavigationGutterIconBuilder
-            .create(getPackageIcon())
+            .create(Icon.`package`)
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(targets)
@@ -156,8 +156,8 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
         return file.viewProvider.fileType is TypeMappingFileType
     }
 
-    private fun getPackageIcon(): Icon {
-        return AllIcons.Modules.GeneratedFolder
+    object Icon {
+        val `package` = AllIcons.Modules.GeneratedFolder
     }
 
     object I18n {
@@ -167,6 +167,5 @@ class TypeMappingLineMarker : RelatedItemLineMarkerProvider() {
 
     companion object {
         const val PACKAGE_KEY = "package-name"
-//        const val PACKAGE_MISSING_TOOLTIP_TEXT = "Package does not yet exists"
     }
 }

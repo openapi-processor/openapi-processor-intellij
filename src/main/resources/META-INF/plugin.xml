@@ -19,7 +19,7 @@
 
         <codeInsight.lineMarkerProvider
             language="yaml"
-            implementationClass="io.openapiprocessor.intellij.TypeMappingLineMarker"/>
+            implementationClass="io.openapiprocessor.intellij.TypeMappingPackageLineMarker"/>
 
         <codeInsight.lineMarkerProvider
             language="yaml"
