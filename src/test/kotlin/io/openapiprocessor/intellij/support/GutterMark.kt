@@ -36,7 +36,7 @@ private fun getTargets(handler: NavigationGutterIconRenderer): List<String> {
 }
 
 private fun getMethods(handler: NavigationGutterIconRenderer): List<PsiMethod> {
-    return handler.targetElements.filterIsInstance(PsiMethod::class.java)
+    return handler.targetElements.filterIsInstance<PsiMethod>()
 }
 
 private fun getHandler(gutter: GutterMark): NavigationGutterIconRenderer {
