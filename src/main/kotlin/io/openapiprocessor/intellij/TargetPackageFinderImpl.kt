@@ -5,6 +5,7 @@
 
 package io.openapiprocessor.intellij
 
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.module.Module
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiDirectory
@@ -13,8 +14,8 @@ import org.slf4j.LoggerFactory
 
 /**
  * find the package directories of the `package-name` configuration in the `mapping.yaml`.
- *
  */
+@Service
 class TargetPackageFinderImpl : TargetPackageFinder {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
