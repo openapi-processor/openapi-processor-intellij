@@ -49,7 +49,7 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         }
 
         val builder = NavigationGutterIconBuilder
-            .create(icon)
+            .create(Icon.openapi)
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(*targets.toTypedArray())
@@ -102,7 +102,9 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
       return findPathInYaml(path, searchScope, project)
     }
 
-    private val icon = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
+    object Icon {
+        val openapi = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
+    }
 
     object I18n {
         val TOOLTIP_TEXT = i18n("line.marker.java.mapping.annotation.tooltip")
