@@ -1,6 +1,6 @@
 .intellijPlatform
 .gradle
 .idea
-.intellijPlatform
+.run
 .qodana
 build
