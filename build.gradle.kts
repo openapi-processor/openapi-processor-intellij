@@ -146,7 +146,12 @@ tasks {
     }
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
 intellijPlatformTesting {
+
     runIde {
         register("runIdeForUiTests") {
             task {
