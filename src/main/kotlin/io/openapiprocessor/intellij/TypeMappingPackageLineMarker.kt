@@ -24,7 +24,6 @@ import com.intellij.util.TextWithIcon
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.function.Supplier
 import javax.swing.Icon as JIcon
 
 /**
@@ -95,11 +94,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         val pkgDirs = service<TargetPackageService>()
             .findPackageDirs(pkgName, module)
 
-        val targets = addLocations(pkgDirs!!)
-
-        val y = Supplier<PsiTargetPresentationRenderer<PsiElement>> { Renderer() }
-
-
+        val targets = addLocations(pkgDirs)
         if (targets.isEmpty()) {
             log.warn("found no targets!")
             return
@@ -110,7 +105,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(targets)
-            .setTargetRenderer(y)
+            .setTargetRenderer { Renderer() }
 
         result.add(builder.createLineMarkerInfo(element))
     }
