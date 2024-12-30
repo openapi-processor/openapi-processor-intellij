@@ -5,25 +5,58 @@
 
 package io.openapiprocessor.intellij.listener
 
+import com.intellij.codeInsight.daemon.GutterMark
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiDirectory
+import com.intellij.testFramework.LightPlatformTestCase
+import com.intellij.testFramework.TestDataFile
+import com.intellij.testFramework.VfsTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
+import com.intellij.testFramework.fixtures.TempDirTestFixture
 import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl
+import com.intellij.testFramework.replaceService
 import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
 
-class LightCodeInsightListener : TestListener {
+class LightCodeInsightListener(private var testDataPath: String? = null) : TestListener {
     var fixture: CodeInsightTestFixture? = null
+    private var tmpDirFixture: TempDirTestFixture? = null
 
     override suspend fun beforeTest(testCase: TestCase) {
         val factory = IdeaTestFixtureFactory.getFixtureFactory()
         val builder = factory.createLightFixtureBuilder(testCase.name.testName)
-        val temp = LightTempDirTestFixtureImpl(true)
-        fixture = factory.createCodeInsightFixture(builder.fixture, temp)
-        fixture?.setUp()
+        tmpDirFixture = LightTempDirTestFixtureImpl(true)
+
+        fixture = factory.createCodeInsightFixture(builder.fixture, tmpDirFixture!!)
+        if (testDataPath != null) {
+            fixture!!.testDataPath = testDataPath!!
+        }
+
+        fixture!!.setUp()
     }
 
     override suspend fun afterTest(testCase: TestCase, result: TestResult) {
-        fixture?.tearDown()
+        fixture!!.tearDown()
+    }
+
+    val project get() = fixture!!.project!!
+
+    fun createDir(path: String): VirtualFile {
+        return VfsTestUtil.createDir(LightPlatformTestCase.getSourceRoot(), path)
+    }
+
+    fun findPsiDir(path: VirtualFile): PsiDirectory {
+        return fixture!!.psiManager.findDirectory(path)!!
+    }
+
+    fun <T : Any> replaceService(serviceInterface: Class<T>, instance: T) {
+        ApplicationManager.getApplication().replaceService(serviceInterface, instance, fixture!!.testRootDisposable)
+    }
+
+    fun findAllGutters(@TestDataFile filePath: String): List<GutterMark> {
+        return fixture!!.findAllGutters(filePath)
     }
 }
