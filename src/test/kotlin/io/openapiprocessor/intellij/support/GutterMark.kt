@@ -16,6 +16,9 @@ import com.intellij.psi.PsiMethod
 val GutterMark.methods: List<PsiElement>
     get() = getMethods(getHandler(this))
 
+val GutterMark.psiTargets: List<PsiElement>
+    get() = getHandler(this).targetElements
+
 
 fun getTargets(gutterMark: GutterMark): List<String> {
     return getTargets(getHandler(gutterMark))
@@ -36,7 +39,7 @@ private fun getTargets(handler: NavigationGutterIconRenderer): List<String> {
 }
 
 private fun getMethods(handler: NavigationGutterIconRenderer): List<PsiMethod> {
-    return handler.targetElements.filterIsInstance(PsiMethod::class.java)
+    return handler.targetElements.filterIsInstance<PsiMethod>()
 }
 
 private fun getHandler(gutter: GutterMark): NavigationGutterIconRenderer {

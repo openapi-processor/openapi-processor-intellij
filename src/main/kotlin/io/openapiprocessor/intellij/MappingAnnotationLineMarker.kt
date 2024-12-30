@@ -9,17 +9,13 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.openapi.module.Module
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.util.IconLoader
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiManager
+import com.intellij.psi.*
 import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.util.CommonProcessors
+import com.intellij.psi.util.firstLeaf
 import com.intellij.util.IconUtil
-import com.intellij.util.indexing.FileBasedIndex
-import org.jetbrains.yaml.navigation.YAMLKeysIndex
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -30,33 +26,41 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         element: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-       if (element !is PsiAnnotation) {
-           return
-       }
+        if (element !is PsiIdentifier) {
+            return
+        }
 
-        val match = Annotations.KNOWN
-            .firstOrNull { it.matches(element) }
+        val annotation = getAnnotation(element) ?: return
 
+        val match = Annotations.KNOWN.firstOrNull { it.matches(annotation) }
         if (match == null) {
             return
         }
 
-        val apiPath = match.path(element)
-        val searchTerm = "paths.${apiPath}"
+        val apiPath = match.path(annotation)
         val module = findModule(element) ?: return
 
         val scope = GlobalSearchScope.moduleScope(module)
-        val targets = findPsiElement(element, searchTerm, scope)
+        val targets = findPsiElementsOfPath(apiPath!!, scope, element.project)
+
+        if (targets.isEmpty()) {
+            log.warn("found no targets!")
+            return
+        }
 
         val builder = NavigationGutterIconBuilder
-            .create(Support.NAVIGATE_TO_OPENAPI)
-            .setTooltipTitle(POPUP_TITLE)
-            .setTooltipText(TOOLTIP_TEXT)
-            .setPopupTitle(POPUP_TITLE)
-            .setEmptyPopupText("No match")
+            .create(Icon.openapi)
+            .setTooltipText(I18n.TOOLTIP_TEXT)
+            .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(*targets.toTypedArray())
 
         result.add(builder.createLineMarkerInfo(element))
+    }
+
+    private fun getAnnotation(id: PsiIdentifier): PsiAnnotation? {
+        val reference = id.parent as? PsiJavaCodeReferenceElement ?: return null
+        val annotation = reference.parent as? PsiAnnotation ?: return null
+        return annotation
     }
 
     private fun findModule(element: PsiElement): Module? {
@@ -73,45 +77,37 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         return found
     }
 
-    private fun findPsiElement(element: PsiElement, searchTerm: String, searchScope: GlobalSearchScope): List<PsiElement> {
+    private fun findPsiElementsOfPath(path: String, searchScope: GlobalSearchScope, project: Project): List<PsiElement> {
         val targets = mutableListOf<PsiElement>()
 
-        log.debug("looking for yaml file with key '$searchTerm'")
-        val files = CommonProcessors.CollectProcessor<VirtualFile>()
-        FileBasedIndex.getInstance().getFilesWithKey(YAMLKeysIndex.KEY, setOf(searchTerm), files, searchScope)
-        files.results.forEach { f ->
-            log.debug(">> found file '${f.path}'")
-        }
+        log.debug("looking for yaml file with key '$path'")
+        val files = searchForPath(path, searchScope, project)
+        files.forEach { f ->
+            val psiFile = PsiManager.getInstance(project).findFile(f.file)
+            log.debug(">> found psi file {}", f.file.path)
 
-        log.debug("looking for position '$searchTerm'")
-        files.results.forEach { f ->
-            val position = FileBasedIndex.getInstance().getFileData(YAMLKeysIndex.KEY, f, element.project)[searchTerm]
-            log.debug(">> found position {} in '${f.path}'", position)
-
-            if(position == null) {
-                return@forEach
-            }
-
-            val psiFile = PsiManager.getInstance(element.project).findFile(f)
-            val psiElement = psiFile?.findElementAt(position)
-
+            val psiElement = psiFile?.findElementAt(f.offset)
             if (psiElement != null) {
-                log.debug(">> found psi element at position {}", position)
-                targets.add(psiElement)
+                log.debug(">> found psi element at position {}", f.offset)
+                targets.add(psiElement.firstLeaf())
             } else {
-                log.debug(">> found no psi element at position {}", position)
+                log.debug(">> found no psi element at position {}", f.offset)
             }
         }
 
         return targets
     }
 
-    object Support {
-        val NAVIGATE_TO_OPENAPI = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
+    private fun searchForPath(path: String, searchScope: GlobalSearchScope, project: Project): List<YamlKeyWithFile> {
+      return findPathInYaml(path, searchScope, project)
     }
 
-    companion object {
-        const val TOOLTIP_TEXT = "Navigate to OpenAPI path"
-        const val POPUP_TITLE = "Navigate to OpenAPI"
+    object Icon {
+        val openapi = IconUtil.scale(IconLoader.getIcon("/icons/openApi.svg", javaClass), null, 0.875f)
+    }
+
+    object I18n {
+        val TOOLTIP_TEXT = i18n("line.marker.java.mapping.annotation.tooltip")
+        val POPUP_TITLE = i18n("line.marker.java.mapping.annotation.title")
     }
 }

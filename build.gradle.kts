@@ -15,9 +15,9 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-// Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+// 21 for 2024.2+
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 repositories {
@@ -146,7 +146,12 @@ tasks {
     }
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
 intellijPlatformTesting {
+
     runIde {
         register("runIdeForUiTests") {
             task {
@@ -155,7 +160,7 @@ intellijPlatformTesting {
                         "-Drobot-server.port=8082",
                         "-Dide.mac.message.dialogs.as.sheets=false",
                         "-Djb.privacy.policy.text=<!--999.999-->",
-                        "-Djb.consents.confirmation.enabled=false",
+                        "-Djb.consents.confirmation.enabled=false"
                     )
                 }
             }

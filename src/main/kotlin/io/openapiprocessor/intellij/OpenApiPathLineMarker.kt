@@ -46,12 +46,15 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
 
             val targets = pathTargetService.findPathTargets(path.project, path.keyText)
 
+            if (targets.isEmpty()) {
+                log.warn("found no targets!")
+                return@forEach
+            }
+
             val builder = NavigationGutterIconBuilder
-                .create(Support.NAVIGATE_TO_INTERFACE)
-                .setTooltipTitle("OpenAPI Processor")
-                .setTooltipText(TOOLTIP_TEXT)
-                .setPopupTitle(POPUP_TITLE)
-                .setEmptyPopupText("Could not find interface")
+                .create(icon)
+                .setTooltipText(I18n.TOOLTIP_TEXT)
+                .setPopupTitle(I18n.POPUP_TITLE)
                 .setTargets(targets)
 
             result.add(builder.createLineMarkerInfo(path.key!!))
@@ -64,12 +67,10 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
         }
     }
 
-    object Support {
-        val NAVIGATE_TO_INTERFACE = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
-    }
+    private val icon = IconUtil.scale(AllIcons.Nodes.Interface, null, 0.875f)
 
-    companion object {
-        const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
-        const val POPUP_TITLE = "Endpoint Interface Methods"
+    object I18n {
+        val TOOLTIP_TEXT = i18n("line.marker.openapi.path.tooltip")
+        val POPUP_TITLE = i18n("line.marker.openapi.path.title")
     }
 }

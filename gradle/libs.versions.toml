@@ -2,6 +2,7 @@
 # libraries
 annotations = "26.0.1"
 kotest = "5.9.1"
+mockk = "1.9.3"
 junit = "5.11.4"
 
 # plugins
@@ -15,6 +16,7 @@ versions = "0.51.0"
 [libraries]
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
 kotest = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 junit = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit" }
 
 [plugins]

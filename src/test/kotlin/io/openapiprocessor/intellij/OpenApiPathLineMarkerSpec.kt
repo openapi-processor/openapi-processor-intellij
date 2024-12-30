@@ -30,8 +30,7 @@ class OpenApiPathLineMarkerSpec : StringSpec({
     fun getMethod(name: String): PsiMethod {
         return JavaMethodNameIndex
             .getInstance()
-            // getMethods()
-            .get(name, fixture().project, GlobalSearchScope.allScope(fixture().project))
+            .getMethods(name, fixture().project, GlobalSearchScope.allScope(fixture().project))
             .first()
     }
 
