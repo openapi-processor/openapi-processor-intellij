@@ -9,6 +9,7 @@ import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiFile
 import com.intellij.testFramework.LightPlatformTestCase
 import com.intellij.testFramework.TestDataFile
 import com.intellij.testFramework.VfsTestUtil
@@ -52,11 +53,23 @@ class LightCodeInsightListener(private var testDataPath: String? = null) : TestL
         return fixture!!.psiManager.findDirectory(path)!!
     }
 
+    fun copyFileToProject(@TestDataFile sourceFilePath: String): VirtualFile {
+        return fixture!!.copyFileToProject(sourceFilePath)
+    }
+
+    fun copyDirectoryToProject(@TestDataFile sourceFilePath: String, targetPath: String): VirtualFile {
+        return fixture!!.copyDirectoryToProject(sourceFilePath, targetPath)
+    }
+
+    fun configureFromTempProjectFile(sourceFilePath: String): PsiFile {
+        return fixture!!.configureFromTempProjectFile(sourceFilePath)
+    }
+
     fun <T : Any> replaceService(serviceInterface: Class<T>, instance: T) {
         ApplicationManager.getApplication().replaceService(serviceInterface, instance, fixture!!.testRootDisposable)
     }
 
-    fun findAllGutters(@TestDataFile filePath: String): List<GutterMark> {
-        return fixture!!.findAllGutters(filePath)
+    fun findAllGutters(@TestDataFile sourceFilePath: String): List<GutterMark> {
+        return fixture!!.findAllGutters(sourceFilePath)
     }
 }

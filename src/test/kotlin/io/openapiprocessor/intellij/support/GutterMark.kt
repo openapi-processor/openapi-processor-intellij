@@ -16,6 +16,9 @@ import com.intellij.psi.PsiMethod
 val GutterMark.methods: List<PsiElement>
     get() = getMethods(getHandler(this))
 
+val GutterMark.psiTargets: List<PsiElement>
+    get() = getHandler(this).targetElements
+
 
 fun getTargets(gutterMark: GutterMark): List<String> {
     return getTargets(getHandler(gutterMark))
