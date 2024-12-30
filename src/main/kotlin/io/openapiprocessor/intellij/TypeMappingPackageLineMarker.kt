@@ -15,6 +15,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.util.Iconable
+import com.intellij.openapi.util.Key
 import com.intellij.platform.backend.presentation.TargetPresentation
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
@@ -47,15 +48,16 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         }
 
         override fun getPresentation(element: PsiElement): TargetPresentation {
-            if (element !is Directory) {
+            if (element !is PsiDirectory) {
                 return super.getPresentation(element)
             }
 
             val moduleLocation = getModuleLocation(element)
-            val locationText = if (element.location == null) {
+            val packageLocation = element.getUserData(PACKAGE_LOCATION_USER_KEY)
+            val locationText = if (packageLocation == null) {
                 moduleLocation?.text
             } else {
-                "${element.location}     ${moduleLocation?.text}"
+                "$packageLocation     ${moduleLocation?.text}"
             }
 
             return TargetPresentation.builder(getElementText(element))
@@ -69,8 +71,6 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
             return ModuleRendererFactory.findInstance(element).getModuleTextWithIcon(element)
         }
     }
-
-    class Directory(val location: String?, private val delegate: PsiDirectory) : PsiDirectory by delegate, PsiElement
 
     override fun collectNavigationMarkers(
         element: PsiElement,
@@ -110,10 +110,9 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         result.add(builder.createLineMarkerInfo(element))
     }
 
-    private fun addLocations(pkgDirs: List<PsiDirectory>): List<Directory> {
+    private fun addLocations(pkgDirs: List<PsiDirectory>): List<PsiDirectory> {
         if (pkgDirs.size < 2) {
             return pkgDirs
-                .map { Directory(null, it) }
         }
 
         val commonPrefix = pkgDirs
@@ -134,7 +133,11 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
 
         return pkgDirs
             .map {
-                Directory(it.virtualFile.path.drop(commonPrefix.length).dropLast(commonSuffix.length), it)
+                it.putUserData(
+                    PACKAGE_LOCATION_USER_KEY,
+                    it.virtualFile.path.drop(commonPrefix.length).dropLast(commonSuffix.length)
+                )
+                it
             }
     }
 
@@ -164,3 +167,5 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         const val PACKAGE_KEY = "package-name"
     }
 }
+
+private val PACKAGE_LOCATION_USER_KEY: Key<String> = Key.create("openapiprocessor.package-location")
