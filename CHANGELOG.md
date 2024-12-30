@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+- navigate from (generated) interface to OpenAPI
+- reimplemented (unreliable) `package-name` navigation as package navigation popup.
+- updated minimum platform to 2024.2
+
 ## [2024.3-SNAPSHOT.3]
 
 - navigate from (generated) interface to OpenAPI
