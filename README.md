@@ -14,6 +14,7 @@ Adds support for the [openapi-processor](https://openapiprocessor.io/oap/home/ho
 * navigate from the `package-name` configuration in the `mapping.yaml` to the package with the generated sources (if the target package exists).
 * navigate from an endpoint `path` mapping in the `mapping.yaml` to the generated interface method (via a standard interface icon).  
 * navigate from an OpenAPI endpoint `path` to the generated endpoint interface methods (via a standard interface icon).
+* navigate from a generated endpoint interface to the OpenAPI endpoint `path` (via a standard OpenAPI icon).
 <br/><br/>
 <!-- Plugin description end -->
 
