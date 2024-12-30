@@ -61,6 +61,10 @@ class LightCodeInsightListener(private var testDataPath: String? = null) : TestL
         return fixture!!.copyDirectoryToProject(sourceFilePath, targetPath)
     }
 
+    fun configureByFile(@TestDataFile sourceFilePath: String): PsiFile {
+        return fixture!!.configureByFile(sourceFilePath)
+    }
+
     fun configureFromTempProjectFile(sourceFilePath: String): PsiFile {
         return fixture!!.configureFromTempProjectFile(sourceFilePath)
     }
