@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 
-- navigate from (generated) interface to OpenAPI
+- navigate from (generated) interface to the OpenAPI endpoint `path`
 - reimplemented (unreliable) `package-name` navigation as package navigation popup.
 - updated minimum platform to 2024.2
 
