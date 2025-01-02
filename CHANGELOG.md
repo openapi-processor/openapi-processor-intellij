@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+- navigate from (generated) interface to the OpenAPI endpoint `path`.
+  > **NOTE**  
+  > to make this work the OpenAPI description has to be in a **source root** or a **resource root**. To achieve this move the OpenAPI to a package or add its parent folder as additional source/resource directory. 
+- reimplemented (unreliable) `package-name` navigation as package navigation popup.
+- updated minimum platform to 2024.2.
+
 ## [2025.1-SNAPSHOT.1]
 
 - navigate from (generated) interface to the OpenAPI endpoint `path`.
