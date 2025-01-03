@@ -2,7 +2,7 @@
 # libraries
 annotations = "26.0.1"
 kotest = "5.9.1"
-mockk = "1.9.3"
+mockk = "1.13.14"
 junit = "5.11.4"
 
 # plugins
