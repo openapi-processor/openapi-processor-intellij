@@ -12,7 +12,6 @@ import com.jetbrains.jsonSchema.extension.ContentAwareJsonSchemaFileProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Suppress("UnstableApiUsage")
 class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
