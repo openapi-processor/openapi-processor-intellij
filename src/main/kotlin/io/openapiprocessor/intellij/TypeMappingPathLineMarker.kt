@@ -28,38 +28,38 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         if (!isMapping)
             return
 
-        if (element !is YAMLKeyValue)
+        if (element !is YAMLKeyValue || element.keyText != "paths")
             return
 
-        if(element.keyText != "paths")
-            return
+        element.value?.children
+            ?.mapNotNull { path -> createLineMarkerInfo(path) }
+            ?.forEach { result.add(it) }
+    }
+
+    private fun createLineMarkerInfo(path: PsiElement): RelatedItemLineMarkerInfo<*>? {
+        if (path !is YAMLKeyValue)
+         return null
+
+        val isPath = path.keyText.startsWith("/")
+        if (!isPath) {
+            log.warn("expected to find path but found {}", path.keyText)
+        }
 
         val pathTargetService = service<PathTargetService>()
+        val targets = pathTargetService.findPathTargets(path.project, path.keyText)
 
-        // TODO for each path, handle http methods?
-        element.value?.children?.forEach { path ->
-            if (path !is YAMLKeyValue)
-                return@forEach
-
-            val isPath = path.keyText.startsWith("/")
-            if (!isPath) {
-                log.warn("expected to find path but found {}", path.keyText)
-            }
-
-            val targets = pathTargetService.findPathTargets(path.project, path.keyText)
-
-            if (targets.isEmpty()) {
-                log.warn("found no targets!")
-                return@forEach
-            }
-
-            val builder = NavigationGutterIconBuilder
-                .create(Icon.`interface`)
-                .setTooltipText(I18n.TOOLTIP_TEXT)
-                .setPopupTitle(I18n.POPUP_TITLE)
-                .setTargets(targets)
-            result.add(builder.createLineMarkerInfo(path.key!!))
+        if (targets.isEmpty()) {
+            log.warn("found no targets!")
+            return null
         }
+
+        val builder = NavigationGutterIconBuilder
+            .create(Icon.`interface`)
+            .setTooltipText(I18n.TOOLTIP_TEXT)
+            .setPopupTitle(I18n.POPUP_TITLE)
+            .setTargets(targets)
+
+        return builder.createLineMarkerInfo(path.key!!)
     }
 
     private fun isMappingFile(file: PsiFile): Boolean {
@@ -75,9 +75,4 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         val TOOLTIP_TEXT = i18n("line.marker.type.mapping.path.tooltip")
         val POPUP_TITLE = i18n("line.marker.type.mapping.path.title")
     }
-
-    companion object {
-        const val TOOLTIP_TEXT = "Navigate to endpoint interface methods"
-    }
 }
-
