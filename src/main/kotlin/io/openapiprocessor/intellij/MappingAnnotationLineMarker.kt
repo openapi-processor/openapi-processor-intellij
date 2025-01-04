@@ -26,26 +26,29 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         element: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        if (element !is PsiIdentifier) {
-            return
+        val info = createLineMarkerInfo(element) ?: return
+        result.add(info)
+    }
+
+    private fun createLineMarkerInfo(element: PsiElement): RelatedItemLineMarkerInfo<*>? {
+        if (element !is PsiAnnotation) {
+            return null
         }
 
-        val annotation = getAnnotation(element) ?: return
-
-        val match = Annotations.KNOWN.firstOrNull { it.matches(annotation) }
+        val match = Annotations.KNOWN.firstOrNull { it.matches(element) }
         if (match == null) {
-            return
+            return null
         }
 
-        val apiPath = match.path(annotation)
-        val module = findModule(element) ?: return
+        val apiPath = match.path(element)
+        val module = findModule(element) ?: return null
 
         val scope = GlobalSearchScope.moduleScope(module)
         val targets = findPsiElementsOfPath(apiPath!!, scope, element.project)
 
         if (targets.isEmpty()) {
             log.warn("found no targets!")
-            return
+            return null
         }
 
         val builder = NavigationGutterIconBuilder
@@ -54,13 +57,9 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(*targets.toTypedArray())
 
-        result.add(builder.createLineMarkerInfo(element))
-    }
+        val id = element.nameReferenceElement?.firstChild!!
 
-    private fun getAnnotation(id: PsiIdentifier): PsiAnnotation? {
-        val reference = id.parent as? PsiJavaCodeReferenceElement ?: return null
-        val annotation = reference.parent as? PsiAnnotation ?: return null
-        return annotation
+        return builder.createLineMarkerInfo(id)
     }
 
     private fun findModule(element: PsiElement): Module? {
