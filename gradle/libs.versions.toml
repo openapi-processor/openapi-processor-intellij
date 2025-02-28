@@ -3,7 +3,7 @@
 annotations = "26.0.2"
 kotest = "5.9.1"
 mockk = "1.13.16"
-junit = "5.11.4"
+junit = "5.12.0"
 
 # plugins
 intelliJPlatform = "2.2.1"
