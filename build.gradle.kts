@@ -1,6 +1,8 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
 
 plugins {
     id("java")
@@ -144,6 +146,13 @@ tasks {
     publishPlugin {
         dependsOn(patchChangelog)
     }
+
+    printProductsReleases {
+      channels = listOf(/*ProductRelease.Channel.RELEASE, ProductRelease.Channel.BETA,*/ ProductRelease.Channel.EAP)
+      types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
+      untilBuild = provider { null }
+    }
+
 }
 
 tasks.named<Test>("test") {
