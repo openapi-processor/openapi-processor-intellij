@@ -9,8 +9,10 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiMethod
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
 
 @Service
 class PathTargetService {
@@ -27,7 +29,15 @@ class PathTargetService {
 
         matches
             .filter { annotation.matches(it, path) }
+            .forEach {
+                val method = PsiTreeUtil.getParentOfType(it.navigationElement, PsiMethod::class.java)
+                if (method != null)
+                    targets.add(method.navigationElement)
+            }
+
+        /*
             .forEach { targets.add(it.navigationElement) }
+         */
 
         return targets
     }
