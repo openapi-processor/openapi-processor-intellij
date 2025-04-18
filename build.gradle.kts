@@ -1,8 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
-import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.jetbrains.intellij.platform.gradle.models.ProductRelease
 
 plugins {
     id("java")
@@ -34,10 +32,11 @@ repositories {
 
 dependencies {
     testImplementation(libs.junit)
+    testImplementation(libs.opentest4j)
     testImplementation(libs.kotest)
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension
-    // ead more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
+    // read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
 
@@ -45,10 +44,8 @@ dependencies {
         bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
 
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
-         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
-        pluginVerifier()
-        zipSigner()
         testFramework(TestFrameworkType.Platform)
     }
 }
@@ -59,6 +56,7 @@ intellijPlatform {
     buildSearchableOptions = false
 
     pluginConfiguration {
+        name = providers.gradleProperty("pluginName")
         version = providers.gradleProperty("pluginVersion")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
@@ -112,7 +110,6 @@ intellijPlatform {
         ides {
             recommended()
         }
-        freeArgs = listOf("-mute", "TemplateWordInPluginId")
     }
 }
 
@@ -146,13 +143,6 @@ tasks {
     publishPlugin {
         dependsOn(patchChangelog)
     }
-
-    printProductsReleases {
-      channels = listOf(/*ProductRelease.Channel.RELEASE, ProductRelease.Channel.BETA,*/ ProductRelease.Channel.EAP)
-      types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
-      untilBuild = provider { null }
-    }
-
 }
 
 tasks.named<Test>("test") {
