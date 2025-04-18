@@ -10,15 +10,19 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.util.IconLoader
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.firstLeaf
 import com.intellij.util.IconUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * line marker to navigate from mapping annotation (from interface) to the path in the OpenAPI document.
+ */
 class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
@@ -41,11 +45,14 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         }
 
         val apiPath = match.path(element)
-        val module = findModule(element) ?: return null
+        val modules = findModules(element)
 
-        val scope = GlobalSearchScope.moduleScope(module)
-        val targets = findPsiElementsOfPath(apiPath!!, scope, element.project)
+        var searchScope = GlobalSearchScope.EMPTY_SCOPE
+        for (module in modules) {
+            searchScope = searchScope.uniteWith(GlobalSearchScope.moduleScope(module))
+        }
 
+        val targets = findPsiElementsOfPath(apiPath!!, searchScope, element.project)
         if (targets.isEmpty()) {
             log.warn("found no targets!")
             return null
@@ -62,18 +69,20 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         return builder.createLineMarkerInfo(id)
     }
 
-    private fun findModule(element: PsiElement): Module? {
-        val found = ProjectRootManager.getInstance(element.project)
-            .fileIndex
-            .getModuleForFile(element.containingFile.virtualFile)
+    private fun findModules(element: PsiElement): List<Module> {
+        val finder = ModuleFinder(element.project)
+        val modules = finder.findModules(element.containingFile.virtualFile.presentableUrl)
 
-        if (found != null) {
-            log.debug("found module '{}' of file '{}'", found.name, element.containingFile.name)
+        if (modules.isNotEmpty()) {
+            modules.forEach {
+                log.debug("related modules of file '{}'", element.containingFile.name)
+                log.debug("found module '{}'", it.name)
+            }
         } else {
             log.debug("could not find module of file '{}'", element.containingFile.name)
         }
 
-        return found
+        return modules
     }
 
     private fun findPsiElementsOfPath(path: String, searchScope: GlobalSearchScope, project: Project): List<PsiElement> {
