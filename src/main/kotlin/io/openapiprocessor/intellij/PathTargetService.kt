@@ -35,10 +35,6 @@ class PathTargetService {
                     targets.add(method.navigationElement)
             }
 
-        /*
-            .forEach { targets.add(it.navigationElement) }
-         */
-
         return targets
     }
 
