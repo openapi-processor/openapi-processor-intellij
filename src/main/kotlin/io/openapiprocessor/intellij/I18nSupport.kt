@@ -7,6 +7,7 @@ package io.openapiprocessor.intellij
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.PropertyKey
+import java.util.function.Supplier
 
 private const val BUNDLE = "messages.I18nBundle"
 
@@ -16,6 +17,10 @@ private object I18nMessages {
 
 fun i18n(@PropertyKey(resourceBundle = BUNDLE) key: String): String {
     return I18nMessages.bundle.getMessage(key)
+}
+
+fun i18nLazy(@PropertyKey(resourceBundle = BUNDLE) key: String): Supplier<String> {
+    return I18nMessages.bundle.getLazyMessage(key)
 }
 
 fun i18n(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any?): String {

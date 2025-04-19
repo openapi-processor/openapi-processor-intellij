@@ -11,6 +11,7 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.codeInsight.navigation.impl.PsiTargetPresentationRenderer
 import com.intellij.icons.AllIcons
 import com.intellij.ide.util.ModuleRendererFactory
+import com.intellij.navigation.GotoRelatedItem
 import com.intellij.openapi.components.service
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtil
@@ -20,7 +21,8 @@ import com.intellij.platform.backend.presentation.TargetPresentation
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.presentation.java.SymbolPresentationUtil
+import com.intellij.psi.presentation.java.SymbolPresentationUtil.getSymbolContainerText
+import com.intellij.psi.presentation.java.SymbolPresentationUtil.getSymbolPresentableText
 import com.intellij.util.TextWithIcon
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
@@ -36,11 +38,11 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     class Renderer() : PsiTargetPresentationRenderer<PsiElement>() {
 
         override fun getContainerText(element: PsiElement): String? {
-            return SymbolPresentationUtil.getSymbolContainerText(element)
+            return getSymbolContainerText(element)
         }
 
         override fun getElementText(element: PsiElement): String {
-            return SymbolPresentationUtil.getSymbolPresentableText(element)
+            return getSymbolPresentableText(element)
         }
 
         override fun getIcon(element: PsiElement): JIcon? {
@@ -72,6 +74,18 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         }
     }
 
+    class GotoPackage(element: PsiDirectory): GotoRelatedItem(element, I18n.GOTO_GROUP) {
+        override fun getCustomName(): String {
+            return "${getSymbolPresentableText(this.element!!)}"
+        }
+
+        override fun getCustomContainerName(): String {
+            val loc = element!!.getUserData(PACKAGE_LOCATION_USER_KEY)!!
+            val pkg = getSymbolContainerText(element!!)!!
+            return "$pkg - $loc"
+        }
+    }
+
     override fun collectNavigationMarkers(
         element: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
@@ -83,13 +97,20 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         if (element.text != PACKAGE_KEY)
             return
 
-        val keyValue = element.parent
-        if (keyValue !is YAMLKeyValue)
-            return
-
-        val pkgName = keyValue.valueText
-        val module = findModule(element.containingFile)
+        val info = createLineMarkerInfo(element)
             ?: return
+
+        result.add(info)
+    }
+
+    private fun createLineMarkerInfo(packageKey: PsiElement): RelatedItemLineMarkerInfo<*>? {
+        val packageKeyValue = packageKey.parent
+        if (packageKeyValue !is YAMLKeyValue)
+            return null
+
+        val pkgName = packageKeyValue.valueText
+        val module = findModule(packageKeyValue.containingFile)
+            ?: return null
 
         val pkgDirs = service<TargetPackageService>()
             .findPackageDirs(pkgName, module)
@@ -97,17 +118,20 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         val targets = addLocations(pkgDirs)
         if (targets.isEmpty()) {
             log.warn("found no targets!")
-            return
+            return null
         }
 
         val builder = NavigationGutterIconBuilder
-            .create(Icon.`package`)
+            .create<PsiDirectory>(
+                Icon.`package`,
+                { listOf(it) },
+                { listOf(GotoPackage(it)) })
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(targets)
             .setTargetRenderer { Renderer() }
 
-        result.add(builder.createLineMarkerInfo(element))
+        return builder.createLineMarkerInfo(packageKey)
     }
 
     private fun addLocations(pkgDirs: List<PsiDirectory>): List<PsiDirectory> {
@@ -161,6 +185,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     object I18n {
         val TOOLTIP_TEXT = i18n("line.marker.type.mapping.package.tooltip")
         val POPUP_TITLE = i18n("line.marker.type.mapping.package.title")
+        val GOTO_GROUP = i18n("goto.related.item.group")
     }
 
     companion object {
