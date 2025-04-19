@@ -7,9 +7,9 @@ package io.openapiprocessor.intellij.support
 
 import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiDirectory
-import io.openapiprocessor.intellij.TargetPackageFinder
+import io.openapiprocessor.intellij.TargetPackageService
 
-class TargetPackageFinderStub(private val pkg: PsiDirectory?) : TargetPackageFinder {
+class TargetPackageServiceStub(private val pkg: PsiDirectory?) : TargetPackageService {
 
     override fun findPackageDirs(pkgName: String, mappingModule: Module): List<PsiDirectory> {
         return if (pkg == null) emptyList() else listOf(pkg)

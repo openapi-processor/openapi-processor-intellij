@@ -8,7 +8,7 @@ package io.openapiprocessor.intellij
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
-import com.intellij.openapi.module.Module
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiAnnotation
@@ -44,14 +44,15 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
             return null
         }
 
-        val apiPath = match.path(element)
-        val modules = findModules(element)
+        val moduleService = service<ModuleService>()
+        val modules = moduleService.findModules(element)
 
         var searchScope = GlobalSearchScope.EMPTY_SCOPE
         for (module in modules) {
             searchScope = searchScope.uniteWith(GlobalSearchScope.moduleScope(module))
         }
 
+        val apiPath = match.path(element)
         val targets = findPsiElementsOfPath(apiPath!!, searchScope, element.project)
         if (targets.isEmpty()) {
             log.warn("found no targets!")
@@ -67,22 +68,6 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         val id = element.nameReferenceElement?.firstChild!!
 
         return builder.createLineMarkerInfo(id)
-    }
-
-    private fun findModules(element: PsiElement): List<Module> {
-        val finder = ModuleFinder(element.project)
-        val modules = finder.findModules(element.containingFile.virtualFile.presentableUrl)
-
-        if (modules.isNotEmpty()) {
-            modules.forEach {
-                log.debug("related modules of file '{}'", element.containingFile.name)
-                log.debug("found module '{}'", it.name)
-            }
-        } else {
-            log.debug("could not find module of file '{}'", element.containingFile.name)
-        }
-
-        return modules
     }
 
     private fun findPsiElementsOfPath(path: String, searchScope: GlobalSearchScope, project: Project): List<PsiElement> {

@@ -34,6 +34,15 @@
             implementationClass="io.openapiprocessor.intellij.MappingAnnotationLineMarker"/>
 
         <iconMapper mappingFile="IconMappings.json"/>
+
+        <applicationService
+            serviceInterface="io.openapiprocessor.intellij.TargetPackageService"
+            serviceImplementation="io.openapiprocessor.intellij.TargetPackageServiceImpl"/>
+
+        <applicationService
+            serviceInterface="io.openapiprocessor.intellij.ModuleService"
+            serviceImplementation="io.openapiprocessor.intellij.ModuleServiceImpl"/>
+
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript.JsonSchema">

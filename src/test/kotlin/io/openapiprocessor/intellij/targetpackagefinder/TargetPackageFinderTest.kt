@@ -30,8 +30,7 @@ class TargetPackageFinderTest: HeavyBaseTestCase() {
         val module = ModuleUtil.findModuleForFile(mapping)!!
 
         // when
-        val targets = project
-            .service<TargetPackageService>()
+        val targets = service<TargetPackageService>()
             .findPackageDirs("io.openapiprocessor", module)
 
         // then

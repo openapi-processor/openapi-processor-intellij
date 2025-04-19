@@ -5,8 +5,9 @@
 
 package io.openapiprocessor.intellij
 
-import com.intellij.openapi.components.Service
+import com.intellij.openapi.module.Module
+import com.intellij.psi.PsiDirectory
 
-@Service
-class TargetPackageService(finder: TargetPackageFinder = TargetPackageFinderImpl()) :
-    TargetPackageFinder by finder
+interface TargetPackageService {
+    fun findPackageDirs(pkgName: String, mappingModule: Module): List<PsiDirectory>
+}

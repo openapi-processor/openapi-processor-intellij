@@ -9,12 +9,17 @@ import com.intellij.openapi.application.EDT
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
+import io.openapiprocessor.intellij.support.ModuleServiceStub
 import io.openapiprocessor.intellij.support.psiTargets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MappingAnnotationLineMarkerSpec : StringSpec({
     val fixture = register(LightCodeInsightListener("src/test/testdata/interface-to-openapi/paths"))
+
+    beforeTest {
+        fixture.replaceService(ModuleService::class.java, ModuleServiceStub())
+    }
 
     "adds navigation gutter icon to mapping annotation" {
         withContext(Dispatchers.EDT) {

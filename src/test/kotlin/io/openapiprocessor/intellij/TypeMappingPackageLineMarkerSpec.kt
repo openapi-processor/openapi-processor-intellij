@@ -12,7 +12,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldEndWith
 import io.openapiprocessor.intellij.listener.LightCodeInsightListener
-import io.openapiprocessor.intellij.support.TargetPackageFinderStub
+import io.openapiprocessor.intellij.support.TargetPackageServiceStub
 import io.openapiprocessor.intellij.support.getTargets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,10 +24,8 @@ class TypeMappingPackageLineMarkerSpec: StringSpec({
     beforeTest {
         val pkgDir = test.createDir(expectedPkgDir)
         val psiDir = readAction { test.findPsiDir(pkgDir) }
-
-        test.replaceService(
-            TargetPackageService::class.java,
-            TargetPackageService(TargetPackageFinderStub(psiDir)))
+        val stub = TargetPackageServiceStub(psiDir)
+        test.replaceService(TargetPackageService::class.java, stub)
     }
 
     "adds navigation gutter at package-name" {
