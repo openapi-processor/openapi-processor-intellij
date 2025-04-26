@@ -4,11 +4,15 @@
 
 ## [Unreleased]
 
+- improve related item popup.
+- improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
+- updated the minimum platform to 2025.1.
+
 ## [2025.1]
 
 - navigate from (generated) interface to the OpenAPI endpoint `path`.
   > **NOTE**  
-  > to make this work the OpenAPI description has to be in a **source root** or a **resource root**. To achieve this move the OpenAPI to a package or add its parent folder as additional source/resource directory. 
+  > to make this work, the OpenAPI description has to be in a **source root** or a **resource root**. To achieve this move the OpenAPI to a package or add its parent folder as additional source/resource directory. 
 - reimplemented (unreliable) `package-name` navigation as package navigation popup.
 - updated minimum platform to 2024.2.
 
@@ -16,7 +20,7 @@
 
 - navigate from (generated) interface to the OpenAPI endpoint `path`.
   > **NOTE**  
-  > to make this work the OpenAPI description has to be in a **source root** or a **resource root**. To achieve this move the OpenAPI to a package or add its parent folder as additional source/resource directory. 
+  > to make this work, the OpenAPI description has to be in a **source root** or a **resource root**. To achieve this move the OpenAPI to a package or add its parent folder as additional source/resource directory. 
 - reimplemented (unreliable) `package-name` navigation as package navigation popup.
 - updated minimum platform to 2024.2.
 
@@ -43,7 +47,7 @@
 
 ## [2024.1]
 
-- dynamic detection of `mapping.yaml` json schema.<br> i.e. it is no longer necessary to wait for a new version that supports the new mapping schema version. This removes the openapi-processor schemas from IntelliJ's json mappings.
+- dynamic detection of `mapping.yaml` json schema.<br> i.e., it is no longer necessary to wait for a new version that supports the new mapping schema version. This removes the openapi-processor schemas from IntelliJ's json mappings.
 - navigate from an OpenAPI path to the generated interface methods. <br> The plugin will add an interface icon to the paths in an OpenAPI yaml document that provides navigation to the generated interface methods. 
 - clean up icons, new ui icons. <br> navigation from a path mapping in the `mapping.yaml` now uses the interface icon. Added a new ui icon for the `mapping.yaml`.
 
@@ -83,7 +87,7 @@
 
 - Idea 2022.3 compatibility
 - allow future Idea builds
-- increased minimum version to Idea 2020.3
+- increased the minimum version to Idea 2020.3
 
 ## [2022.3]
 
