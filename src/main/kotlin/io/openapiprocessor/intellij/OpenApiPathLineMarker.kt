@@ -11,6 +11,7 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiMethod
 import com.intellij.util.IconUtil
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
@@ -23,7 +24,6 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
         element: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-
         if (element !is YAMLKeyValue)
             return
 
@@ -39,25 +39,25 @@ class OpenApiPathLineMarker: RelatedItemLineMarkerProvider()  {
             if (path !is YAMLKeyValue)
                 return@forEach
 
-            val isPath = path.keyText.startsWith("/")
+            val keyText = path.keyText
+            val isPath = keyText.startsWith("/")
             if (!isPath) {
-                log.warn("expected to find path but found {}", path.keyText)
+                log.warn("expected to find path but found {}", keyText)
             }
 
             val targets = pathTargetService.findPathTargets(path.project, path.keyText)
 
-            if (targets.isEmpty()) {
-                log.warn("found no targets!")
-                return@forEach
-            }
-
-            val builder = NavigationGutterIconBuilder
-                .create(icon)
+            val markerInfo = NavigationGutterIconBuilder
+                .create<PsiMethod>(
+                    icon,
+                    { listOf(it) },
+                    { listOf(GotoMethod(it)) })
                 .setTooltipText(I18n.TOOLTIP_TEXT)
                 .setPopupTitle(I18n.POPUP_TITLE)
                 .setTargets(targets)
+                .createLineMarkerInfo(path.key!!)
 
-            result.add(builder.createLineMarkerInfo(path.key!!))
+            result.add(markerInfo)
         }
     }
 

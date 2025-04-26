@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory
 import javax.swing.Icon as JIcon
 
 /**
- * line marker for the package-name key in the mapping.yaml. It navigates to any folder with the same package name.
+ * Line marker for the package-name key in the mapping.yaml. It navigates to any folder with the same package name.
  */
 class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
@@ -74,7 +74,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         }
     }
 
-    class GotoPackage(element: PsiDirectory): GotoRelatedItem(element, I18n.GOTO_GROUP) {
+    class GotoPackage(element: PsiDirectory): GotoRelatedItem(element, Goto.I18n.GROUP) {
         override fun getCustomName(): String {
             return "${getSymbolPresentableText(this.element!!)}"
         }
@@ -185,7 +185,6 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     object I18n {
         val TOOLTIP_TEXT = i18n("line.marker.type.mapping.package.tooltip")
         val POPUP_TITLE = i18n("line.marker.type.mapping.package.title")
-        val GOTO_GROUP = i18n("goto.related.item.group")
     }
 
     companion object {

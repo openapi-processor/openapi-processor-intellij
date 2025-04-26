@@ -8,7 +8,6 @@ package io.openapiprocessor.intellij
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -17,14 +16,14 @@ import com.intellij.psi.util.PsiTreeUtil
 @Service
 class PathTargetService {
 
-    fun findPathTargets(project: Project, path: String): List<PsiElement> {
+    fun findPathTargets(project: Project, path: String): List<PsiMethod> {
         return Annotations.KNOWN
             .map { findPathTargets(project, path, it) }
             .flatten()
     }
 
-    private fun findPathTargets(project: Project, path: String, annotation: Annotation): List<PsiElement> {
-        val targets = mutableListOf<PsiElement>()
+    private fun findPathTargets(project: Project, path: String, annotation: Annotation): List<PsiMethod> {
+        val targets = mutableListOf<PsiMethod>()
         val matches = getAnnotations(project, annotation)
 
         matches
@@ -32,7 +31,7 @@ class PathTargetService {
             .forEach {
                 val method = PsiTreeUtil.getParentOfType(it.navigationElement, PsiMethod::class.java)
                 if (method != null)
-                    targets.add(method.navigationElement)
+                    targets.add(method)
             }
 
         return targets

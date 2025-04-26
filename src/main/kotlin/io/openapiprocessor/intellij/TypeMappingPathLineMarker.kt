@@ -12,6 +12,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiMethod
 import com.intellij.util.IconUtil
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.slf4j.Logger
@@ -54,7 +55,10 @@ class TypeMappingPathLineMarker : RelatedItemLineMarkerProvider() {
         }
 
         val builder = NavigationGutterIconBuilder
-            .create(Icon.`interface`)
+            .create<PsiMethod>(
+                Icon.`interface`,
+                { listOf(it) },
+                { listOf(GotoMethod(it)) })
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(targets)
