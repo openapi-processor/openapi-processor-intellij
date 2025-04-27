@@ -6,7 +6,7 @@
 
 - improve related item popup entry on mapping annotation
 
-## [2025.2-SNAPSHOT-1]
+## [2025.2-SNAPSHOT.1]
 
 - improve related item popup entries.
 - improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
