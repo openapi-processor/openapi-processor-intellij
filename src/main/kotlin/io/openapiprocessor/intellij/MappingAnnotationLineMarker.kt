@@ -8,6 +8,7 @@ package io.openapiprocessor.intellij
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
+import com.intellij.navigation.GotoRelatedItem
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
@@ -24,7 +25,14 @@ import org.slf4j.LoggerFactory
  * line marker to navigate from mapping annotation (from interface) to the path in the OpenAPI document.
  */
 class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
-    private val log: Logger = LoggerFactory.getLogger(javaClass.name)
+    val log: Logger = LoggerFactory.getLogger(javaClass.name)
+
+    class GotoOpenApi(element: PsiElement): GotoRelatedItem(element, Goto.I18n.GROUP) {
+
+        override fun getCustomIcon(): javax.swing.Icon? {
+            return Icon.openapi
+        }
+    }
 
     override fun collectNavigationMarkers(
         element: PsiElement,
@@ -60,10 +68,13 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
         }
 
         val builder = NavigationGutterIconBuilder
-            .create(Icon.openapi)
+            .create<PsiElement>(
+                Icon.openapi,
+                { listOf(it) },
+                { listOf(GotoOpenApi(it)) })
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
-            .setTargets(*targets.toTypedArray())
+            .setTargets(targets)
 
         val id = element.nameReferenceElement?.firstChild!!
 
