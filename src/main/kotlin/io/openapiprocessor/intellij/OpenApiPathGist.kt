@@ -44,8 +44,10 @@ private fun findKeys(file: PsiFile): List<YamlKey> {
     if (file !is YAMLFile)
         return emptyList()
 
-    // using save navigation because otherwise it crashes if called from tests
-    log.debug("indexing file: {}", file?.virtualFile?.path)
+    // this is null if called from MappingAnnotationLineMarkerSpec
+    if (file.virtualFile != null) {
+        log.debug("indexing file: {}", file.virtualFile.path)
+    }
 
     val keys = mutableListOf<YamlKey>()
 
