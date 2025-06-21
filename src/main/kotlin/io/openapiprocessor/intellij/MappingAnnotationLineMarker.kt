@@ -29,7 +29,7 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
 
     class GotoOpenApi(element: PsiElement): GotoRelatedItem(element, Goto.I18n.GROUP) {
 
-        override fun getCustomIcon(): javax.swing.Icon? {
+        override fun getCustomIcon(): javax.swing.Icon {
             return Icon.openapi
         }
     }
