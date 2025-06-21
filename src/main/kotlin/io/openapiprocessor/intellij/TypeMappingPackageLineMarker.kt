@@ -35,7 +35,7 @@ import javax.swing.Icon as JIcon
 class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    class Renderer() : PsiTargetPresentationRenderer<PsiElement>() {
+    class Renderer(private val userDataKey: Key<String>) : PsiTargetPresentationRenderer<PsiElement>() {
 
         override fun getContainerText(element: PsiElement): String? {
             return getSymbolContainerText(element)
@@ -55,7 +55,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
             }
 
             val moduleLocation = getModuleLocation(element)
-            val packageLocation = element.getUserData(PACKAGE_LOCATION_USER_KEY)
+            val packageLocation = element.getUserData(userDataKey)
             val locationText = if (packageLocation == null) {
                 moduleLocation?.text
             } else {
@@ -74,13 +74,15 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         }
     }
 
-    class GotoPackage(element: PsiDirectory): GotoRelatedItem(element, Goto.I18n.GROUP) {
+    class GotoPackage(element: PsiDirectory, private val userDataKey: Key<String>):
+        GotoRelatedItem(element, Goto.I18n.GROUP) {
+
         override fun getCustomName(): String {
             return "${getSymbolPresentableText(this.element!!)}"
         }
 
         override fun getCustomContainerName(): String {
-            val loc = element!!.getUserData(PACKAGE_LOCATION_USER_KEY)!!
+            val loc = element!!.getUserData(userDataKey)!!
             val pkg = getSymbolContainerText(element!!)!!
             return "$pkg - $loc"
         }
@@ -94,16 +96,31 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         if (!isMapping)
             return
 
-        if (element.text != PACKAGE_KEY)
-            return
+        if (element.text == PACKAGE_NAME_KEY) {
+            val info = createLineMarkerInfo(element, PACKAGE_NAME_USER_KEY)
+            if (info != null) {
+                result.add(info)
+            }
+        }
 
-        val info = createLineMarkerInfo(element)
-            ?: return
+        if (element.text == PACKAGE_BASE_KEY) {
+            // todo check package-names parent key
+            val info = createLineMarkerInfo(element, PACKAGE_NAMES_BASE_USER_KEY)
+            if (info != null) {
+                result.add(info)
+            }
+        }
 
-        result.add(info)
+        if (element.text == PACKAGE_LOCATION_KEY) {
+            // todo check package-names parent key
+            val info = createLineMarkerInfo(element, PACKAGE_NAMES_LOCATION_USER_KEY)
+            if (info != null) {
+                result.add(info)
+            }
+        }
     }
 
-    private fun createLineMarkerInfo(packageKey: PsiElement): RelatedItemLineMarkerInfo<*>? {
+    private fun createLineMarkerInfo(packageKey: PsiElement, userDataKey: Key<String>): RelatedItemLineMarkerInfo<*>? {
         val packageKeyValue = packageKey.parent
         if (packageKeyValue !is YAMLKeyValue)
             return null
@@ -115,7 +132,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         val pkgDirs = service<TargetPackageService>()
             .findPackageDirs(pkgName, module)
 
-        val targets = addLocations(pkgDirs)
+        val targets = addLocations(pkgDirs, userDataKey)
         if (targets.isEmpty()) {
             log.warn("found no targets!")
             return null
@@ -125,16 +142,16 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
             .create<PsiDirectory>(
                 Icon.`package`,
                 { listOf(it) },
-                { listOf(GotoPackage(it)) })
+                { listOf(GotoPackage(it, userDataKey)) })
             .setTooltipText(I18n.TOOLTIP_TEXT)
             .setPopupTitle(I18n.POPUP_TITLE)
             .setTargets(targets)
-            .setTargetRenderer { Renderer() }
+            .setTargetRenderer { Renderer(userDataKey) }
 
         return builder.createLineMarkerInfo(packageKey)
     }
 
-    private fun addLocations(pkgDirs: List<PsiDirectory>): List<PsiDirectory> {
+    private fun addLocations(pkgDirs: List<PsiDirectory>, userDataKey: Key<String>): List<PsiDirectory> {
         if (pkgDirs.size < 2) {
             return pkgDirs
         }
@@ -158,7 +175,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         return pkgDirs
             .map {
                 it.putUserData(
-                    PACKAGE_LOCATION_USER_KEY,
+                    userDataKey,
                     it.virtualFile.path.drop(commonPrefix.length).dropLast(commonSuffix.length)
                 )
                 it
@@ -188,8 +205,13 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     }
 
     companion object {
-        const val PACKAGE_KEY = "package-name"
+        const val PACKAGE_NAME_KEY = "package-name"
+        const val PACKAGE_NAMES_KEY = "package-names"
+        const val PACKAGE_BASE_KEY = "base"
+        const val PACKAGE_LOCATION_KEY = "location"
     }
 }
 
-private val PACKAGE_LOCATION_USER_KEY: Key<String> = Key.create("openapiprocessor.package-location")
+private val PACKAGE_NAME_USER_KEY: Key<String> = Key.create("openapiprocessor.package-name")
+private val PACKAGE_NAMES_BASE_USER_KEY: Key<String> = Key.create("openapiprocessor.package-names.base")
+private val PACKAGE_NAMES_LOCATION_USER_KEY: Key<String> = Key.create("openapiprocessor.package-names.location")

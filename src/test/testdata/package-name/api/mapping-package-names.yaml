@@ -1,0 +1,5 @@
+openapi-processor-mapping: v13
+options:
+  package-names:
+    base: io.openapiprocessor
+    location: io.openapiprocessor
