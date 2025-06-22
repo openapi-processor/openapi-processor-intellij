@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- support new (v13) package-names.base and package-names.location mapping.yaml keys
+
 ## [2025.2-SNAPSHOT.2]
 
 - improve related item popup entry on mapping annotation
