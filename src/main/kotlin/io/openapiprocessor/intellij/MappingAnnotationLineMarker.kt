@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory
  * line marker to navigate from mapping annotation (from interface) to the path in the OpenAPI document.
  */
 class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
-    val log: Logger = LoggerFactory.getLogger(javaClass.name)
+    private val log: Logger = LoggerFactory.getLogger(javaClass.name)
 
     class GotoOpenApi(element: PsiElement): GotoRelatedItem(element, Goto.I18n.GROUP) {
 
