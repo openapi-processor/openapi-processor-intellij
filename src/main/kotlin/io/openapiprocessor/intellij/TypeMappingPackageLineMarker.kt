@@ -79,7 +79,7 @@ class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
         GotoRelatedItem(element, Goto.I18n.GROUP) {
 
         override fun getCustomName(): String {
-            return "${getSymbolPresentableText(this.element!!)}"
+            return getSymbolPresentableText(this.element!!)
         }
 
         override fun getCustomContainerName(): String {
