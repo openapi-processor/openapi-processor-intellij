@@ -5,6 +5,7 @@
 
 package io.openapiprocessor.intellij
 
+@Suppress("unused")
 object Methods {
     private val methods = listOf("delete", "get", "head", "patch", "post", "put", "trace")
 

@@ -19,10 +19,12 @@ fun i18n(@PropertyKey(resourceBundle = BUNDLE) key: String): String {
     return I18nMessages.bundle.getMessage(key)
 }
 
+@Suppress("unused")
 fun i18nLazy(@PropertyKey(resourceBundle = BUNDLE) key: String): Supplier<String> {
     return I18nMessages.bundle.getLazyMessage(key)
 }
 
+@Suppress("unused")
 fun i18n(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any?): String {
     return I18nMessages.bundle.getMessage(key, *params)
 }

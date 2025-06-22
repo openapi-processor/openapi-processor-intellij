@@ -15,6 +15,7 @@ import com.intellij.psi.util.PsiTreeUtil
 
 data class TargetMethod(val project: Project, val uri: String, val method: String)
 
+@Suppress("unused")
 class TargetMethodFinder {
 
     fun findTargetMethods(targetMethod: TargetMethod): List<PsiElement> {
