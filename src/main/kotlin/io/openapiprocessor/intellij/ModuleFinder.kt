@@ -36,7 +36,7 @@ class ModuleFinder(private val project: Project) {
                 val matches = matchPaths(Path.of(source), sourceRoots)
 
                 if (matches.isNotEmpty()) {
-                    results.put(moduleEntity, matches)
+                    results[moduleEntity] = matches
                 }
             }
 
@@ -59,7 +59,7 @@ class ModuleFinder(private val project: Project) {
             val min = min(sourceItems.size, canSplit.size)
             val matching = mutableListOf<String>()
 
-            for (i in 0.. min - 1) {
+            for (i in 0..< min) {
                 if (sourceItems[i] != canSplit[i]) {
                     break
                 }
