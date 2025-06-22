@@ -42,9 +42,6 @@ class SpringRequestAnnotation(override val method: String): Annotation {
             return false
 
         val uri = PsiLiteralUtil.getStringLiteralContent(value)
-        if (uri != path)
-            return false
-
-        return true
+        return uri == path
     }
 }

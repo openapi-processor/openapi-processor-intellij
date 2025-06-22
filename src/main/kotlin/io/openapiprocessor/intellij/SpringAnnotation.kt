@@ -25,10 +25,7 @@ class SpringAnnotation(override val name: String, override val method: String): 
             return false
 
         val value = psi.findAttributeValue("path")
-        if (value !is PsiLiteralExpression)
-            return false
-
-        return true
+        return value is PsiLiteralExpression
     }
 
     override fun matches(psi: PsiAnnotation, path: String): Boolean {
@@ -40,9 +37,6 @@ class SpringAnnotation(override val name: String, override val method: String): 
             return false
 
         val uri = PsiLiteralUtil.getStringLiteralContent(value)
-        if (uri != path)
-            return false
-
-        return true
+        return uri == path
     }
 }
