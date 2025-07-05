@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2025.2.1]
+
 - improve related item popup entries.
 - improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
 - support new (v13) `package-names.base` and `package-names.location` `mapping.yaml` keys
@@ -150,7 +152,8 @@
 - auto-detect the `mapping.yaml` file and set the json schema for editing support (autocompletion & validation)
 - add openapi-processor icon for `mapping.yaml`
 
-[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2...HEAD
+[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2.1...HEAD
+[2025.2.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2-SNAPSHOT.3...v2025.2.1
 [2022.2.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2022.1...v2022.2.1
 [2021.1-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/commits/v2021.1-SNAPSHOT.1
 [2021.1-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2021.1-SNAPSHOT.1...v2021.1-SNAPSHOT.2
