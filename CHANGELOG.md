@@ -4,8 +4,6 @@
 
 ## [Unreleased]
 
-## [2025.2]
-
 - improve related item popup entries.
 - improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
 - support new (v13) `package-names.base` and `package-names.location` `mapping.yaml` keys
