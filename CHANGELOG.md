@@ -4,11 +4,7 @@
 
 ## [Unreleased]
 
-- remove intellij from name (marketplace requirement)
-- improve related item popup entries.
-- improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
-- support new (v13) `package-names.base` and `package-names.location` `mapping.yaml` keys
-- updated the minimum platform to 2025.1.
+- remove "intellij" from name (marketplace requirement)
 
 ## [2025.2-SNAPSHOT.3]
 
