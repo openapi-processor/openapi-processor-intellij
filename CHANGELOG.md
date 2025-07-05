@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [2025.2]
+
+- remove intellij from name (marketplace requirement)
 - improve related item popup entries.
 - improve OpenAPI detection for navigation from (generated) interface to the OpenAPI endpoint `path`. 
 - support new (v13) `package-names.base` and `package-names.location` `mapping.yaml` keys
@@ -150,7 +153,7 @@
 - auto-detect the `mapping.yaml` file and set the json schema for editing support (autocompletion & validation)
 - add openapi-processor icon for `mapping.yaml`
 
-[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2-SNAPSHOT.3...HEAD
+[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2...HEAD
 [2022.2.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2022.1...v2022.2.1
 [2021.1-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/commits/v2021.1-SNAPSHOT.1
 [2021.1-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2021.1-SNAPSHOT.1...v2021.1-SNAPSHOT.2
@@ -178,6 +181,7 @@
 [2024.3-SNAPSHOT.3]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2024.3-SNAPSHOT.2...v2024.3-SNAPSHOT.3
 [2025.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.1-SNAPSHOT.1...v2025.1
 [2025.1-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2024.3-SNAPSHOT.3...v2025.1-SNAPSHOT.1
+[2025.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2-SNAPSHOT.3...v2025.2
 [2025.2-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.1...v2025.2-SNAPSHOT.1
 [2025.2-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2-SNAPSHOT.1...v2025.2-SNAPSHOT.2
 [2025.2-SNAPSHOT.3]: https://github.com/openapi-processor/openapi-processor-intellij/compare/v2025.2-SNAPSHOT.2...v2025.2-SNAPSHOT.3
