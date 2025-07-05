@@ -22,7 +22,7 @@ Adds support for the [openapi-processor](https://openapiprocessor.io/oap/home/ho
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "openapi-processor-intellij"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "openapi-processor"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
