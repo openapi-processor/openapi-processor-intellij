@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class TypeMappingPackageLineMarkerSpec: StringSpec({
-    val test = register(LightCodeInsightListener("src/test/testdata/package-name"))
+    val test = extension(LightCodeInsightListener("src/test/testdata/package-name"))
     val expectedPkgDir = "io/openapiprocessor"
 
     beforeTest {

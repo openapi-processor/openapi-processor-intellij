@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 class TypeMappingPathLineMarkerSpec: StringSpec({
     isolationMode = IsolationMode.SingleInstance
 
-    val fixture = register(LightCodeInsightListener("src/test/testdata/path-to-methods"))
+    val fixture = extension(LightCodeInsightListener("src/test/testdata/path-to-methods"))
 
     fun getMethod(name: String): PsiMethod {
         return JavaMethodNameIndex

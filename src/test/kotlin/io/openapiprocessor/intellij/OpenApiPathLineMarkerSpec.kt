@@ -17,7 +17,7 @@ import io.openapiprocessor.intellij.listener.LightCodeInsightListener
 import io.openapiprocessor.intellij.support.methods
 
 class OpenApiPathLineMarkerSpec : StringSpec({
-    val test = register(LightCodeInsightListener())
+    val test = extension(LightCodeInsightListener())
 
     fun fixture(): CodeInsightTestFixture {
         return test.fixture!!

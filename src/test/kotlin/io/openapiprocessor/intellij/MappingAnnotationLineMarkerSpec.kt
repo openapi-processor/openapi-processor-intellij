@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MappingAnnotationLineMarkerSpec : StringSpec({
-    val fixture = register(LightCodeInsightListener("src/test/testdata/interface-to-openapi/paths"))
+    val fixture = extension(LightCodeInsightListener("src/test/testdata/interface-to-openapi/paths"))
 
     beforeTest {
         fixture.replaceService(ModuleService::class.java, ModuleServiceStub())

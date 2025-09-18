@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 class FileTypeSpec : StringSpec({
-    val test = register(LightCodeInsightListener())
+    val test = extension(LightCodeInsightListener())
 
     fun fixture(): CodeInsightTestFixture {
         return test.fixture!!
