@@ -26,27 +26,9 @@ concurrency:
 
 jobs:
 
-  # free disk space for verify
-  free-disk-space:
-    name: Free Disk Space
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: false
-          docker-images: true
-          swap-storage: true
-
-  # Prepare environment and build the plugin
+  # Prepare the environment and build the plugin
   build:
     name: Build
-    needs: [ free-disk-space ]
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.properties.outputs.version }}
@@ -58,7 +40,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v5
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
@@ -100,7 +82,7 @@ jobs:
 
           echo "filename=${FILENAME:0:-4}" >> $GITHUB_OUTPUT
 
-      # Store already-built plugin as an artifact for downloading
+      # Store an already-built plugin as an artifact for downloading
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -118,7 +100,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v5
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
@@ -146,8 +128,9 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           files: ${{ github.workspace }}/build/reports/kover/report.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
-  # Run Qodana inspections and provide report
+  # Run Qodana inspections and provide a report
   inspectCode:
     name: Inspect code
     needs: [ build ]
@@ -172,7 +155,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0  # a full history is required for pull request analysis
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
@@ -203,7 +186,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v5
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
@@ -234,7 +217,7 @@ jobs:
           path: ${{ github.workspace }}/build/reports/pluginVerifier
 
   # Prepare a draft release for GitHub Releases page for the manual verification
-  # If accepted and published, release workflow would be triggered
+  # If accepted and published, the release workflow would be triggered
   releaseDraft:
     name: Release draft
     if: github.event_name != 'pull_request'
