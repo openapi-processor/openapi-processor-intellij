@@ -20,7 +20,7 @@ import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl
 import com.intellij.testFramework.replaceService
 import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
+import io.kotest.engine.test.TestResult
 
 class LightCodeInsightListener(private var testDataPath: String? = null) : TestListener {
     var fixture: CodeInsightTestFixture? = null
@@ -28,7 +28,7 @@ class LightCodeInsightListener(private var testDataPath: String? = null) : TestL
 
     override suspend fun beforeTest(testCase: TestCase) {
         val factory = IdeaTestFixtureFactory.getFixtureFactory()
-        val builder = factory.createLightFixtureBuilder(testCase.name.testName)
+        val builder = factory.createLightFixtureBuilder(testCase.name.name)
         tmpDirFixture = LightTempDirTestFixtureImpl(true)
 
         fixture = factory.createCodeInsightFixture(builder.fixture, tmpDirFixture!!)
