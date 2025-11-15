@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.changelog)
     alias(libs.plugins.qodana)
     alias(libs.plugins.kover)
-    alias(libs.plugins.versions)
+//    alias(libs.plugins.versions)
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -33,7 +33,6 @@ repositories {
 dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
-    testImplementation(libs.kotest)
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more:
     // https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -157,7 +156,6 @@ tasks.named<Test>("test") {
 }
 
 intellijPlatformTesting {
-
     runIde {
         register("runIdeForUiTests") {
             task {
