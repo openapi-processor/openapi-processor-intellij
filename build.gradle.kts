@@ -31,8 +31,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation(libs.junit)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.opentest4j)
+    testImplementation(libs.junit4)
+    testRuntimeOnly(libs.junit.launcher)
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more:
     // https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -49,6 +52,8 @@ dependencies {
         bundledModules(providers.gradleProperty("platformBundledModules").map { it.split(',') })
 
         testFramework(TestFrameworkType.Platform)
+        testFramework(TestFrameworkType.JUnit5)
+        testFramework(TestFrameworkType.Plugin.Java)
     }
 }
 
@@ -142,6 +147,10 @@ kover {
 }
 
 tasks {
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
+
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
@@ -149,10 +158,6 @@ tasks {
     publishPlugin {
         dependsOn(patchChangelog)
     }
-}
-
-tasks.named<Test>("test") {
-    useJUnitPlatform()
 }
 
 intellijPlatformTesting {
