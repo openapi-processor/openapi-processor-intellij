@@ -130,7 +130,7 @@ changelog {
 }
 
 // Configure Gradle Kover Plugin - read more:
-// https://github.com/Kotlin/kotlinx-kover#configuration
+// https://kotlin.github.io/gradle-plugin/#configuration-details
 kover {
     reports {
         total {
