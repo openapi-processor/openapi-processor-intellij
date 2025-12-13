@@ -6,7 +6,7 @@ opentest4j = "1.3.0"
 mockk = "1.14.6"
 
 # plugins
-changelog = "2.4.0"          # https://github.com/JetBrains/gradle-changelog-plugin/releases
+changelog = "2.5.0"          # https://github.com/JetBrains/gradle-changelog-plugin/releases
 intelliJPlatform = "2.10.5"  # https://github.com/JetBrains/intellij-platform-gradle-plugin/releases
 kotlin = "2.2.21"             # https://kotlinlang.org/docs/releases.html
 kover = "0.9.3"
