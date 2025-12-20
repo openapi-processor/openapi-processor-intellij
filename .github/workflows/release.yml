@@ -9,22 +9,6 @@ on:
 
 jobs:
 
-  free-disk-space:
-    name: Free Disk Space
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
   # Prepare and publish the plugin to JetBrains Marketplace repository
   release:
     name: Publish Plugin
@@ -33,6 +17,13 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+
+      # Free GitHub Actions Environment Disk Space
+      - name: Maximize Build Space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          large-packages: false
 
       # Check out the current repository
       - name: Fetch Sources
@@ -50,28 +41,20 @@ jobs:
       # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
-
-      # Set environment variables
-      - name: Export Properties
-        id: properties
-        shell: bash
-        run: |
-          CHANGELOG="$(cat << 'EOM' | sed -e 's/^[[:space:]]*$//g' -e '/./,$!d'
-          ${{ github.event.release.body }}
-          EOM
-          )"
-          
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+        with:
+          cache-read-only: true
 
       # Update the Unreleased section with the current release note
       - name: Patch Changelog
-        if: ${{ steps.properties.outputs.changelog != '' }}
+        if: ${{ github.event.release.body != '' }}
         env:
-          CHANGELOG: ${{ steps.properties.outputs.changelog }}
+          CHANGELOG: ${{ github.event.release.body }}
         run: |
-          ./gradlew patchChangelog --release-note="$CHANGELOG"
+          RELEASE_NOTE="./build/tmp/release_note.txt"
+          mkdir -p "$(dirname "$RELEASE_NOTE")"
+          echo "$CHANGELOG" > $RELEASE_NOTE
+
+          ./gradlew patchChangelog --release-note-file=$RELEASE_NOTE
 
       # Publish the plugin to JetBrains Marketplace
       - name: Publish Plugin
@@ -90,7 +73,7 @@ jobs:
 
       # Create a pull request
       - name: Create Pull Request
-        if: ${{ steps.properties.outputs.changelog != '' }}
+        if: ${{ github.event.release.body != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -104,7 +87,7 @@ jobs:
           git checkout -b $BRANCH
           git commit -am "Changelog update - $VERSION"
           git push --set-upstream origin $BRANCH
-          
+
           gh label create "$LABEL" \
             --description "Pull requests with release changelog update" \
             --force \
