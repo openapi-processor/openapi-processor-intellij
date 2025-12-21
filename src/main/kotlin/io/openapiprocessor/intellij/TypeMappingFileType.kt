@@ -46,7 +46,7 @@ class TypeMappingFileType :
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        // when creating a new yaml file by pressing "return" in the new file dialog the file is
+        // when creating a new YAML file by pressing "return" in the new file dialog, the file is
         // a FakeVirtualFile. Is there a better way to handle it?
         if (file is FakeVirtualFile)
             return false
