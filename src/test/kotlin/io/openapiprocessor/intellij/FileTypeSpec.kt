@@ -6,13 +6,10 @@
 package io.openapiprocessor.intellij
 
 import com.intellij.openapi.application.edtWriteAction
-import com.intellij.openapi.module.Module
 import com.intellij.openapi.vfs.VfsUtil.findFileByURL
 import com.intellij.openapi.vfs.VfsUtilCore.convertToURL
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
-import com.intellij.psi.PsiDirectory
-import com.intellij.testFramework.PsiTestUtil
+import com.intellij.testFramework.PsiTestUtil.addProjectLibrary
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.*
 import com.intellij.util.io.directoryContent
@@ -20,28 +17,6 @@ import com.intellij.util.io.generateInVirtualTempDir
 import io.openapiprocessor.intellij.support.virtualDirFixture
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-
-fun TestFixture<PsiDirectory>.virtualJarFixture(moduleFixture: TestFixture<Module>, name: String): TestFixture<VirtualFile> {
-    return testFixture {
-        val parent = this@virtualJarFixture.init()
-
-        val tmpDir = directoryContent {
-            zip(name) {
-                dir("resources") {
-                    file("a.yaml", "openapi-processor-mapping: v0\n")
-                }
-            }
-        }.generateInVirtualTempDir()
-
-        PsiTestUtil.addProjectLibrary(moduleFixture.get(), name, tmpDir)
-
-        initialized(tmpDir) {
-          edtWriteAction {
-            tmpDir.delete(parent)
-          }
-        }
-    }
-}
 
 @TestApplication
 class FileTypeSpec {
@@ -68,7 +43,25 @@ class FileTypeSpec {
 
     val directory = sourceRoot.virtualDirFixture("folder")
 
-    val jar = sourceRoot.virtualJarFixture(module, "yaml.jar")
+    val jar = testFixture {
+        val parent = sourceRoot.init()
+
+        val tmpDir = directoryContent {
+            zip("yaml.jar") {
+                dir("resources") {
+                    file("a.yaml", "openapi-processor-mapping: v0\n")
+                }
+            }
+        }.generateInVirtualTempDir()
+
+        addProjectLibrary(module.get(), "yaml.jar", tmpDir)
+
+        initialized(tmpDir) {
+            edtWriteAction {
+                tmpDir.delete(parent)
+            }
+        }
+    }
 
 
     @Test
