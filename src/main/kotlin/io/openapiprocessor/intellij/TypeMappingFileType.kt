@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory
 import java.io.IOException
 import javax.swing.Icon
 
+val KEY_REGEX = Regex("""^${TypeMappingFileType.KEY}:\s+v\d+\s+""")
+
 class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
     FileTypeIdentifiableByVirtualFile, PlainTextLikeFileType {
@@ -64,8 +66,7 @@ class TypeMappingFileType :
     private fun checkMappingKey(file: VirtualFile): Boolean {
         return try {
             val start = String(file.inputStream.readNBytes(64))
-            val regex = Regex("""^${KEY}:\s+v\d+\s+""")
-            return regex.containsMatchIn(start)
+            return KEY_REGEX.containsMatchIn(start)
         } catch (e: IOException) {
             log.info("failed to check file {} ({})", file.name, e.message)
             false
