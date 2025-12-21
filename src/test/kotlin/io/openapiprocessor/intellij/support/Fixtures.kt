@@ -26,25 +26,3 @@ fun TestFixture<PsiDirectory>.virtualDirFixture(path: String): TestFixture<Virtu
         }
     }
 }
-
-fun TestFixture<PsiDirectory>.virtualJarFixture(moduleFixture: TestFixture<Module>, name: String): TestFixture<VirtualFile> {
-    return testFixture {
-        val parent = this@virtualJarFixture.init()
-
-        val tmpDir = directoryContent {
-            zip(name) {
-                dir("resources") {
-                    file("a.yaml", "openapi-processor-mapping: v0\n")
-                }
-            }
-        }.generateInVirtualTempDir()
-
-        PsiTestUtil.addProjectLibrary(moduleFixture.get(), name, tmpDir)
-
-        initialized(tmpDir) {
-          edtWriteAction {
-            tmpDir.delete(parent)
-          }
-        }
-    }
-}
