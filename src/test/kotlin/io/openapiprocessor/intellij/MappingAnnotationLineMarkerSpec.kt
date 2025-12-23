@@ -12,6 +12,7 @@ import com.intellij.testFramework.TestDataPath
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.*
 import com.intellij.testFramework.replaceService
+import com.intellij.testFramework.runInEdtAndGet
 import io.openapiprocessor.intellij.support.ModuleServiceStub
 import io.openapiprocessor.intellij.support.codeInsightFixture
 import io.openapiprocessor.intellij.support.psiTargets
@@ -50,10 +51,12 @@ class MappingAnnotationLineMarkerSpec {
     fun `adds navigation gutter icon to mapping annotation`() {
         val fixture = codeInsightFixture.get()
 
-        val file = VfsUtil.findRelativeFile(sourceRootFixture.get().virtualFile, "api", "Api.java")!!
-        fixture.configureFromExistingVirtualFile(file)
+        val gutters = runInEdtAndGet {
+            val file = VfsUtil.findRelativeFile(sourceRootFixture.get().virtualFile, "api", "Api.java")!!
+            fixture.configureFromExistingVirtualFile(file)
 
-        val gutters = fixture.findAllGutters("api/Api.java")
+            return@runInEdtAndGet fixture.findAllGutters("api/Api.java")
+        }
         assertEquals(2, gutters.size)
 
         runReadAction {
