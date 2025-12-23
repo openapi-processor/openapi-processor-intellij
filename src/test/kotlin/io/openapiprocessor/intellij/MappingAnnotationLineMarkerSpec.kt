@@ -6,13 +6,12 @@
 package io.openapiprocessor.intellij
 
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.runReadAction
+import com.intellij.openapi.application.runInEdt
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.testFramework.TestDataPath
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.*
 import com.intellij.testFramework.replaceService
-import com.intellij.testFramework.runInEdtAndGet
 import io.openapiprocessor.intellij.support.ModuleServiceStub
 import io.openapiprocessor.intellij.support.codeInsightFixture
 import io.openapiprocessor.intellij.support.psiTargets
@@ -24,19 +23,14 @@ import java.nio.file.Path
 @TestApplication
 @TestDataPath($$"$PROJECT_ROOT/src/test/testdata/interface-to-openapi/paths")
 class MappingAnnotationLineMarkerSpec {
-
     val tempPathFixture = tempPathFixture()
     val projectFixture = projectFixture(tempPathFixture, openAfterCreation = true)
     val moduleFixture = projectFixture.moduleFixture("main")
-
     val sourceRootFixture = moduleFixture.sourceRootFixture(
         pathFixture = tempPathFixture,
-        blueprintResourcePath = Path.of("src/test/testdata/interface-to-openapi/paths")
-    )
-
+        blueprintResourcePath = Path.of("src/test/testdata/interface-to-openapi/paths"))
     val codeInsightFixture = codeInsightFixture(projectFixture, tempPathFixture)
     val disposableFixture = disposableFixture()
-
 
     @BeforeEach
     fun stubModuleService() {
@@ -50,16 +44,14 @@ class MappingAnnotationLineMarkerSpec {
     @Test
     fun `adds navigation gutter icon to mapping annotation`() {
         val fixture = codeInsightFixture.get()
+        val file = VfsUtil.findRelativeFile(sourceRootFixture.get().virtualFile, "api", "Api.java")!!
 
-        val gutters = runInEdtAndGet {
-            val file = VfsUtil.findRelativeFile(sourceRootFixture.get().virtualFile, "api", "Api.java")!!
+        runInEdt {
             fixture.configureFromExistingVirtualFile(file)
 
-            return@runInEdtAndGet fixture.findAllGutters("api/Api.java")
-        }
-        assertEquals(2, gutters.size)
+            val gutters = fixture.findAllGutters("api/Api.java")
+            assertEquals(2, gutters.size)
 
-        runReadAction {
             val bar = gutters[0]
             assertEquals(MappingAnnotationLineMarker.Icon.openapi, bar.icon)
             assertEquals(MappingAnnotationLineMarker.I18n.TOOLTIP_TEXT, bar.tooltipText)

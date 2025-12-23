@@ -5,7 +5,9 @@
 
 package io.openapiprocessor.intellij.support
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.edtWriteAction
+import com.intellij.openapi.application.runInEdt
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.modules
@@ -23,6 +25,7 @@ import com.intellij.testFramework.fixtures.impl.TempDirTestFixtureImpl
 import com.intellij.testFramework.junit5.fixture.TestContext
 import com.intellij.testFramework.junit5.fixture.TestFixture
 import com.intellij.testFramework.junit5.fixture.testFixture
+import com.intellij.testFramework.runInEdtAndWait
 import org.jetbrains.annotations.TestOnly
 import java.nio.file.Path
 
@@ -96,9 +99,14 @@ fun <T: CodeInsightTestFixture> codeInsightFixture(
 
   codeInsightFixture.testDataPath = getTestDataPath(context)
 
-  codeInsightFixture.setUp()
+  ApplicationManager.getApplication().invokeAndWait {
+    codeInsightFixture.setUp()
+  }
+
   initialized(codeInsightFixture) {
-    codeInsightFixture.tearDown()
+    runInEdt {
+      codeInsightFixture.tearDown()
+    }
   }
 }
 
