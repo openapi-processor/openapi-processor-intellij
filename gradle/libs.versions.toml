@@ -10,7 +10,7 @@ changelog = "2.5.0"          # https://github.com/JetBrains/gradle-changelog-plu
 intelliJPlatform = "2.10.5"  # https://github.com/JetBrains/intellij-platform-gradle-plugin/releases
 kotlin = "2.2.21"             # https://kotlinlang.org/docs/releases.html
 kover = "0.9.3"
-qodana = "2025.2.2"
+qodana = "2025.3.1"
 versions = "0.53.0"
 
 [libraries]
