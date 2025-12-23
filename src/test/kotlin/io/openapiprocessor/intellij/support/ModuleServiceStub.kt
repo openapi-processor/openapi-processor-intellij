@@ -15,7 +15,8 @@ import io.openapiprocessor.intellij.ModuleService
 class ModuleServiceStub: ModuleService {
 
     override fun findModules(element: PsiElement): List<Module> {
-        val module = ProjectRootManager.getInstance(element.project)
+        val module = ProjectRootManager
+            .getInstance(element.project)
             .fileIndex
             .getModuleForFile(element.containingFile.virtualFile)
 

@@ -20,49 +20,50 @@ import org.junit.jupiter.api.Test
 
 @TestApplication
 class FileTypeSpec {
-    val project = projectFixture()
-    val module = project.moduleFixture("src")
-    val sourceRoot = module.sourceRootFixture()
+    companion object {
+        val project = projectFixture()
+        val module = project.moduleFixture("main")
+        val sourceRoot = module.sourceRootFixture()
 
-    val emptyYaml = sourceRoot.virtualFileFixture("empty.yaml", "")
-    val otherYaml = sourceRoot.virtualFileFixture("other.yaml", "something: some value")
+        val emptyYaml = sourceRoot.virtualFileFixture("empty.yaml", "")
+        val otherYaml = sourceRoot.virtualFileFixture("other.yaml", "something: some value")
 
-    val mappingYaml = sourceRoot.virtualFileFixture(
-        "mapping.yaml", """
-        openapi-processor-mapping: v0
-        options:
-          package-name: io.openapiprocessor
-        """.trimIndent())
+        val mappingYaml = sourceRoot.virtualFileFixture(
+            "mapping.yaml", """
+            openapi-processor-mapping: v0
+            options:
+              package-name: io.openapiprocessor
+            """.trimIndent())
 
-    val mappingYml = sourceRoot.virtualFileFixture(
-        "mapping.yml", """
-        openapi-processor-mapping: v0
-        options:
-          package-name: io.openapiprocessor
-        """.trimIndent())
+        val mappingYml = sourceRoot.virtualFileFixture(
+            "mapping.yml", """
+            openapi-processor-mapping: v0
+            options:
+              package-name: io.openapiprocessor
+            """.trimIndent())
 
-    val directory = sourceRoot.virtualDirFixture("folder")
+        val directory = sourceRoot.virtualDirFixture("folder")
 
-    val jar = testFixture {
-        val parent = sourceRoot.init()
+        val jar = testFixture {
+            val parent = sourceRoot.init()
 
-        val tmpDir = directoryContent {
-            zip("yaml.jar") {
-                dir("resources") {
-                    file("a.yaml", "openapi-processor-mapping: v0\n")
+            val tmpDir = directoryContent {
+                zip("yaml.jar") {
+                    dir("resources") {
+                        file("a.yaml", "openapi-processor-mapping: v0\n")
+                    }
                 }
-            }
-        }.generateInVirtualTempDir()
+            }.generateInVirtualTempDir()
 
-        addProjectLibrary(module.get(), "yaml.jar", tmpDir)
+            addProjectLibrary(module.get(), "yaml.jar", tmpDir)
 
-        initialized(tmpDir) {
-            edtWriteAction {
-                tmpDir.delete(parent)
+            initialized(tmpDir) {
+                edtWriteAction {
+                    tmpDir.delete(parent)
+                }
             }
         }
     }
-
 
     @Test
     fun `ignores empty file`() {
