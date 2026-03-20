@@ -8,10 +8,11 @@
 
 - Upgrade Gradle Wrapper to `9.4.1`
 - Set empty `versionPrefix` for changelog in Gradle build file.
+- Update `platformVersion` to `2025.2.6.1`
 - Dependencies - upgrade `org.jetbrains.intellij.platform` to `2.13.1`
-- Dependencies - upgrade `org.jetbrains.kotlin.jvm` to `2.3.0`
-- Dependencies - upgrade `org.jetbrains.qodana` to `2025.3.1`
-- Dependencies - upgrade `org.jetbrains.kotlinx.kover` to `0.9.5`
+- Dependencies - upgrade `org.jetbrains.kotlin.jvm` to `2.3.20`
+- Dependencies - upgrade `org.jetbrains.qodana` to `2025.3.2`
+- Dependencies - upgrade `org.jetbrains.kotlinx.kover` to `0.9.7`
 - Dependencies (GitHub Actions) - upgrade `actions/checkout` to `v6`
 - Dependencies (GitHub Actions) - upgrade `actions/upload-artifact` to `v6`
 - GitHub Actions: Setup Java and Gradle actions for the `releaseDraft` build step
