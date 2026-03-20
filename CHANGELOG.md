@@ -6,7 +6,7 @@
 
 ### Changed
 
-- Upgrade Gradle Wrapper to `9.3.1`
+- Upgrade Gradle Wrapper to `9.4.1`
 - Set empty `versionPrefix` for changelog in Gradle build file.
 - Dependencies - upgrade `org.jetbrains.intellij.platform` to `2.13.1`
 - Dependencies - upgrade `org.jetbrains.kotlin.jvm` to `2.3.0`
