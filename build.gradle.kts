@@ -131,6 +131,7 @@ changelog {
     headerParserRegex = """^((2[0-9]{3})\.(\d+)(\.(\d+))?(-(SNAPSHOT\.(\d+)))?)$"""
     header = provider { version.get() }
     combinePreReleases = false
+    versionPrefix = ""
 }
 
 // Configure Gradle Kover Plugin - read more:
