@@ -46,18 +46,20 @@ private fun findKeys(file: PsiFile): List<YamlKey> {
 
     // this is null if called from MappingAnnotationLineMarkerSpec
     if (file.virtualFile != null) {
-        log.debug("indexing file: {}", file.virtualFile.path)
+        log.debug("indexing YAML file: {}", file.virtualFile.path)
     }
 
     val keys = mutableListOf<YamlKey>()
 
     file.accept(object : YamlRecursivePsiElementVisitor() {
         override fun visitKeyValue(keyValue: YAMLKeyValue) {
+            log.debug("visiting YAML key/value {} {}", keyValue.keyText, keyValue.valueText)
+
             val key = keyValue.key
             if (key != null) {
                 val fullKey = YAMLUtil.getConfigFullName(keyValue)
                 if (isPathKey(fullKey)) {
-                    log.debug(">> adding key: {}", fullKey)
+                    log.debug(">> adding YAML key: {}", fullKey)
                     keys.add(YamlKey(fullKey, key.textOffset))
                 }
             }
