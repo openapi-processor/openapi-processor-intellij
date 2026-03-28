@@ -1,5 +1,8 @@
 #!/usr/bin/env just --justfile
 
+default:
+  @just --list --unsorted
+
 build:
   ./gradlew -x test build
 
