@@ -44,9 +44,9 @@ class MappingAnnotationLineMarkerSpec {
     @Test
     fun `adds navigation gutter icon to mapping annotation`() {
         val fixture = codeInsightFixture.get()
-        val file = VfsUtil.findRelativeFile(sourceRootFixture.get().virtualFile, "api", "Api.java")!!
 
         runInEdt {
+            val file = fixture.copyFileToProject("api/Api.java")
             fixture.configureFromExistingVirtualFile(file)
 
             val gutters = fixture.findAllGutters("api/Api.java")
