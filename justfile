@@ -26,4 +26,4 @@ upstream:
 
 # merge template changes
 upstream-merge:
-    git merge upstream/main --allow-unrelated-histories
+    git merge upstream/HEAD --allow-unrelated-histories
