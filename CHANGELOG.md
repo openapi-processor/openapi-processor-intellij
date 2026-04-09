@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- updated the minimum platform to 2025.3. 
+
 ## [2025.2]
 
 - improve related item popup entries.
