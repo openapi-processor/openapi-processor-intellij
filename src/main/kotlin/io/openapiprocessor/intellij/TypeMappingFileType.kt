@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory
 import java.io.IOException
 import javax.swing.Icon
 
-val KEY_REGEX = Regex("""^${TypeMappingFileType.KEY}:\s+v\d+\s+""")
+val KEY_REGEX = Regex("""^${TypeMappingFileType.PREFIX}-[a-z]+:\s+v\d+\s+""")
 
 class TypeMappingFileType :
     LanguageFileType(YAMLLanguage.INSTANCE, true),
@@ -78,5 +78,6 @@ class TypeMappingFileType :
     companion object {
         const val NAME = "openapi-processor mapping"
         const val KEY = "openapi-processor-mapping"
+        const val PREFIX = "openapi-processor"
     }
 }

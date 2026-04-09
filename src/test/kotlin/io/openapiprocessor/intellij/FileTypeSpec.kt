@@ -42,6 +42,13 @@ class FileTypeSpec {
               package-name: io.openapiprocessor
             """.trimIndent())
 
+        val springMappingYaml = sourceRoot.virtualFileFixture(
+            "spring-mapping.yaml", """
+            openapi-processor-spring: v0
+            options:
+              package-name: io.openapiprocessor
+            """.trimIndent())
+
         val directory = sourceRoot.virtualDirFixture("folder")
 
         val jar = testFixture {
@@ -87,6 +94,18 @@ class FileTypeSpec {
     fun `detects file type with 'yml' extension`() {
         assertEquals(TypeMappingFileType.NAME, mappingYml.get().fileType.name)
         assertTrue(mappingYml.get().fileType is TypeMappingFileType)
+    }
+
+    @Test
+    fun `detects file type with 'openapi-processor-mapping' identifier`() {
+        assertEquals(TypeMappingFileType.NAME, mappingYaml.get().fileType.name)
+        assertTrue(mappingYaml.get().fileType is TypeMappingFileType)
+    }
+
+    @Test
+    fun `detects file type with 'openapi-processor-spring' identifier`() {
+        assertEquals(TypeMappingFileType.NAME, springMappingYaml.get().fileType.name)
+        assertTrue(springMappingYaml.get().fileType is TypeMappingFileType)
     }
 
     @Test

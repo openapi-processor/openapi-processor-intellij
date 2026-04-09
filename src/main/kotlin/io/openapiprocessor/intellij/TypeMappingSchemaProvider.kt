@@ -17,20 +17,22 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
             return null
 
         val start = String(file.virtualFile.inputStream.readNBytes(64))
-        val regex = Regex("""^${TypeMappingFileType.KEY}:\s+(v\d+)\s*$""", RegexOption.MULTILINE)
+        val regex = Regex("""^${TypeMappingFileType.PREFIX}-([a-z]+):\s+(v\d+)\s*$""", RegexOption.MULTILINE)
         val match = regex.find(start) ?: return null
-        val version = match.groups[1] ?: return null
 
-        return getSchema(version.value)
+        val type = match.groups[1] ?: return null
+        val version = match.groups[2] ?: return null
+
+        return getSchema(type.value, version.value)
     }
 
-    private fun getSchema(version: String): VirtualFile? {
-        // same as https://openapiprocessor.io/schemas/mapping/mapping-$version.json
+    private fun getSchema(type: String, version: String): VirtualFile? {
+        // same as https://openapiprocessor.io/schemas/mapping/$type-$version.json
         @Suppress("UnstableApiUsage")
         return HttpsFileSystem.getHttpsInstance().findFileByPath(
             "raw.githubusercontent.com" +
                 "/openapi-processor/openapi-processor" +
-                "/master/public/schemas/mapping/mapping-$version.json"
+                "/master/public/schemas/mapping/$type-$version.json"
         )
     }
 

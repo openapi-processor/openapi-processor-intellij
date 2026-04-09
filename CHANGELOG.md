@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- added support for `openapi-processor-spring` mapping.yaml identifier (for `openapi-processor-spring` 2026.3). 
 - updated the minimum platform to 2025.3. 
 
 ## [2025.2]
