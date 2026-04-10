@@ -21,6 +21,7 @@
 - Remove redundant `intellijPlatform.pluginVerification` configuration from `build.gradle.kts`
 - Remove redundant `java` plugin declaration from `build.gradle.kts`
 - Remove redundant `pluginVersion` configuration from `build.gradle.kts`.
+- Remove redundant `pluginName` property from `gradle.properties` and `build.gradle.kts` as it is already set in the `plugin.xml`
 
 ## [2.4.1] - 2026-03-20
 
