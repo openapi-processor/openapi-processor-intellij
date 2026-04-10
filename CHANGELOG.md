@@ -14,7 +14,8 @@
 ### Removed
 
 - Remove redundant Kotlin JVM toolchain configuration from `build.gradle.kts`
-- Remove redundant `intellijPlatform.pluginConfiguration.ideaVersion` configuration from `build.gradle.kts`
+- Remove redundant `intellijPlatform.pluginConfiguration.ideaVersion.sinceBuild` configuration from `build.gradle.kts`
+- Remove redundant `pluginSinceBuild` property from `gradle.properties`
 - Remove redundant `intellijPlatform.signing` configuration from `build.gradle.kts`
 - Remove redundant `intellijPlatform.publishing.token` configuration from `build.gradle.kts`
 - Remove redundant `intellijPlatform.pluginVerification` configuration from `build.gradle.kts`
