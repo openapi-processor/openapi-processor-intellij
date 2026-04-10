@@ -8,6 +8,7 @@
 
 - Migrate IntelliJ Platform repository configuration to `settings.gradle.kts`
 - Dependencies - upgrade `org.jetbrains.intellij.platform` to `2.14.0`
+- Simplify property configuration by removing redundant `pluginGroup` reference from `build.gradle.kts` and updating `gradle.properties`.
 
 ### Removed
 
