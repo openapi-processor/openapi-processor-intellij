@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Migrate IntelliJ Platform repository configuration to `settings.gradle.kts`
+
 ## [2.4.1] - 2026-03-20
 
 ### Fixed
