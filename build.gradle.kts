@@ -14,11 +14,6 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-// Set the JVM language level used to build the project.
-kotlin {
-    jvmToolchain(21)
-}
-
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/version_catalogs.html
 dependencies {
     testImplementation(libs.junit)

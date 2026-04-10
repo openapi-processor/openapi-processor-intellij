@@ -9,6 +9,10 @@
 - Migrate IntelliJ Platform repository configuration to `settings.gradle.kts`
 - Dependencies - upgrade `org.jetbrains.intellij.platform` to `2.14.0`
 
+### Removed
+
+- Remove redundant Kotlin JVM toolchain configuration from `build.gradle.kts`
+
 ## [2.4.1] - 2026-03-20
 
 ### Fixed
