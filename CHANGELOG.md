@@ -12,6 +12,7 @@
 ### Removed
 
 - Remove redundant Kotlin JVM toolchain configuration from `build.gradle.kts`
+- Remove redundant `intellijPlatform.pluginConfiguration.ideaVersion` configuration from `build.gradle.kts`
 
 ## [2.4.1] - 2026-03-20
 
