@@ -53,7 +53,7 @@ class TypeMappingSchemaProviderSpec {
     }
 
     @Test
-    fun `detects openapi-processor-spring schema`() {
+    fun `detects 'merged' openapi-processor-spring schema`() {
         val provider = TypeMappingSchemaProvider()
 
         runReadAction {
@@ -62,7 +62,7 @@ class TypeMappingSchemaProviderSpec {
             assertEquals(
                 "raw.githubusercontent.com" +
                 "/openapi-processor/openapi-processor" +
-                "/master/public/schemas/mapping/spring-v1.json",
+                "/master/public/schemas/mapping/spring-v1.merged.json",
                 schema!!.canonicalPath)
         }
     }

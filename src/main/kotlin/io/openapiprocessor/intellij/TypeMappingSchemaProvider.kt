@@ -8,7 +8,11 @@ package io.openapiprocessor.intellij
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.http.HttpsFileSystem
 import com.intellij.psi.PsiFile
+import com.intellij.util.net.HttpConnectionUtils
 import com.jetbrains.jsonSchema.extension.ContentAwareJsonSchemaFileProvider
+import java.net.HttpURLConnection
+
+const val GITHUB_PREFIX = "raw.githubusercontent.com/openapi-processor/openapi-processor/master/"
 
 class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
 
@@ -28,12 +32,26 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
 
     private fun getSchema(type: String, version: String): VirtualFile? {
         // same as https://openapiprocessor.io/schemas/mapping/$type-$version.json
-        @Suppress("UnstableApiUsage")
+
+        // first, check if there is a "merged" version without external $refs
+        val mergedUrl = "${GITHUB_PREFIX}public/schemas/mapping/$type-$version.merged.json"
+        if(exists(mergedUrl)) {
+            return HttpsFileSystem.getHttpsInstance().findFileByPath(mergedUrl)
+        }
+
+        // if there is no merged version try the original json schema
         return HttpsFileSystem.getHttpsInstance().findFileByPath(
-            "raw.githubusercontent.com" +
-                "/openapi-processor/openapi-processor" +
-                "/master/public/schemas/mapping/$type-$version.json"
-        )
+            "${GITHUB_PREFIX}public/schemas/mapping/$type-$version.json")
+    }
+
+    private fun exists(url: String): Boolean {
+        try {
+            val connection = HttpConnectionUtils.openHttpConnection("https://${url}")
+            connection.setRequestMethod("HEAD")
+            return connection.responseCode == HttpURLConnection.HTTP_OK
+        } catch (_: Exception) {
+            return false
+        }
     }
 
     private fun isMappingFile(file: PsiFile): Boolean {
