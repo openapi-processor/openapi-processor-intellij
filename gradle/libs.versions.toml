@@ -7,7 +7,7 @@ mockk = "1.14.9"
 
 # plugins
 changelog = "2.5.0"          # https://github.com/JetBrains/gradle-changelog-plugin/releases
-intelliJPlatform = "2.13.1"  # https://github.com/JetBrains/intellij-platform-gradle-plugin/releases
+intelliJPlatform = "2.14.0"  # https://github.com/JetBrains/intellij-platform-gradle-plugin/releases
 kotlin = "2.3.20"             # https://kotlinlang.org/docs/releases.html
 kover = "0.9.8"
 qodana = "2025.3.2"
