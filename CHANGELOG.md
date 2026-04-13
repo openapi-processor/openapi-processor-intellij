@@ -16,6 +16,7 @@
 - Remove `opentest4j` dependency from `build.gradle.kts` and `libs.versions.toml`, redundant  since IntelliJ Platform 251+
 - Remove `gradleVersion` property and wrapper configuration as Gradle Wrapper should be updated with `./gradlew wrapper --gradle-version=9.4.1 && ./gradlew wrapper`
 - Remove Qodana configuration, dependencies, and related workflow steps.
+- Remove Kover configuration, dependencies, and related workflow steps.
 - Remove redundant Kotlin JVM toolchain configuration from `build.gradle.kts`
 - Remove redundant `intellijPlatform.pluginConfiguration.ideaVersion.sinceBuild` configuration from `build.gradle.kts`
 - Remove redundant `pluginSinceBuild` property from `gradle.properties`
@@ -23,8 +24,8 @@
 - Remove redundant `intellijPlatform.publishing.token` configuration from `build.gradle.kts`
 - Remove redundant `intellijPlatform.pluginVerification` configuration from `build.gradle.kts`
 - Remove redundant `java` plugin declaration from `build.gradle.kts`
-- Remove redundant `pluginVersion` configuration from `build.gradle.kts`.
-- Remove redundant `pluginName` property from `gradle.properties` and `build.gradle.kts` as it is already set in the `plugin.xml`
+- Remove `pluginVersion` configuration from `build.gradle.kts`.
+- Remove `pluginName` property from `gradle.properties` and `build.gradle.kts` as it is already set in the `plugin.xml`
 
 ## [2.4.1] - 2026-03-20
 
