@@ -31,9 +31,8 @@ jobs:
           echo "\`\`\`diff" >> $GITHUB_STEP_SUMMARY
 
           diff -U 0 \
-            -I '^pluginVersion' \
-            -I '^pluginGroup' \
-            -I '^pluginName' \
+            -I '^version' \
+            -I '^group' \
             -I '^pluginRepositoryUrl' \
             --label .github/template-cleanup/gradle.properties \
             --label gradle.properties \
