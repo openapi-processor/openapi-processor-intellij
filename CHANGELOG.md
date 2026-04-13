@@ -12,6 +12,7 @@
 - Update `version` property in `gradle.properties` and remove redundant `pluginVersion` configuration from `build.gradle.kts`
 - Inline `junit` dependency version in `build.gradle.kts` and remove it from `libs.versions.toml`.
 - Remove `platformVersion` property and inline its value in `build.gradle.kts` for cleaner configuration.
+- Remove `libs.versions.toml` and inline plugin versions in build scripts for simpler configuration.
 
 ### Removed
 
