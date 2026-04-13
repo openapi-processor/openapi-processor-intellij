@@ -10,10 +10,11 @@
 - Dependencies - upgrade `org.jetbrains.intellij.platform` to `2.14.0`
 - Update `group` property in `gradle.properties` and remove redundant `pluginGroup` configuration from `build.gradle.kts`
 - Update `version` property in `gradle.properties` and remove redundant `pluginVersion` configuration from `build.gradle.kts`
+- Inline `junit` dependency version in `build.gradle.kts` and remove it from `libs.versions.toml`.
+- Remove `platformVersion` property and inline its value in `build.gradle.kts` for cleaner configuration.
 
 ### Removed
 
-- Remove `platformVersion` property and inline its value in `build.gradle.kts` for cleaner configuration.
 - Remove (empty) plugin and module dependency configurations from `build.gradle.kts` and `gradle.properties`.
 - Remove `opentest4j` dependency from `build.gradle.kts` and `libs.versions.toml`, redundant  since IntelliJ Platform 251+
 - Remove `gradleVersion` property and wrapper configuration as Gradle Wrapper should be updated with `./gradlew wrapper --gradle-version=9.4.1 && ./gradlew wrapper`
