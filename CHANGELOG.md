@@ -31,6 +31,7 @@
 - Remove `pluginVersion` configuration from `build.gradle.kts`.
 - Remove `pluginName` property from `gradle.properties` and `build.gradle.kts` as it is already set in the `plugin.xml`
 - Remove `intellijPlatform.publishing.channels` configuration from `build.gradle.kts`.
+- Remove `runIdeForUiTests` obsolete task from `build.gradle.kts`.
 
 ## [2.4.1] - 2026-03-20
 
