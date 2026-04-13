@@ -13,6 +13,7 @@
 
 ### Removed
 
+- Remove (empty) plugin and module dependency configurations from `build.gradle.kts` and `gradle.properties`.
 - Remove `opentest4j` dependency from `build.gradle.kts` and `libs.versions.toml`, redundant  since IntelliJ Platform 251+
 - Remove `gradleVersion` property and wrapper configuration as Gradle Wrapper should be updated with `./gradlew wrapper --gradle-version=9.4.1 && ./gradlew wrapper`
 - Remove Qodana configuration, dependencies, and related workflow steps.
