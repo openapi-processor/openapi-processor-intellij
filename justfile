@@ -30,3 +30,14 @@ upstream:
 # merge template changes
 upstream-merge:
     git merge upstream/HEAD --allow-unrelated-histories
+
+upstream-changes:
+    git log HEAD..upstream/next --oneline --reverse
+
+upstream-rebase:
+    git rebase -i upstream/next
+
+merge hash:
+    git merge {{hash}}
+
+
