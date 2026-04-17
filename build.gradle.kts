@@ -11,7 +11,6 @@ plugins {
 //    alias(libs.plugins.versions)
 }
 
-group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
 dependencies {
