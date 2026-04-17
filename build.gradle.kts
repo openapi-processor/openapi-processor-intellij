@@ -11,8 +11,6 @@ plugins {
 //    alias(libs.plugins.versions)
 }
 
-version = providers.gradleProperty("pluginVersion").get()
-
 dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
@@ -46,9 +44,6 @@ intellijPlatform {
     buildSearchableOptions = false
 
     pluginConfiguration {
-        name = providers.gradleProperty("pluginName")
-        version = providers.gradleProperty("pluginVersion")
-
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         description = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
             val start = "<!-- Plugin description -->"
