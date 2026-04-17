@@ -5,8 +5,6 @@ junit4 = "4.13.2"
 mockk = "1.14.9"
 
 # plugins
-changelog = "2.5.0"          # https://github.com/JetBrains/gradle-changelog-plugin/releases
-kotlin = "2.3.20"             # https://kotlinlang.org/docs/releases.html
 kover = "0.9.8"
 qodana = "2025.3.2"
 versions = "0.53.0"
@@ -20,9 +18,9 @@ junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 [plugins]
-changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+changelog = { id = "org.jetbrains.changelog" }
 intelliJPlatform = { id = "org.jetbrains.intellij.platform" }
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin = { id = "org.jetbrains.kotlin.jvm" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 qodana = { id = "org.jetbrains.qodana", version.ref = "qodana" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
