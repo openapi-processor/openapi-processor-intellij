@@ -14,7 +14,6 @@ plugins {
 dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.opentest4j)
     testImplementation(libs.junit4)
     testRuntimeOnly(libs.junit.launcher)
 
@@ -114,10 +113,6 @@ kover {
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
-    }
-
-    wrapper {
-        gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
 
     publishPlugin {

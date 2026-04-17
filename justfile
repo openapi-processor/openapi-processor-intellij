@@ -40,4 +40,8 @@ upstream-rebase:
 merge hash:
     git merge {{hash}}
 
+# build plugin zip
+build-plugin:
+  ./gradlew buildPlugin
+
 

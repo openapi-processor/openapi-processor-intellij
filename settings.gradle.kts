@@ -15,6 +15,7 @@ plugins {
     id("org.jetbrains.intellij.platform.settings") version "2.14.0"
 }
 
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
