@@ -14,6 +14,7 @@ import java.net.HttpURLConnection
 
 const val GITHUB_PREFIX = "raw.githubusercontent.com/openapi-processor/openapi-processor/master/"
 
+@Suppress("UnstableApiUsage")
 class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
 
     override fun getSchemaFile(file: PsiFile): VirtualFile? {
@@ -39,7 +40,7 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
             return HttpsFileSystem.getHttpsInstance().findFileByPath(mergedUrl)
         }
 
-        // if there is no merged version try the original json schema
+        // if there is no merged version, try the original json schema
         return HttpsFileSystem.getHttpsInstance().findFileByPath(
             "${GITHUB_PREFIX}public/schemas/mapping/$type-$version.json")
     }
@@ -47,7 +48,7 @@ class TypeMappingSchemaProvider: ContentAwareJsonSchemaFileProvider {
     private fun exists(url: String): Boolean {
         try {
             val connection = HttpConnectionUtils.openHttpConnection("https://${url}")
-            connection.setRequestMethod("HEAD")
+            connection.requestMethod = "HEAD"
             return connection.responseCode == HttpURLConnection.HTTP_OK
         } catch (_: Exception) {
             return false
