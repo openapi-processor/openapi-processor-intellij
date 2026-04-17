@@ -92,10 +92,6 @@ intellijPlatform {
           "-mute",
           "TemplateWordInPluginId"
         )
-
-        ides {
-            recommended()
-        }
     }
 }
 
