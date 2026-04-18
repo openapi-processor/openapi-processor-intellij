@@ -66,6 +66,9 @@ intellijPlatform {
 
     publishing {
         token = providers.environmentVariable("INTELLIJ_PUBLISH_TOKEN")
+
+        // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
+        channels = if (isSnapshot()) listOf("SNAPSHOT") else listOf("default")
     }
 
     pluginVerification {
@@ -108,3 +111,5 @@ tasks {
         dependsOn(patchChangelog)
     }
 }
+
+fun isSnapshot() = version.toString().contains("-SNAPSHOT")
