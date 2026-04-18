@@ -77,7 +77,6 @@ class TypeMappingFileType :
 
     companion object {
         const val NAME = "openapi-processor mapping"
-        const val KEY = "openapi-processor-mapping"
         const val PREFIX = "openapi-processor"
     }
 }
