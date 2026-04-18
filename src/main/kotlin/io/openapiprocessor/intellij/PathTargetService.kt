@@ -17,9 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil
 class PathTargetService {
 
     fun findPathTargets(project: Project, path: String): List<PsiMethod> {
-        return Annotations.KNOWN
-            .map { findPathTargets(project, path, it) }
-            .flatten()
+        return Annotations.KNOWN.flatMap { findPathTargets(project, path, it) }
     }
 
     private fun findPathTargets(project: Project, path: String, annotation: Annotation): List<PsiMethod> {

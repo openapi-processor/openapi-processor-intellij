@@ -21,8 +21,7 @@ class TargetMethodFinder {
     fun findTargetMethods(targetMethod: TargetMethod): List<PsiElement> {
         return Annotations
             .withMethod(targetMethod.method)
-            .map { findTargetMethods(it, targetMethod) }
-            .flatten()
+            .flatMap { findTargetMethods(it, targetMethod) }
     }
 
     private fun findTargetMethods(annotation: Annotation, targetMethod: TargetMethod): List<PsiElement> {
