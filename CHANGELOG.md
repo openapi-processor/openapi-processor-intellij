@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- build: fix release channel selection
+
 ## [2026.1-SNAPSHOT.3]
 
 - build: sync with the plugin template
