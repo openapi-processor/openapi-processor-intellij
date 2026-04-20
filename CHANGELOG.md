@@ -4,7 +4,11 @@
 
 ## [Unreleased]
 
+- added support for `openapi-processor-spring` mapping.yaml identifier (for `openapi-processor-spring` 2026.3). 
+- try to find a _merged_ JSON schema (i.e. no external `$ref`) and if available use it for the editor support. IntelliJ does not handle the external `$ref` to the base mapping JSON schema.
+- updated the minimum platform to 2025.3.
 - build: fix release channel selection
+- build: sync with the plugin template
 
 ## [2026.1-SNAPSHOT.3]
 
