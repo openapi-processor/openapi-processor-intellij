@@ -10,7 +10,7 @@ pluginManagement {
 
     plugins {
         // https://kotlinlang.org/docs/releases.html
-        id("org.jetbrains.kotlin.jvm") version "2.3.20"
+        id("org.jetbrains.kotlin.jvm") version "2.3.21"
         // https://github.com/JetBrains/gradle-changelog-plugin/releases
         id("org.jetbrains.changelog") version "2.5.0"
     }
