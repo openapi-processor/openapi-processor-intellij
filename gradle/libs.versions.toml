@@ -2,7 +2,7 @@
 # libraries
 junit5 = "5.14.1"
 junit4 = "4.13.2"
-mockk = "1.14.9"
+mockk = "1.14.11"
 
 # plugins
 kover = "0.9.8"
