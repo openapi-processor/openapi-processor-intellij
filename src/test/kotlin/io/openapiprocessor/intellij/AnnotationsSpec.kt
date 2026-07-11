@@ -18,12 +18,10 @@ import org.junit.jupiter.api.Test
 @TestApplication
 class AnnotationsSpec {
 
-    companion object {
-        val springPostAnnotation = SpringAnnotation("PostMapping", "post")
-        val micronautPostAnnotation = MicronautAnnotation("Post", "post")
+    val springPostAnnotation = SpringAnnotation("PostMapping", "post")
+    val micronautPostAnnotation = MicronautAnnotation("Post", "post")
 
-        val project by projectFixture()
-    }
+    val project by projectFixture()
 
     @Test
     fun `post psi annotation matches fully qualified spring @PostMapping`() {

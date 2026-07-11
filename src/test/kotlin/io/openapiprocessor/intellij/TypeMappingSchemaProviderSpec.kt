@@ -5,7 +5,7 @@
 
 package io.openapiprocessor.intellij
 
-import com.intellij.openapi.application.runReadAction
+import com.intellij.openapi.application.runReadActionBlocking
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.moduleFixture
 import com.intellij.testFramework.junit5.fixture.projectFixture
@@ -41,7 +41,7 @@ class TypeMappingSchemaProviderSpec {
     fun `detects openapi-processor-mapping schema`() {
         val provider = TypeMappingSchemaProvider()
 
-        runReadAction {
+        runReadActionBlocking {
             val schema = provider.getSchemaFile(mappingYaml.get().getPsiFile(project.get()))
 
             assertEquals(
@@ -56,7 +56,7 @@ class TypeMappingSchemaProviderSpec {
     fun `detects 'merged' openapi-processor-spring schema`() {
         val provider = TypeMappingSchemaProvider()
 
-        runReadAction {
+        runReadActionBlocking {
             val schema = provider.getSchemaFile(springMappingYaml.get().getPsiFile(project.get()))
 
             assertEquals(
