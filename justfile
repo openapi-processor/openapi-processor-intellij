@@ -31,14 +31,16 @@ upstream:
 upstream-merge:
     git merge upstream/HEAD --allow-unrelated-histories
 
-upstream-changes:
-    git log HEAD..upstream/next --oneline --reverse
-
 upstream-rebase:
     git rebase -i upstream/next
 
+# show upstream changes
+upstream-changes:
+    git log HEAD..upstream/main --oneline --reverse
+
+# merge upstream changes until commit hash
 merge hash:
-    git merge {{hash}}
+    git merge {{hash}} --allow-unrelated-histories --no-commit --no-ff
 
 # build plugin zip
 build-plugin:
