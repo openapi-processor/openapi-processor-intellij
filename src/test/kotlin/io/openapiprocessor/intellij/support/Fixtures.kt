@@ -24,8 +24,8 @@ import com.intellij.testFramework.fixtures.impl.CodeInsightTestFixtureImpl
 import com.intellij.testFramework.fixtures.impl.TempDirTestFixtureImpl
 import com.intellij.testFramework.junit5.fixture.TestContext
 import com.intellij.testFramework.junit5.fixture.TestFixture
+import com.intellij.testFramework.junit5.fixture.sourceRootFixture
 import com.intellij.testFramework.junit5.fixture.testFixture
-import com.intellij.testFramework.runInEdtAndWait
 import org.jetbrains.annotations.TestOnly
 import java.nio.file.Path
 
@@ -108,6 +108,21 @@ fun <T: CodeInsightTestFixture> codeInsightFixture(
       codeInsightFixture.tearDown()
     }
   }
+}
+
+/**
+ * initializes the source root of the module with the test data path from the @TestDataPath annotation.
+ */
+@TestOnly
+fun TestFixture<Module>.testDataSourceRootFixture(
+  sourcePathFixture: TestFixture<Path>
+): TestFixture<PsiDirectory> = testFixture { context ->
+  val testDataPath = getTestDataPath(context)
+  val delegate = this@testDataSourceRootFixture.sourceRootFixture(
+    pathFixture = sourcePathFixture,
+    blueprintResourcePath = Path.of(testDataPath)
+  )
+  initialized(delegate.init()) {}
 }
 
 private fun getTestDataPath(context: TestContext): String {

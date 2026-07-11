@@ -5,30 +5,33 @@
 
 package io.openapiprocessor.intellij
 
+import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.runInEdt
-import com.intellij.openapi.vfs.VfsUtil
+import com.intellij.openapi.application.runReadActionBlocking
 import com.intellij.testFramework.TestDataPath
+import com.intellij.testFramework.junit5.RunInEdt
 import com.intellij.testFramework.junit5.TestApplication
-import com.intellij.testFramework.junit5.fixture.*
+import com.intellij.testFramework.junit5.fixture.disposableFixture
+import com.intellij.testFramework.junit5.fixture.moduleFixture
+import com.intellij.testFramework.junit5.fixture.projectFixture
+import com.intellij.testFramework.junit5.fixture.tempPathFixture
 import com.intellij.testFramework.replaceService
 import io.openapiprocessor.intellij.support.ModuleServiceStub
 import io.openapiprocessor.intellij.support.codeInsightFixture
 import io.openapiprocessor.intellij.support.psiTargets
+import io.openapiprocessor.intellij.support.testDataSourceRootFixture
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.nio.file.Path
 
+@RunInEdt
 @TestApplication
 @TestDataPath($$"$PROJECT_ROOT/src/test/testdata/interface-to-openapi/paths")
 class MappingAnnotationLineMarkerSpec {
     val tempPathFixture = tempPathFixture()
     val projectFixture = projectFixture(tempPathFixture, openAfterCreation = true)
     val moduleFixture = projectFixture.moduleFixture("main")
-    val sourceRootFixture = moduleFixture.sourceRootFixture(
-        pathFixture = tempPathFixture,
-        blueprintResourcePath = Path.of("src/test/testdata/interface-to-openapi/paths"))
+    val sourceRootFixture = moduleFixture.testDataSourceRootFixture(tempPathFixture)
     val codeInsightFixture = codeInsightFixture(projectFixture, tempPathFixture)
     val disposableFixture = disposableFixture()
 
@@ -37,30 +40,24 @@ class MappingAnnotationLineMarkerSpec {
         ApplicationManager.getApplication().replaceService(
             ModuleService::class.java,
             ModuleServiceStub(),
-            disposableFixture.get()
-        )
+            disposableFixture.get())
     }
 
     @Test
     fun `adds navigation gutter icon to mapping annotation`() {
         val fixture = codeInsightFixture.get()
+        fixture.configureByFile("api/Api.java")
 
-        runInEdt {
-            val file = fixture.copyFileToProject("api/Api.java")
-            fixture.configureFromExistingVirtualFile(file)
+        val gutters = fixture.findAllGutters()
 
-            val gutters = fixture.findAllGutters("api/Api.java")
-            assertEquals(2, gutters.size)
+        assertEquals(2, gutters.size)
+        assertGutter(gutters[0], "/bar")
+        assertGutter(gutters[1], "/foo")
+    }
 
-            val bar = gutters[0]
-            assertEquals(MappingAnnotationLineMarker.Icon.openapi, bar.icon)
-            assertEquals(MappingAnnotationLineMarker.I18n.TOOLTIP_TEXT, bar.tooltipText)
-            assertEquals(bar.psiTargets.first().text, "/bar")
-
-            val foo = gutters[1]
-            assertEquals(MappingAnnotationLineMarker.Icon.openapi, foo.icon)
-            assertEquals(MappingAnnotationLineMarker.I18n.TOOLTIP_TEXT, foo.tooltipText)
-            assertEquals(foo.psiTargets.first().text, "/foo")
-        }
+    private fun assertGutter(gutter: GutterMark, expectedTarget: String) = runReadActionBlocking {
+        assertEquals(MappingAnnotationLineMarker.Icon.openapi, gutter.icon)
+        assertEquals(MappingAnnotationLineMarker.I18n.TOOLTIP_TEXT, gutter.tooltipText)
+        assertEquals(expectedTarget, gutter.psiTargets.first().text)
     }
 }
