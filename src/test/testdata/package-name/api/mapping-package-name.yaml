@@ -1,3 +1,3 @@
-openapi-processor-mapping: v4
+openapi-processor-mapping: v0
 options:
   package-name: io.openapiprocessor

@@ -5,10 +5,12 @@
 
 package io.openapiprocessor.intellij.support
 
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiDirectory
 import io.openapiprocessor.intellij.TargetPackageService
 
+@Service
 class TargetPackageServiceStub(private val pkg: PsiDirectory?) : TargetPackageService {
 
     override fun findPackageDirs(pkgName: String, mappingModule: Module): List<PsiDirectory> {

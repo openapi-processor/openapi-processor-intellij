@@ -1,4 +1,4 @@
-openapi-processor-mapping: v13
+openapi-processor-mapping: v0
 options:
   package-names:
     base: io.openapiprocessor
