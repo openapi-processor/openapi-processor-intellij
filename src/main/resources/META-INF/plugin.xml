@@ -3,6 +3,39 @@
     <id>io.openapiprocessor.intellij</id>
     <name>openapi-processor</name>
     <vendor>openapiprocessor.io</vendor>
+    <description><![CDATA[
+        <p>
+          Adds support for the <a href="https://openapiprocessor.io/oap/home/home.html">openapi-processor</a>
+          <code>mapping.yaml</code> configuration file.
+        </p>
+        <ul>
+          <li>
+            automatically selects the JSON schema of the <code>mapping.yaml</code> to provide editing support
+            (autocompletion &amp; validation). Note that the <code>openapi-processor-[mapping|spring]: v[x]</code>
+            line in the <code>mapping.yaml</code> is used to detect it.
+          </li>
+          <li>
+            marks the <code>mapping.yaml</code> with an openapi-processor icon to separate it from the openapi YAML
+            file(s) (includes new ui icon)
+          </li>
+          <li>
+            navigate from the <code>package-name</code> configuration in the <code>mapping.yaml</code> to the package
+            with the generated sources (if the target package exists).
+          </li>
+          <li>
+            navigate from an endpoint <code>path</code> mapping in the <code>mapping.yaml</code> to the generated
+            interface method (via a standard interface icon).
+          </li>
+          <li>
+            navigate from an OpenAPI endpoint <code>path</code> to the generated endpoint interface methods
+            (via a standard interface icon).
+          </li>
+          <li>
+            navigate from a generated endpoint interface to the OpenAPI endpoint <code>path</code>
+            (via a standard OpenAPI icon).
+          </li>
+        </ul>
+    ]]></description>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
