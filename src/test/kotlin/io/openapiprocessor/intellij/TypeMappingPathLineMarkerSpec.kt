@@ -41,9 +41,9 @@ class TypeMappingPathLineMarkerSpec {
     @Test
     fun `adds navigation gutter icon to micronaut interface methods`() {
         val fixture = codeInsightFixture.get()
+        fixture.copyDirectoryToProject("micronaut", "")
 
         runInEdt {
-            fixture.copyDirectoryToProject("micronaut", "")
             fixture.configureByFile("mapping.yaml")
 
             val expected = listOf(
@@ -67,9 +67,9 @@ class TypeMappingPathLineMarkerSpec {
     @Test
     fun `adds navigation gutter icon to spring interface methods`() {
         val fixture = codeInsightFixture.get()
+        fixture.copyDirectoryToProject("spring", "")
 
         runInEdt {
-            fixture.copyDirectoryToProject("spring", "")
             fixture.configureByFile("mapping.yaml")
 
             val expected = listOf(
