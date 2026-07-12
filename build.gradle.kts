@@ -53,6 +53,8 @@ intellijPlatform {
 
 tasks.test {
     useJUnitPlatform()
+
+    systemProperty("idea.log.config.properties.file", "${project.rootDir}/src/test/resources/test-logging.properties")
 }
 
 // Configure Gradle Changelog Plugin - read more:
