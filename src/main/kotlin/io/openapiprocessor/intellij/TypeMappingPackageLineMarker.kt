@@ -35,7 +35,6 @@ import javax.swing.Icon as JIcon
 class TypeMappingPackageLineMarker : RelatedItemLineMarkerProvider() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    @Suppress("UnstableApiUsage")
     class Renderer(private val userDataKey: Key<String>) : PsiTargetPresentationRenderer<PsiElement>() {
 
         override fun getContainerText(element: PsiElement): String? {
