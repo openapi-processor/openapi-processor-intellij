@@ -112,7 +112,7 @@ class TargetPackageFinderSpec {
     fun `find target package directories`() {
         val service = service<TargetPackageService>()
 
-        val pkgDirs = ReadAction.compute<List<PsiDirectory>, Throwable> {
+        val pkgDirs = ReadAction.computeBlocking<List<PsiDirectory>, Throwable> {
             service.findPackageDirs("io.openapiprocessor", moduleFixture.get())
         }
 
