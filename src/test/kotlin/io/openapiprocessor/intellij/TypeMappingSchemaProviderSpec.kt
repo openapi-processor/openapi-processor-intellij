@@ -17,25 +17,23 @@ import org.junit.jupiter.api.Test
 
 @TestApplication
 class TypeMappingSchemaProviderSpec {
-    companion object {
-        val project = projectFixture()
-        val module = project.moduleFixture("main")
-        val sourceRoot = module.sourceRootFixture()
+    val project = projectFixture()
+    val module = project.moduleFixture("main")
+    val sourceRoot = module.sourceRootFixture()
 
-        val mappingYaml = sourceRoot.virtualFileFixture(
-            "mapping.yaml", """
-            openapi-processor-mapping: v18
-            options:
-              package-name: io.openapiprocessor
-            """.trimIndent())
+    val mappingYaml = sourceRoot.virtualFileFixture(
+        "mapping.yaml", """
+        openapi-processor-mapping: v18
+        options:
+          package-name: io.openapiprocessor
+        """.trimIndent())
 
-        val springMappingYaml = sourceRoot.virtualFileFixture(
-            "spring-mapping.yaml", """
-            openapi-processor-spring: v1
-            options:
-              package-name: io.openapiprocessor
-            """.trimIndent())
-    }
+    val springMappingYaml = sourceRoot.virtualFileFixture(
+        "spring-mapping.yaml", """
+        openapi-processor-spring: v1
+        options:
+          package-name: io.openapiprocessor
+        """.trimIndent())
 
     @Test
     fun `detects openapi-processor-mapping schema`() {
