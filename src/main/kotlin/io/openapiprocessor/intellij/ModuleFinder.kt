@@ -15,6 +15,9 @@ import java.nio.file.Path
 import kotlin.io.path.name
 import kotlin.math.min
 
+/**
+ * locate modules that may contain files we want to navigate to.
+ */
 class ModuleFinder(private val project: Project) {
 
     fun findModules(sourceUrl: String): List<Module> {
@@ -26,6 +29,35 @@ class ModuleFinder(private val project: Project) {
             .filter { it.sourceRoots.isNotEmpty() }
             .toList()
 
+        val sourceModuleEntity = findSourceModule(allEntities, sourcePath) ?: return emptyList()
+        val sourceContentRoots = sourceModuleEntity.contentRoots
+            .map { it.url.presentableUrl }
+            .toSet()
+
+        val shortestCommonPath = findCommonPath(sourceContentRoots) ?: return emptyList()
+        val siblingEntities = findSiblingModules(allEntities, shortestCommonPath)
+
+        val moduleManager = ModuleManager.getInstance(project)
+        return siblingEntities.mapNotNull { moduleManager.findModuleByName(it.name) }
+    }
+
+    private fun findSiblingModules(allEntities: List<ModuleEntity>, shortestCommonPath: String): List<ModuleEntity> =
+        allEntities.filter { entity ->
+            entity.contentRoots.any { it.url.presentableUrl.contains(shortestCommonPath) }
+        }
+
+    private fun findCommonPath(sourceContentRoots: Set<String>): String? = sourceContentRoots
+        .map {
+            it.split('/')
+        }
+        .reduceOrNull { acc, path ->
+            acc.zip(path)
+                .takeWhile { (a, b) -> a == b }
+                .map { it.first }
+        }
+        ?.joinToString("/")
+
+    private fun findSourceModule(allEntities: List<ModuleEntity>, sourcePath: Path): ModuleEntity? {
         var bestMatchEntity: ModuleEntity? = null
         var longestMatchSize = 0
 
@@ -40,34 +72,7 @@ class ModuleFinder(private val project: Project) {
                 bestMatchEntity = moduleEntity
             }
         }
-
-        if (bestMatchEntity == null) {
-            return emptyList()
-        }
-
-        val bestContentRoots = bestMatchEntity.contentRoots.map { it.url.presentableUrl }.toSet()
-
-        val shortestCommonPath = bestContentRoots
-            .map {
-                it.split('/')
-            }
-            .reduceOrNull { acc, path ->
-                acc.zip(path)
-                    .takeWhile { (a, b) -> a == b }
-                    .map { it.first }
-            }
-            ?.joinToString("/")
-
-        if (shortestCommonPath == null) {
-            return emptyList()
-        }
-
-        val siblingEntities = allEntities.filter { entity ->
-            entity.contentRoots.any { it.url.presentableUrl.contains(shortestCommonPath) }
-        }
-
-        val moduleManager = ModuleManager.getInstance(project)
-        return siblingEntities.mapNotNull { moduleManager.findModuleByName(it.name) }
+        return bestMatchEntity
     }
 
     private fun matchPaths(source: Path, candidates: List<Path>): List<String> {
