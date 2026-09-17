@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+- navigate from Spring `HttpExchange` annotations to OpenAPI (#255).
+- improve target file detection for navigation from mapping annotations to OpenAPI (#256).
+
 ## [2026.1]
 
 - added support for `openapi-processor-spring` mapping.yaml identifier (for `openapi-processor-spring` 2026.3). 
