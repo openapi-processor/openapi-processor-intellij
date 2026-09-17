@@ -17,11 +17,20 @@ object Annotations {
 
         SpringAnnotation("DeleteMapping", "delete"),
         SpringAnnotation("GetMapping", "get"),
-        SpringRequestAnnotation("HEAD"),
+        SpringRequestAnnotation("head"),
         SpringAnnotation("PatchMapping", "patch"),
         SpringAnnotation("PostMapping", "post"),
         SpringAnnotation("PutMapping", "put"),
-        SpringRequestAnnotation("TRACE")
+        SpringRequestAnnotation("trace"),
+
+        SpringExchangeAnnotation("DeleteExchange", "delete"),
+        SpringExchangeAnnotation("GetExchange", "get"),
+        SpringHttpExchangeAnnotation("head"),
+        SpringHttpExchangeAnnotation("options"),
+        SpringExchangeAnnotation("PatchExchange", "patch"),
+        SpringExchangeAnnotation("PostExchange", "post"),
+        SpringExchangeAnnotation("PutExchange", "put"),
+        SpringHttpExchangeAnnotation("trace")
     )
 
     fun withMethod(method: String): List<Annotation> {
