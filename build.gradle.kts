@@ -55,6 +55,7 @@ intellijPlatform {
 tasks.test {
     useJUnitPlatform()
 
+    jvmArgs("-Xshare:off")
     systemProperty("idea.log.config.properties.file", "${project.rootDir}/src/test/resources/test-logging.properties")
 }
 
