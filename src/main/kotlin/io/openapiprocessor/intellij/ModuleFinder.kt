@@ -21,14 +21,11 @@ class ModuleFinder(private val project: Project) {
         val source = getRelativeUrl(sourceUrl)
         val sourcePath = Path.of(source)
 
-        val results = mutableMapOf<ModuleEntity, List<String>>()
-
         val wm = WorkspaceModel.getInstance(project)
         val allEntities = wm.currentSnapshot.entities(ModuleEntity::class.java)
             .filter { it.sourceRoots.isNotEmpty() }
             .toList()
 
-        // 1. Find the single best matching module for the source file
         var bestMatchEntity: ModuleEntity? = null
         var longestMatchSize = 0
 
@@ -48,17 +45,25 @@ class ModuleFinder(private val project: Project) {
             return emptyList()
         }
 
-        // 2. Extract the base subproject name (e.g. "dis-plant" from "dis-plant.main")
-        val bestName = bestMatchEntity.name
-        val baseSubprojectName = if (bestName.contains(".")) {
-            bestName.substringBeforeLast(".")
-        } else {
-            bestName
+        val bestContentRoots = bestMatchEntity.contentRoots.map { it.url.presentableUrl }.toSet()
+
+        val shortestCommonPath = bestContentRoots
+            .map {
+                it.split('/')
+            }
+            .reduceOrNull { acc, path ->
+                acc.zip(path)
+                    .takeWhile { (a, b) -> a == b }
+                    .map { it.first }
+            }
+            ?.joinToString("/")
+
+        if (shortestCommonPath == null) {
+            return emptyList()
         }
 
-        // 3. Collect all modules belonging to this same subproject (e.g. dis-plant.api, dis-plant.test)
         val siblingEntities = allEntities.filter { entity ->
-            entity.name == baseSubprojectName || entity.name.startsWith("$baseSubprojectName.")
+            entity.contentRoots.any { it.url.presentableUrl.contains(shortestCommonPath) }
         }
 
         val moduleManager = ModuleManager.getInstance(project)
