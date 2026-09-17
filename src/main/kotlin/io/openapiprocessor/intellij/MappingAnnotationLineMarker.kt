@@ -54,6 +54,10 @@ class MappingAnnotationLineMarker: RelatedItemLineMarkerProvider() {
 
         val moduleService = service<ModuleService>()
         val modules = moduleService.findModules(element)
+        if (modules.isEmpty()) {
+            log.warn("found no module!")
+            return null
+        }
 
         var searchScope = GlobalSearchScope.EMPTY_SCOPE
         for (module in modules) {
