@@ -1,0 +1,4 @@
+post:
+  responses:
+    '204':
+      description: empty

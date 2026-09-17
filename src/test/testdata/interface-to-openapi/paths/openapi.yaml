@@ -26,6 +26,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bar'
 
+  /ref/nested:
+    description: endpoint with $ref
+    $ref: ref.yaml
+
 components:
   schemas:
     Foo:

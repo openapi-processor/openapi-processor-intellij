@@ -50,9 +50,10 @@ class MappingAnnotationLineMarkerSpec {
 
         val gutters = fixture.findAllGutters()
 
-        assertEquals(2, gutters.size)
+        assertEquals(3, gutters.size)
         assertGutter(gutters[0], "/bar")
         assertGutter(gutters[1], "/foo")
+        assertGutter(gutters[2], "/ref/nested")
     }
 
     private fun assertGutter(gutter: GutterMark, expectedTarget: String) = runReadActionBlocking {

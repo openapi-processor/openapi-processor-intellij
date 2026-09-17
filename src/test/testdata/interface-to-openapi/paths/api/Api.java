@@ -10,4 +10,6 @@ public interface BarApi {
     @PostMapping(path = "/foo")
     Foo postFoo();
 
+    @PostMapping(path = "/ref/nested")
+    void postRef();
 }
