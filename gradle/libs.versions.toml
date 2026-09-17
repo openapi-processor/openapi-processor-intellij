@@ -4,7 +4,7 @@ junit5 = "5.14.1"
 junit4 = "4.13.2"
 
 # plugins
-versions = "0.54.0"
+versions = "0.56.0"
 
 [libraries]
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit5" }
