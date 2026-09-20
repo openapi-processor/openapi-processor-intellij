@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2026.2-SNAPSHOT.1]
+
 - navigate from Spring `HttpExchange` annotations to OpenAPI (#255).
 - improve target file detection for navigation from mapping annotations to OpenAPI (#256).
 
@@ -181,8 +183,9 @@
 - auto-detect the `mapping.yaml` file and set the json schema for editing support (autocompletion & validation)
 - add openapi-processor icon for `mapping.yaml`
 
-[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2026.1...HEAD
+[Unreleased]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2026.2-SNAPSHOT.1...HEAD
 [2022.2.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2022.1...2022.2.1
+[2026.2-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2026.1...2026.2-SNAPSHOT.1
 [2026.1-SNAPSHOT.3]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2026.1-SNAPSHOT.2...2026.1-SNAPSHOT.3
 [2026.1-SNAPSHOT.2]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2026.1-SNAPSHOT.1...2026.1-SNAPSHOT.2
 [2026.1-SNAPSHOT.1]: https://github.com/openapi-processor/openapi-processor-intellij/compare/2025.2...2026.1-SNAPSHOT.1
