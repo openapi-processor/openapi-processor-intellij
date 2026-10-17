@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+- navigate from Spring `HttpExchange` annotations to OpenAPI (#255).
+- improve target file detection for navigation from mapping annotations to OpenAPI (#256).
+
 ## [2026.2-SNAPSHOT.1]
 
 - navigate from Spring `HttpExchange` annotations to OpenAPI (#255).
