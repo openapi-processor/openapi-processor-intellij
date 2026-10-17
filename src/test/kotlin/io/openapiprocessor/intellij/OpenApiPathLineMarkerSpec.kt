@@ -52,11 +52,13 @@ class OpenApiPathLineMarkerSpec {
             getMethod("postBar")
         )
 
-        val pathGutters = runReadActionBlocking {
-            gutters.filter { it.tooltipText == OpenApiPathLineMarker.I18n.TOOLTIP_TEXT }
-        }
         val methods = runReadActionBlocking {
-            pathGutters.flatMap { it.methods }
+            gutters.filter {
+                // can't find better way to filter my markers
+                it.tooltipText == OpenApiPathLineMarker.I18n.TOOLTIP_TEXT
+            }.flatMap {
+                it.methods
+            }
         }
 
         assertEquals(expected, methods)
