@@ -14,7 +14,6 @@ import com.intellij.openapi.vfs.JarFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
 import com.intellij.testFramework.LightVirtualFile
-import com.intellij.testFramework.junit5.RunInEdt
 import com.intellij.testFramework.junit5.RunMethodInEdt
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.moduleFixture
@@ -25,7 +24,6 @@ import com.intellij.util.io.generateInVirtualTempDir
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-@RunInEdt
 @TestApplication
 class TypeMappingFileTypeSpec {
 

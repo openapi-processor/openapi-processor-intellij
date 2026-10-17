@@ -9,7 +9,7 @@ import com.intellij.codeInsight.daemon.GutterMark
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.runReadActionBlocking
 import com.intellij.testFramework.TestDataPath
-import com.intellij.testFramework.junit5.RunInEdt
+import com.intellij.testFramework.junit5.RunMethodInEdt
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.disposableFixture
 import com.intellij.testFramework.junit5.fixture.moduleFixture
@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-@RunInEdt
 @TestApplication
 @TestDataPath($$"$PROJECT_ROOT/src/test/testdata/interface-to-openapi/paths")
 class MappingAnnotationLineMarkerSpec {
@@ -44,6 +43,7 @@ class MappingAnnotationLineMarkerSpec {
     }
 
     @Test
+    @RunMethodInEdt
     fun `adds navigation gutter icon to mapping annotation`() {
         val fixture = codeInsightFixture.get()
         fixture.configureByFile("api/Api.java")
