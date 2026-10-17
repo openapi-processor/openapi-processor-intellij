@@ -10,7 +10,9 @@ pluginManagement {
 
     plugins {
         // https://kotlinlang.org/docs/releases.html
-        id("org.jetbrains.kotlin.jvm") version "2.3.20"
+        // 2026.2 -> 2.4.0
+        // 2026.1 -> 2.3.20
+        id("org.jetbrains.kotlin.jvm") version "2.4.0"
         // https://github.com/JetBrains/gradle-changelog-plugin/releases
         id("org.jetbrains.changelog") version "2.5.0"
     }
@@ -19,7 +21,7 @@ pluginManagement {
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
     // https://github.com/JetBrains/intellij-platform-gradle-plugin/releases
-    id("org.jetbrains.intellij.platform.settings") version "2.16.0"
+    id("org.jetbrains.intellij.platform.settings") version "2.19.0"
 }
 
 @Suppress("UnstableApiUsage")
