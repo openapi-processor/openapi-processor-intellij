@@ -10,7 +10,7 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.impl.java.stubs.index.JavaMethodNameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.testFramework.TestDataPath
-import com.intellij.testFramework.junit5.RunInEdt
+import com.intellij.testFramework.junit5.RunMethodInEdt
 import com.intellij.testFramework.junit5.TestApplication
 import com.intellij.testFramework.junit5.fixture.moduleFixture
 import com.intellij.testFramework.junit5.fixture.projectFixture
@@ -21,7 +21,6 @@ import io.openapiprocessor.intellij.support.testDataSourceRootFixture
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-@RunInEdt
 @TestApplication
 @TestDataPath($$"$PROJECT_ROOT/src/test/testdata/openapi-to-interface/paths")
 class OpenApiPathLineMarkerSpec {
@@ -41,6 +40,7 @@ class OpenApiPathLineMarkerSpec {
     }
 
     @Test
+    @RunMethodInEdt
     fun `adds navigation gutter icon to OpenAPI paths`() {
         val fixture = codeInsightFixture.get()
         fixture.configureByFile("openapi.yaml")
@@ -52,7 +52,12 @@ class OpenApiPathLineMarkerSpec {
             getMethod("postBar")
         )
 
-        val methods = gutters.flatMap { it.methods }
+        val pathGutters = runReadActionBlocking {
+            gutters.filter { it.tooltipText == OpenApiPathLineMarker.I18n.TOOLTIP_TEXT }
+        }
+        val methods = runReadActionBlocking {
+            pathGutters.flatMap { it.methods }
+        }
 
         assertEquals(expected, methods)
     }
